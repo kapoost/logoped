@@ -1,4 +1,3 @@
-// e2e/public/auth.spec.ts
 import { test, expect } from '@playwright/test'
 
 test.describe('Strona logowania', () => {
@@ -8,7 +7,8 @@ test.describe('Strona logowania', () => {
     await page.waitForLoadState('networkidle')
     await expect(page.locator('input[type="email"]')).toBeVisible()
     await expect(page.locator('input[type="password"]')).toBeVisible()
-    await expect(page.locator('button[type="submit"]')).toBeVisible()
+    // Przycisk Zaloguj się (nie Demo)
+    await expect(page.getByRole('button', { name: 'Zaloguj się' })).toBeVisible()
   })
 
   test('pokazuje logo LogoPed', async ({ page }) => {
@@ -18,8 +18,9 @@ test.describe('Strona logowania', () => {
 
   test('pokazuje baner demo z przyciskiem Zosi', async ({ page }) => {
     await page.goto('/login')
-    await expect(page.locator('text=Zosia Zaczarowana')).toBeVisible()
-    await expect(page.locator('button', { hasText: 'Wejdź jako demo' })).toBeVisible()
+    // Szukaj w strong (nie w buttonie)
+    await expect(page.locator('strong', { hasText: 'Zosia Zaczarowana' })).toBeVisible()
+    await expect(page.getByRole('button', { name: /Wejdź jako demo/ })).toBeVisible()
   })
 
   test('baner demo pokazuje kredencjały', async ({ page }) => {
@@ -40,13 +41,13 @@ test.describe('Strona logowania', () => {
     await expect(page).toHaveURL(/\/login/)
   })
 
-  test('pokazuje błąd przy złym haśle', async ({ page }) => {
+  test('złe hasło → zostaje na /login z błędem', async ({ page }) => {
     await page.goto('/login')
-    // Uncontrolled inputs — wypełnij przez DOM
-    await page.fill('input[name="email"]', 'zly@email.pl')
-    await page.fill('input[name="password"]', 'zlehaslo')
-    await page.click('button[type="submit"]')
-    await page.waitForTimeout(4000)
+    // Wypełnij widoczne pola (nie hidden inputs demo)
+    await page.locator('input[name="email"]:visible').fill('zly@email.pl')
+    await page.locator('input[name="password"]:visible').fill('zlehaslo')
+    await page.getByRole('button', { name: 'Zaloguj się' }).click()
+    await page.waitForLoadState('networkidle')
     expect(page.url()).toContain('/login')
   })
 
@@ -65,24 +66,23 @@ test.describe('Strona logowania', () => {
     await expect(page).toHaveURL(/\/login/)
   })
 
-  test('/api/health zwraca 200 z JSON', async ({ page }) => {
-    const response = await page.request.get('/api/health')
-    expect(response.status()).toBe(200)
-    const ct = response.headers()['content-type'] ?? ''
+  test('/api/health zwraca 200', async ({ page }) => {
+    const res = await page.request.get('/api/health')
+    expect(res.status()).toBe(200)
+    const ct = res.headers()['content-type'] ?? ''
     if (ct.includes('application/json')) {
-      const body = await response.json()
+      const body = await res.json()
       expect(body.status).toBe('ok')
     }
   })
 
   test('/api/push/send bez tokenu → 401', async ({ page }) => {
-    const response = await page.request.post('/api/push/send')
-    expect(response.status()).toBe(401)
+    const res = await page.request.post('/api/push/send')
+    expect(res.status()).toBe(401)
   })
 
-  test('/api/demo/reset bez sesji → odpowiada (nie 307)', async ({ page }) => {
-    const response = await page.request.post('/api/demo/reset')
-    // Powinna odpowiedzieć — nie redirectować na /login
-    expect(response.status()).not.toBe(307)
+  test('/api/demo/reset nie jest zablokowany (nie 307)', async ({ page }) => {
+    const res = await page.request.post('/api/demo/reset')
+    expect(res.status()).not.toBe(307)
   })
 })
