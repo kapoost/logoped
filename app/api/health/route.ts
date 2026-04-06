@@ -1,0 +1,11 @@
+// app/api/health/route.ts
+import { NextResponse } from 'next/server'
+
+export const runtime = 'edge'
+
+export function GET() {
+  return NextResponse.json(
+    { status: 'ok', ts: new Date().toISOString() },
+    { status: 200 }
+  )
+}

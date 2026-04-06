@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Env — NIGDY nie commituj!
+.env
+.env.local
+.env.test
+.env*.local
+
+# Playwright
+playwright-report/
+test-results/
+e2e/.auth/
+
+# Misc
+.DS_Store
+*.bak
+fly.toml.bak
