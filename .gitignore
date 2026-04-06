@@ -20,4 +20,3 @@ e2e/.auth/
 .DS_Store
 *.bak
 fly.toml.bak
-.github/workflows/
