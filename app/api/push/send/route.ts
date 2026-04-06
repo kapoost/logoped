@@ -1,106 +1,70 @@
-// app/api/push/send/route.ts
-// Wywoływane przez cron job na Fly.io o ustalonej godzinie
-
 import { NextResponse } from 'next/server'
-import webpush from 'web-push'
 import { createAdminClient } from '@/lib/supabase/server'
 
-webpush.setVapidDetails(
-  process.env.VAPID_SUBJECT!,
-  process.env.VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!
-)
-
-// Prosty token zabezpieczający cron endpoint
-const CRON_SECRET = process.env.CRON_SECRET ?? 'changeme'
+const CRON_SECRET = process.env.CRON_SECRET ?? ''
 
 export async function POST(request: Request) {
-  // Weryfikacja tokenu
   const auth = request.headers.get('authorization')
   if (auth !== `Bearer ${CRON_SECRET}`) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const supabase = createAdminClient()
+  // Inicjalizuj webpush dopiero tutaj (runtime, nie build time)
+  const webpush = await import('web-push')
+  const subject  = process.env.VAPID_SUBJECT
+  const pubKey   = process.env.VAPID_PUBLIC_KEY
+  const privKey  = process.env.VAPID_PRIVATE_KEY
 
-  // Pobierz pacjentów z aktywnym harmonogramem na teraz
-  // + ich subskrypcjami push
-  const now         = new Date()
-  const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`
-  const currentDay  = now.getDay() === 0 ? 6 : now.getDay() - 1  // 0=pon
+  if (!subject || !pubKey || !privKey) {
+    return NextResponse.json({ error: 'VAPID not configured' }, { status: 500 })
+  }
+
+  webpush.setVapidDetails(subject, pubKey, privKey)
+
+  const supabase = createAdminClient()
+  const now = new Date()
+  const currentDay = now.getDay() === 0 ? 6 : now.getDay() - 1
+  const nowMin = now.getHours() * 60 + now.getMinutes()
 
   const { data: schedules } = await supabase
     .from('schedules')
-    .select(`
-      plan_id,
-      reminder_time,
-      days_of_week,
-      exercise_plans!inner (
-        patient_id,
-        is_active,
-        profiles!inner ( full_name )
-      )
-    `)
+    .select(`plan_id, reminder_time, days_of_week, exercise_plans!inner(patient_id, is_active, profiles!inner(full_name))`)
     .eq('is_active', true)
     .contains('days_of_week', [currentDay])
 
   if (!schedules?.length) {
-    return NextResponse.json({ sent: 0, message: 'No schedules for now' })
+    return NextResponse.json({ sent: 0, message: 'No schedules' })
   }
-
-  // Filtruj po godzinie (±5 min tolerancji)
-  const [hh, mm] = currentTime.split(':').map(Number)
-  const nowMin   = hh * 60 + mm
 
   const toNotify = schedules.filter(s => {
     const [sh, sm] = s.reminder_time.split(':').map(Number)
-    const schedMin = sh * 60 + sm
-    return Math.abs(schedMin - nowMin) <= 5
+    return Math.abs(sh * 60 + sm - nowMin) <= 5
   })
 
   let sent = 0
-  const errors: string[] = []
-
   for (const schedule of toNotify) {
-    const plan    = (schedule as any).exercise_plans
-    const profile = plan?.profiles
-    if (!plan?.is_active || !profile) continue
-
-    const patientId = plan.patient_id
-    const firstName = (profile.full_name as string).split(' ')[0]
-
-    // Pobierz subskrypcje push dla tego pacjenta
+    const plan = (schedule as any).exercise_plans
+    if (!plan?.is_active) continue
+    const firstName = (plan.profiles?.full_name as string ?? '').split(' ')[0]
     const { data: subs } = await supabase
       .from('push_subscriptions')
       .select('endpoint, p256dh, auth')
-      .eq('patient_id', patientId)
+      .eq('patient_id', plan.patient_id)
 
     for (const sub of subs ?? []) {
       try {
         await webpush.sendNotification(
           { endpoint: sub.endpoint, keys: { p256dh: sub.p256dh, auth: sub.auth } },
-          JSON.stringify({
-            title: '🦜 Papuga czeka!',
-            body:  `Czas na ćwiczenia, ${firstName}! Zdobądź punkty i utrzymaj serię!`,
-            icon:  '/icons/icon-192.png',
-            badge: '/icons/icon-192.png',
-            url:   '/pacjent/cwiczenia',
-          })
+          JSON.stringify({ title: '🦜 Papuga czeka!', body: `Czas na ćwiczenia, ${firstName}!`, url: '/pacjent/cwiczenia' })
         )
         sent++
       } catch (err: any) {
-        // 410 Gone = nieważna subskrypcja — usuń ją
         if (err.statusCode === 410) {
-          await supabase
-            .from('push_subscriptions')
-            .delete()
-            .eq('endpoint', sub.endpoint)
-        } else {
-          errors.push(err.message)
+          await supabase.from('push_subscriptions').delete().eq('endpoint', sub.endpoint)
         }
       }
     }
   }
 
-  return NextResponse.json({ sent, errors: errors.length ? errors : undefined })
+  return NextResponse.json({ sent })
 }
