@@ -1,173 +1,164 @@
+<div align="center">
+
 # 🦜 LogoPed
 
-Aplikacja logopedyczna dla dzieci i terapeutów. PWA (Progressive Web App) działająca na iOS i Android bez potrzeby publikacji w App Store.
+**Aplikacja logopedyczna dla dzieci i terapeutów**
 
-## Stack
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-logoped.fly.dev-7c3aed?style=for-the-badge&logo=rocket)](https://logoped.fly.dev)
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org)
+[![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=for-the-badge&logo=supabase)](https://supabase.com)
+[![Fly.io](https://img.shields.io/badge/Fly.io-Warsaw-8B5CF6?style=for-the-badge)](https://fly.io)
 
-| Warstwa | Technologia |
-|---------|-------------|
-| Frontend | Next.js 14 (App Router) |
-| Backend/DB | Supabase (PostgreSQL + Auth + Storage) |
-| Hosting | Fly.io (region: Warsaw) |
-| Styling | Tailwind CSS v3 |
-| Animacje | Framer Motion |
-| Push | Web Push API (VAPID) |
+*Duolingo dla logopedii — codzienne ćwiczenia, gamifikacja, śledzenie postępów*
 
-## Szybki start
+</div>
 
-### 1. Sklonuj i zainstaluj zależności
+---
+
+## O projekcie
+
+LogoPed to aplikacja webowa (PWA) wspierająca pracę logopedów i ich małych pacjentów. Dzieci ćwiczą codziennie z pomocą animowanej papugi 🦜, zdobywają punkty i odznaki — tak jak w grze. Logopedzi tworzą spersonalizowane plany ćwiczeń i śledzą postępy pacjentów w czasie rzeczywistym.
+
+### Dla kogo?
+
+| Użytkownik | Co robi w aplikacji |
+|------------|---------------------|
+| 🏥 **Admin** | Zarządza kontami logopedów, licencjami, bazą ćwiczeń |
+| 👩‍⚕️ **Logopeda** | Tworzy plany ćwiczeń, przydziela pacjentom, śledzi postępy |
+| 🧒 **Dziecko/Pacjent** | Wykonuje ćwiczenia, zdobywa nagrody, widzi papugę |
+| 👨‍👩‍👧 **Rodzic** | Pomaga dziecku, widzi postępy i harmonogram |
+
+---
+
+## Funkcje
+
+### Panel dziecka
+- 🎯 **Ćwiczenia na dziś** — lista z dużymi ikonami, gwiazdki postępu
+- 🎵 **Dźwięki** — ding przy każdym powtórzeniu, fanfara po sesji
+- 🔄 **Powtarzanie** — opcja powtórzenia ukończonego ćwiczenia
+- 🏆 **Gamifikacja** — punkty, poziomy, seria dni, odznaki
+- 🦜 **Papuga Lolo** — maskotka z pełnym panelem statystyk
+
+### Panel logopedy
+- 📋 **Kreator planów** — drag & drop, notatki dla każdego ćwiczenia
+- 📊 **Postępy pacjentów** — kalendarz, streak, alerty nieaktywności
+- 📚 **Baza ćwiczeń** — 50+ publicznych ćwiczeń + własne
+- ⏰ **Harmonogramy** — dni tygodnia, godzina przypomnienia
+
+### Panel admina
+- 👥 Zarządzanie logopedami i licencjami
+- 📖 Zarządzanie publiczną bazą ćwiczeń
+- 📈 Statystyki globalne systemu
+
+---
+
+## Stack technologiczny
+
+```
+Frontend        Next.js 14 (App Router) + Tailwind CSS + Framer Motion
+Backend         Supabase (PostgreSQL + Auth + Storage + Realtime)
+PWA             next-pwa + Web Push API (VAPID)
+Hosting         Fly.io (region: Frankfurt)
+Testy           Playwright E2E
+CI/CD           GitHub Actions → flyctl deploy
+Dźwięki         Web Audio API (bez zewnętrznych bibliotek)
+```
+
+---
+
+## Demo
+
+🔗 **https://logoped.fly.dev**
+
+Kliknij przycisk **"🦜 Wejdź jako demo"** na stronie logowania — zobaczysz widok dziecka z przykładowymi ćwiczeniami, gamifikacją i papugą Lolo.
+
+---
+
+## Architektura
+
+```
+logoped/
+├── app/
+│   ├── admin/          # Panel admina (RLS: rola admin)
+│   ├── logopeda/       # Panel logopedy (RLS: rola therapist)
+│   ├── pacjent/        # Panel pacjenta (RLS: rola patient)
+│   └── api/            # Route Handlers (auth, push, demo)
+├── components/
+│   ├── patient/        # ExerciseView, ExerciseList, TodayHeader, PatientNav
+│   └── therapist/      # TherapistNav, PlanBuilder
+├── lib/
+│   ├── demoProgress.ts # localStorage postęp dla demo
+│   ├── demoStats.ts    # localStorage fake stats dla demo
+│   └── sounds.ts       # Web Audio API
+└── supabase/
+    └── migrations/     # 001_profiles.sql ... 007_licenses.sql
+```
+
+### Row-Level Security
+
+Każda tabela ma włączone RLS. Pacjent widzi tylko swoje dane, logopeda widzi pacjentów których obsługuje, admin widzi wszystko.
+
+---
+
+## Lokalny development
 
 ```bash
-git clone https://github.com/TWOJ_USER/logoped.git
+# Klonuj repo
+git clone https://github.com/kapoost/logoped.git
 cd logoped
+
+# Zainstaluj zależności
 npm install
-```
 
-### 2. Skonfiguruj Supabase
+# Skonfiguruj środowisko
+cp .env.example .env.local
+# Uzupełnij klucze Supabase i VAPID
 
-1. Utwórz projekt na [supabase.com](https://supabase.com) (region: eu-central-1)
-2. W SQL Editor uruchom migracje **w kolejności**:
-   ```
-   supabase/migrations/001_profiles.sql
-   supabase/migrations/002_exercises.sql
-   supabase/migrations/003_plans.sql
-   supabase/migrations/004_completions_and_stats.sql
-   supabase/migrations/005_views.sql
-   supabase/migrations/seed.sql
-   ```
-3. W Storage utwórz buckety:
-   ```sql
-   INSERT INTO storage.buckets (id, name, public) VALUES
-     ('exercise-media', 'exercise-media', true),
-     ('recordings', 'recordings', false),
-     ('avatars', 'avatars', false);
-   ```
-4. W Authentication:
-   - Włącz Email/Password
-   - **Wyłącz** "Confirm email" (dla MVP)
-   - Ustaw Site URL: `http://localhost:3000`
-
-### 3. Skonfiguruj zmienne środowiskowe
-
-```bash
-cp .env.local.example .env.local
-```
-
-Uzupełnij `.env.local`:
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://TWOJ_PROJEKT.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
-SUPABASE_SERVICE_ROLE_KEY=eyJ...
-
-# Generuj: npx web-push generate-vapid-keys
-VAPID_PUBLIC_KEY=BM...
-VAPID_PRIVATE_KEY=...
-NEXT_PUBLIC_VAPID_PUBLIC_KEY=BM...
-VAPID_SUBJECT=mailto:admin@logoped.pl
-
-NEXT_PUBLIC_APP_URL=http://localhost:3000
-CRON_SECRET=twoj-tajny-klucz-crona
-```
-
-### 4. Utwórz konto admina
-
-W Supabase SQL Editor:
-```sql
--- Najpierw zarejestruj się przez aplikację jako zwykły użytkownik,
--- potem zmień rolę na admin:
-UPDATE public.profiles
-SET role = 'admin'
-WHERE id = 'TWOJE_USER_ID';
-```
-
-### 5. Uruchom lokalnie
-
-```bash
+# Uruchom lokalnie
 npm run dev
 ```
 
-Otwórz [http://localhost:3000](http://localhost:3000)
+### Wymagania
+- Node.js 20+
+- Konto Supabase (free tier wystarczy)
+- Konto Fly.io (free tier wystarczy)
 
 ---
 
-## Struktura ról
-
-| Rola | Dashboard | Funkcje |
-|------|-----------|---------|
-| `admin` | `/admin` | Zarządza logopedami i publiczną bazą ćwiczeń |
-| `therapist` | `/logopeda` | Zarządza pacjentami, tworzy plany ćwiczeń |
-| `patient` | `/pacjent/cwiczenia` | Wykonuje ćwiczenia, zbiera punkty i odznaki |
-
-## Deployment na Fly.io
+## Testy
 
 ```bash
-# Zainstaluj flyctl
-curl -L https://fly.io/install.sh | sh
+# Uruchom wszystkie testy E2E
+TEST_BASE_URL=https://logoped.fly.dev npx playwright test
 
-# Zaloguj się
-flyctl auth login
-
-# Uruchom (pierwszy raz)
-flyctl launch --name logoped --region waw
-
-# Ustaw zmienne środowiskowe
-flyctl secrets set \
-  NEXT_PUBLIC_SUPABASE_URL="..." \
-  NEXT_PUBLIC_SUPABASE_ANON_KEY="..." \
-  SUPABASE_SERVICE_ROLE_KEY="..." \
-  VAPID_PUBLIC_KEY="..." \
-  VAPID_PRIVATE_KEY="..." \
-  NEXT_PUBLIC_VAPID_PUBLIC_KEY="..." \
-  VAPID_SUBJECT="mailto:admin@logoped.pl" \
-  CRON_SECRET="..." \
-  NEXT_PUBLIC_APP_URL="https://logoped.fly.dev"
-
-# Deploy
-flyctl deploy
+# Konkretny projekt
+npx playwright test --project=patient
+npx playwright test --project=integration
 ```
 
-### CI/CD
-
-Push na branch `main` → automatyczny deploy przez GitHub Actions.
-Wymagany sekret w repo: `FLY_API_TOKEN` (z `flyctl tokens create deploy`).
-
-### Push notifications cron
-
-Skonfiguruj cron na Fly.io lub zewnętrzny serwis (np. cron-job.org):
-
-```bash
-# Co minutę sprawdzaj harmonogramy i wysyłaj przypomnienia
-curl -X POST https://logoped.fly.dev/api/push/send \
-  -H "Authorization: Bearer TWOJ_CRON_SECRET"
-```
-
----
-
-## Gamifikacja
-
-| Akcja | Punkty |
-|-------|--------|
-| Jedno ćwiczenie | +20 |
-| Cała sesja (wszystkie ćwiczenia) | +50 bonus |
-| 3 dni z rzędu | +100 |
-| 7 dni z rzędu | +200 |
-| 30 dni z rzędu | +500 |
-
-**Poziomy:** Maluszek 🐣 → Uczniaczek 📚 → Gadałka 🗣️ → Mistrz Słowa 🏅 → Mistrz Mowy 🏆
+**Stan testów:** setup ✅ | public ✅ | integration ✅ | admin ✅ | therapist ✅ | patient ✅ | api ✅ | demo ✅
 
 ---
 
 ## Roadmapa
 
-- [x] Migracje Supabase + seed 50 ćwiczeń
-- [x] Auth (logowanie, rejestracja, role)
-- [x] Panel pacjenta (ćwiczenia, kalendarz, nagrody, papuga)
-- [x] Panel logopedy (pacjenci, plany, baza ćwiczeń)
-- [x] Panel admina (logopedzi, ćwiczenia)
-- [x] Gamifikacja (punkty, serie, odznaki — triggery PostgreSQL)
-- [x] PWA manifest + push notifications
-- [x] Dockerfile + Fly.io + GitHub Actions
-- [ ] Nagrywanie audio/wideo (v2)
-- [ ] Weryfikacja nagrań przez logopedę (v2)
-- [ ] Google Play Store (TWA wrapper)
-- [ ] App Store (Capacitor wrapper)
+- [x] MVP — logopeda przydziela → dziecko ćwiczy → oboje widzą postępy
+- [x] Gamifikacja — punkty, serie, poziomy, odznaki, papuga
+- [x] PWA — offline, push notifications, instalacja na ekranie głównym
+- [x] Demo konto — bez rejestracji
+- [ ] Nagrania audio/wideo — pacjent nagrywa, logopeda weryfikuje
+- [ ] App Store — Google Play (TWA) + Apple App Store (Capacitor)
+
+---
+
+## Licencja
+
+Projekt prywatny. Wszelkie prawa zastrzeżone.
+
+---
+
+<div align="center">
+
+Zbudowane z ❤️ dla małych logopedów i ich terapeutów
+
+</div>
