@@ -1,8 +1,9 @@
 'use client'
+// components/therapist/TherapistNav.tsx
+
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from 'next/navigation'
 import { clsx } from 'clsx'
-import { createClient } from '@/lib/supabase/client'
 
 const NAV = [
   { href: '/logopeda/pacjenci',  emoji: '👥', label: 'Pacjenci'   },
@@ -12,18 +13,11 @@ const NAV = [
 
 export default function TherapistNav({ name }: { name: string }) {
   const pathname = usePathname()
-  const router = useRouter()
-  const initials = name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase()
-
-  async function handleLogout() {
-    const supabase = createClient()
-    await supabase.auth.signOut()
-    router.push('/login')
-    router.refresh()
-  }
+  const initials = name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()
 
   return (
     <>
+      {/* Górna belka */}
       <header className="bg-green-800 text-white px-5 py-4 flex items-center justify-between sticky top-0 z-40">
         <div className="flex items-center gap-3">
           <span className="text-xl">🦜</span>
@@ -31,18 +25,18 @@ export default function TherapistNav({ name }: { name: string }) {
           <span className="text-green-400 text-xs hidden sm:block">Panel logopedy</span>
         </div>
         <div className="flex items-center gap-3">
+          <form action="/api/auth/logout" method="POST">
+            <button type="submit" className="text-green-300 hover:text-white text-xs border border-green-600 hover:border-green-400 px-3 py-1 rounded transition">
+              Wyloguj
+            </button>
+          </form>
           <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm font-bold">
             {initials}
           </div>
-          <button
-            onClick={handleLogout}
-            className="text-xs text-green-300 hover:text-white transition px-2 py-1 rounded-lg hover:bg-white/10"
-          >
-            Wyloguj
-          </button>
         </div>
       </header>
 
+      {/* Dolna nawigacja */}
       <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-2xl bg-white border-t border-gray-100 safe-bottom z-50">
         <div className="flex">
           {NAV.map(item => {
