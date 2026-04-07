@@ -47,11 +47,15 @@ export default async function CwiczeniePage({ params }: Props) {
     (e, i) => i > currentIdx && !e.completed_today
   ) ?? null
 
+  const isLastExercise = !nextExercise &&
+    (allExercises?.filter(e => !e.completed_today).length ?? 0) <= 1
+
   return (
     <ExerciseView
       exercise={data}
       nextId={nextExercise?.plan_exercise_id ?? null}
       patientId={session.profile.id}
+      isLastExercise={isLastExercise}
     />
   )
 }
