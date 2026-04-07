@@ -1,13 +1,15 @@
 'use client'
-// app/(logopeda)/pacjenci/dodaj/AddPatientForm.tsx
+// app/logopeda/pacjenci/dodaj/AddPatientForm.tsx
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
 
-export default function AddPatientForm() {
-  const router  = useRouter()
-  const supabase = createClient()
+interface Props {
+  therapistId: string  // przekazywany z server component — bezpieczne
+}
+
+export default function AddPatientForm({ therapistId }: Props) {
+  const router = useRouter()
 
   const [fullName,  setFullName]  = useState('')
   const [email,     setEmail]     = useState('')
@@ -19,31 +21,33 @@ export default function AddPatientForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setLoading(true)
     setError(null)
 
-    // 1. Pobierz aktualnego logopedę
-    const { data: { user: therapist } } = await supabase.auth.getUser()
-    if (!therapist) { setError('Błąd sesji — zaloguj się ponownie.'); setLoading(false); return }
+    // Walidacja po stronie klienta
+    if (!fullName.trim()) { setError('Podaj imię dziecka.'); return }
+    if (!email.trim())    { setError('Podaj adres email.'); return }
+    if (password.length < 8) { setError('Hasło musi mieć minimum 8 znaków.'); return }
 
-    // 2. Utwórz konto pacjenta przez API route (wymaga service_role)
+    setLoading(true)
+
+    // therapistId pochodzi z serwera — nie trzeba wywoływać supabase.auth.getUser()
     const res = await fetch('/api/admin/create-patient', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        full_name:     fullName,
-        email,
+        full_name:     fullName.trim(),
+        email:         email.trim(),
         password,
         date_of_birth: birthDate || null,
-        therapist_id:  therapist.id,
+        therapist_id:  therapistId,
       }),
     })
 
     const data = await res.json()
+    setLoading(false)
 
     if (!res.ok) {
       setError(data.error ?? 'Wystąpił błąd. Spróbuj ponownie.')
-      setLoading(false)
       return
     }
 
@@ -117,6 +121,7 @@ export default function AddPatientForm() {
             <input
               type="password"
               required
+              minLength={8}
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="minimum 8 znaków"

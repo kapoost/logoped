@@ -44,6 +44,16 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], storageState: 'e2e/.auth/therapist.json' },
     },
     {
+      name: 'api',
+      testMatch: /e2e\/api\/.*/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'demo',
+      testMatch: /e2e\/demo\/.*/,
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
       name: 'patient',
       testMatch: /e2e\/patient\/.*/,
       dependencies: ['setup'],
