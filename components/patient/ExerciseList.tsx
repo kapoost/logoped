@@ -47,7 +47,8 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
         : e
     ))
 
-    const newDone = exercises.filter(e => e.completed_today).length + 1
+    const prevDone = exercises.filter(e => e.completed_today).length
+    const newDone = prevDone + 1
     if (newDone === total) {
       setTimeout(() => playSessionComplete(), 100)
     } else {
@@ -60,7 +61,7 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
       setDemoReps(ex.plan_exercise_id, ex.repetitions, true)
       addDemoExercisePoints()
       const newDoneCount = exercises.filter(e => e.completed_today).length + 1
-      if (newDoneCount === total) addDemoSessionBonus()
+      if (newDoneCount >= total) addDemoSessionBonus()
       window.dispatchEvent(new Event('demo-stats-updated'))
       return
     }

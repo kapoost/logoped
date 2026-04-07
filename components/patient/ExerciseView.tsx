@@ -9,13 +9,6 @@ import { playRep, playExerciseDone, playSessionComplete } from '@/lib/sounds'
 import { addDemoExercisePoints, addDemoSessionBonus } from '@/lib/demoStats'
 import type { TodayExercise } from '@/types/database'
 
-interface Props {
-  exercise: TodayExercise
-  nextId: string | null
-  patientId: string
-  isLastExercise: boolean
-}
-
 const DIFFICULTY_COLOR = {
   latwe:   'bg-green-100 text-green-700',
   srednie: 'bg-amber-100 text-amber-700',
@@ -23,29 +16,44 @@ const DIFFICULTY_COLOR = {
 }
 const DIFFICULTY_LABEL = { latwe: 'łatwe', srednie: 'średnie', trudne: 'trudne' }
 
+interface Props {
+  exercise: TodayExercise
+  nextId: string | null
+  patientId: string
+  isLastExercise: boolean
+}
+
 export default function ExerciseView({ exercise: ex, nextId, patientId, isLastExercise }: Props) {
   const router   = useRouter()
   const supabase = createClient()
   const demo     = isDemo(patientId)
 
-  const initReps = demo ? getDemoReps(ex.plan_exercise_id) : (ex.completed_today ? ex.repetitions : 0)
-  const [repsDone, setRepsDone]           = useState(initReps)
-  const [saving, setSaving]               = useState(false)
+  const initCompleted = demo ? getDemoCompleted(ex.plan_exercise_id) : ex.completed_today
+  const initReps      = demo ? getDemoReps(ex.plan_exercise_id) : (ex.completed_today ? ex.repetitions : 0)
+
+  const [repsDone, setRepsDone]             = useState(initReps)
+  const [completed, setCompleted]           = useState(!!initCompleted)
+  const [saving, setSaving]                 = useState(false)
   const [showCelebration, setShowCelebration] = useState(false)
-  const [ripple, setRipple]               = useState(false)
+  const [ripple, setRipple]                 = useState(false)
 
   const totalReps   = ex.repetitions
-  const isCompleted = (demo ? getDemoCompleted(ex.plan_exercise_id) : ex.completed_today) || repsDone >= totalReps
-  const progress    = totalReps > 0 ? repsDone / totalReps : 0
+  const progress    = totalReps > 0 ? Math.min(repsDone / totalReps, 1) : 0
   const circumference = 2 * Math.PI * 52
 
   const steps = ex.instructions
     .split('\n').map(s => s.replace(/^\d+\.\s*/, '').trim()).filter(Boolean)
 
-  const addRep = useCallback(async () => {
-    if (repsDone >= totalReps || saving) return
+  // Powtórz ćwiczenie — reset licznika (nie usuwa completion z bazy)
+  function repeatExercise() {
+    setRepsDone(0)
+    setCompleted(false)
+    if (demo) setDemoReps(ex.plan_exercise_id, 0, false)
+  }
 
-    // Ripple effect
+  const addRep = useCallback(async () => {
+    if (repsDone >= totalReps || saving || completed) return
+
     setRipple(true)
     setTimeout(() => setRipple(false), 300)
 
@@ -53,6 +61,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
     setRepsDone(next)
 
     if (next >= totalReps) {
+      setCompleted(true)
       if (demo) {
         setDemoReps(ex.plan_exercise_id, next, true)
         addDemoExercisePoints()
@@ -67,7 +76,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
       playRep()
       if (demo) setDemoReps(ex.plan_exercise_id, next, false)
     }
-  }, [repsDone, totalReps, saving, demo, ex.plan_exercise_id, isLastExercise])
+  }, [repsDone, totalReps, saving, completed, demo, ex.plan_exercise_id, isLastExercise])
 
   async function markComplete() {
     setSaving(true)
@@ -81,6 +90,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
 
     setSaving(false)
     if (!error) await celebrate()
+    else setCompleted(false) // rollback
   }
 
   async function celebrate() {
@@ -95,34 +105,31 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col select-none">
 
-      {/* Nagłówek — minimalistyczny */}
+      {/* Nagłówek */}
       <div className="bg-brand-600 px-4 pt-5 pb-8 relative overflow-hidden">
         <div className="absolute -top-6 -right-6 w-28 h-28 bg-white/10 rounded-full" />
-        <div className="absolute top-8 right-14 w-12 h-12 bg-white/5 rounded-full" />
-
         <Link href="/pacjent/cwiczenia"
           className="absolute top-5 left-4 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white text-xl"
         >
           ←
         </Link>
 
-        {/* Duże emoji ćwiczenia */}
         <div className="flex flex-col items-center pt-2">
           <div className="text-7xl mb-2 drop-shadow">{ex.emoji}</div>
           <h1 className="text-xl font-black text-white text-center px-8">{ex.title}</h1>
-          <span className={`mt-2 text-xs font-bold px-3 py-1 rounded-full ${DIFFICULTY_COLOR[ex.difficulty]} bg-opacity-90`}>
+          <span className={`mt-2 text-xs font-bold px-3 py-1 rounded-full ${DIFFICULTY_COLOR[ex.difficulty]}`}>
             {DIFFICULTY_LABEL[ex.difficulty]}
           </span>
         </div>
       </div>
 
-      {/* Kołowy licznik — główny element */}
+      {/* Kołowy licznik */}
       <div className="flex flex-col items-center -mt-8 mb-4">
         <div className="bg-white rounded-full shadow-xl p-3 relative" style={{ width: 140, height: 140 }}>
           <svg width="120" height="120" viewBox="0 0 120 120" className="-rotate-90">
             <circle cx="60" cy="60" r="52" fill="none" stroke="#e5e7eb" strokeWidth="10"/>
             <circle cx="60" cy="60" r="52" fill="none"
-              stroke="#7c3aed" strokeWidth="10"
+              stroke={completed ? '#22c55e' : '#7c3aed'} strokeWidth="10"
               strokeDasharray={circumference}
               strokeDashoffset={circumference * (1 - progress)}
               strokeLinecap="round"
@@ -130,8 +137,13 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
             />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <span className="text-4xl font-black text-brand-700">{repsDone}</span>
-            <span className="text-xs text-gray-400 font-semibold">/ {totalReps}</span>
+            {completed
+              ? <span className="text-4xl">✓</span>
+              : <>
+                  <span className="text-4xl font-black text-brand-700">{repsDone}</span>
+                  <span className="text-xs text-gray-400 font-semibold">/ {totalReps}</span>
+                </>
+            }
           </div>
         </div>
 
@@ -141,7 +153,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
             <div key={i}
               className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
                 i < repsDone
-                  ? 'bg-brand-600 border-brand-600 scale-110'
+                  ? completed ? 'bg-green-500 border-green-500 scale-110' : 'bg-brand-600 border-brand-600 scale-110'
                   : 'bg-white border-gray-200'
               }`}
             />
@@ -149,7 +161,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
         </div>
       </div>
 
-      {/* Instrukcje — zwinięte, tylko kluczowe kroki */}
+      {/* Instrukcje */}
       <div className="flex-1 px-4 space-y-3 overflow-y-auto pb-4">
         {ex.notes && (
           <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 flex gap-3">
@@ -175,23 +187,28 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
         </div>
       </div>
 
-      {/* GŁÓWNY PRZYCISK — ogromny, tapowy */}
-      <div className="px-4 pb-8 pt-2">
-        {isCompleted ? (
-          <div className="bg-green-500 text-white font-black text-xl py-5 rounded-2xl text-center shadow-lg shadow-green-200">
-            ✓ Zrobione! +20 ⭐
-          </div>
+      {/* Przyciski akcji */}
+      <div className="px-4 pb-8 pt-2 space-y-2">
+        {completed ? (
+          <>
+            <div className="bg-green-500 text-white font-black text-xl py-5 rounded-2xl text-center shadow-lg shadow-green-200">
+              ✓ Zrobione! +20 ⭐
+            </div>
+            {/* Powtórz ćwiczenie */}
+            <button
+              onClick={repeatExercise}
+              className="w-full bg-white border-2 border-gray-200 text-gray-600 font-bold py-3 rounded-2xl text-sm active:bg-gray-50 transition flex items-center justify-center gap-2"
+            >
+              🔄 Powtórz ćwiczenie
+            </button>
+          </>
         ) : (
           <button
             onClick={addRep}
             disabled={saving}
             className={`relative w-full font-black text-xl py-5 rounded-2xl text-white shadow-lg transition-all duration-150 overflow-hidden
-              ${saving
-                ? 'bg-brand-400 cursor-wait'
-                : 'bg-brand-600 shadow-brand-200 active:scale-95 active:shadow-none'
-              }`}
+              ${saving ? 'bg-brand-400 cursor-wait' : 'bg-brand-600 shadow-brand-200 active:scale-95 active:shadow-none'}`}
           >
-            {/* Ripple */}
             <AnimatePresence>
               {ripple && (
                 <motion.div
@@ -203,9 +220,9 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
                 />
               )}
             </AnimatePresence>
-
-            {saving ? '💾 Zapisuję…' : repsDone === totalReps - 1
-              ? `🎉 Ostatnie! (${repsDone + 1}/${totalReps})`
+            {saving ? '💾 Zapisuję…'
+              : repsDone === 0 ? `Zacznij! (0/${totalReps})`
+              : repsDone === totalReps - 1 ? `🎉 Ostatnie! (${repsDone + 1}/${totalReps})`
               : `+1 powtórzenie (${repsDone + 1}/${totalReps})`
             }
           </button>
@@ -228,18 +245,14 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
               transition={{ type: 'spring', damping: 12 }}
               className="bg-white rounded-3xl p-8 text-center w-full max-w-xs shadow-2xl"
             >
-              <div className="text-7xl mb-3">
-                {isLastExercise ? '🏆' : '🎉'}
-              </div>
+              <div className="text-7xl mb-3">{isLastExercise ? '🏆' : '🎉'}</div>
               <p className="text-2xl font-black text-gray-900">
                 {isLastExercise ? 'Wszystko gotowe!' : 'Super!'}
               </p>
               <p className="text-gray-500 mt-1 text-sm">
                 {isLastExercise ? 'Ukończyłeś wszystkie ćwiczenia!' : '+20 punktów!'}
               </p>
-              {isLastExercise && (
-                <p className="text-yellow-500 font-black text-lg mt-2">+50 ⭐ bonus!</p>
-              )}
+              {isLastExercise && <p className="text-yellow-500 font-black text-lg mt-2">+50 ⭐ bonus!</p>}
             </motion.div>
           </motion.div>
         )}
