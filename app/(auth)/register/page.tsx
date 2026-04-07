@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import RegisterForm from './RegisterForm'
 
 export const metadata: Metadata = { title: 'Rejestracja' }
+export const dynamic = 'force-dynamic'  // nie generuj statycznie — używa Supabase client
 
 export default function RegisterPage() {
   return (
