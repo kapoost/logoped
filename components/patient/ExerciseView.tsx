@@ -32,7 +32,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
   const initReps      = demo ? getDemoReps(ex.plan_exercise_id) : (ex.completed_today ? ex.repetitions : 0)
 
   const [repsDone, setRepsDone]             = useState(initReps)
-  const [completed, setCompleted]           = useState(!!initCompleted)
+  const [completed, setCompleted]           = useState(!!initCompleted || initReps >= ex.repetitions)
   const [saving, setSaving]                 = useState(false)
   const [showCelebration, setShowCelebration] = useState(false)
   const [ripple, setRipple]                 = useState(false)
@@ -50,6 +50,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
     setCompleted(false)
     if (demo) setDemoReps(ex.plan_exercise_id, 0, false)
   }
+
 
   const addRep = useCallback(async () => {
     if (repsDone >= totalReps || saving || completed) return
@@ -189,7 +190,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
 
       {/* Przyciski akcji */}
       <div className="px-4 pb-8 pt-2 space-y-2">
-        {completed ? (
+        {(completed || repsDone >= totalReps) ? (
           <>
             <div className="bg-green-500 text-white font-black text-xl py-5 rounded-2xl text-center shadow-lg shadow-green-200">
               ✓ Zrobione! +20 ⭐

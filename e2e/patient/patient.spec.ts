@@ -1,4 +1,7 @@
 // e2e/patient/patient.spec.ts
+// Konto testowe: andriej.klomogorov@gmail.com (prawdziwy pacjent z planem w DB)
+// StorageState z setupu — sesja zalogowanego pacjenta
+
 import { test, expect } from '@playwright/test'
 
 async function go(page: any, url: string) {
@@ -7,232 +10,305 @@ async function go(page: any, url: string) {
   if (page.url().includes('/login')) test.skip(true, 'Brak sesji pacjenta')
 }
 
-// Pobierz ID pierwszego dostępnego ćwiczenia z listy
-async function getFirstExerciseId(page: any): Promise<string | null> {
+async function getFirstExerciseLink(page: any) {
   await go(page, '/pacjent/cwiczenia')
   const link = page.locator('a[href*="/pacjent/cwiczenie/"]').first()
-  if (!await link.isVisible({ timeout: 3000 }).catch(() => false)) return null
-  const href = await link.getAttribute('href') ?? ''
-  return href.split('/').pop() ?? null
+  const visible = await link.isVisible({ timeout: 3000 }).catch(() => false)
+  return visible ? link : null
 }
 
-test.describe('Panel pacjenta', () => {
+// ── NAWIGACJA ────────────────────────────────────────────────────────────────
+// Sprawdza że dolna nawigacja działa poprawnie między 4 zakładkami
 
-  test.describe('Nawigacja', () => {
-    test('ekran główny się ładuje', async ({ page }) => {
-      await go(page, '/pacjent/cwiczenia')
-      await expect(page.locator('body')).toBeVisible()
-    })
-
-    test('dolna nawigacja — 4 zakładki', async ({ page }) => {
-      await go(page, '/pacjent/cwiczenia')
-      const nav = page.locator('nav').first()
-      await expect(nav.locator('a')).toHaveCount(4)
-    })
-
-    test('ikony nawigacji są SVG', async ({ page }) => {
-      await go(page, '/pacjent/cwiczenia')
-      const svgs = page.locator('nav svg')
-      await expect(svgs.first()).toBeVisible()
-      expect(await svgs.count()).toBeGreaterThanOrEqual(4)
-    })
-
-    test('zakładka Kalendarz', async ({ page }) => {
-      await go(page, '/pacjent/cwiczenia')
-      await page.click('a[href="/pacjent/kalendarz"]')
-      await expect(page).toHaveURL(/\/pacjent\/kalendarz/)
-    })
-
-    test('zakładka Nagrody', async ({ page }) => {
-      await go(page, '/pacjent/cwiczenia')
-      await page.click('a[href="/pacjent/nagrody"]')
-      await expect(page).toHaveURL(/\/pacjent\/nagrody/)
-    })
-
-    test('zakładka Papuga', async ({ page }) => {
-      await go(page, '/pacjent/cwiczenia')
-      await page.click('a[href="/pacjent/papuga"]')
-      await expect(page).toHaveURL(/\/pacjent\/papuga/)
-    })
-
-    test('powrót z kalendarza', async ({ page }) => {
-      await go(page, '/pacjent/kalendarz')
-      await page.click('a[href="/pacjent/cwiczenia"]')
-      await expect(page).toHaveURL(/\/pacjent\/cwiczenia/)
-    })
+test.describe('Nawigacja dolna', () => {
+  test('4 zakładki są widoczne', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    await expect(page.locator('nav').first().locator('a')).toHaveCount(4)
   })
 
-  test.describe('Ekran ćwiczenia', () => {
-    test('widok ćwiczenia się ładuje', async ({ page }) => {
-      const id = await getFirstExerciseId(page)
-      if (!id) { test.skip(true, 'Brak ćwiczeń'); return }
-      await go(page, `/pacjent/cwiczenie/${id}`)
-      await expect(page.locator('h1').first()).toBeVisible()
-    })
+  test('ikony są SVG (nie emoji)', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    expect(await page.locator('nav svg').count()).toBeGreaterThanOrEqual(4)
+  })
 
-    test('kołowy licznik jest widoczny', async ({ page }) => {
-      const id = await getFirstExerciseId(page)
-      if (!id) { test.skip(true, 'Brak ćwiczeń'); return }
-      await go(page, `/pacjent/cwiczenie/${id}`)
-      await expect(page.locator('svg').first()).toBeVisible()
-    })
+  test('Kalendarz → zmienia URL', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    await page.click('a[href="/pacjent/kalendarz"]')
+    await expect(page).toHaveURL(/\/pacjent\/kalendarz/)
+  })
 
-    test('przycisk +1 powtórzenie lub Zrobione jest widoczny', async ({ page }) => {
-      const id = await getFirstExerciseId(page)
-      if (!id) { test.skip(true, 'Brak ćwiczeń'); return }
-      await go(page, `/pacjent/cwiczenie/${id}`)
-      const btn = page.locator('button').first()
-      await expect(btn).toBeVisible()
-      const text = await btn.innerText()
-      expect(text).toMatch(/powtórzenie|Zrobione|Zacznij|Ostatnie/)
-    })
+  test('Nagrody → zmienia URL', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    await page.click('a[href="/pacjent/nagrody"]')
+    await expect(page).toHaveURL(/\/pacjent\/nagrody/)
+  })
 
-    test('przycisk ← wraca do listy', async ({ page }) => {
-      const id = await getFirstExerciseId(page)
-      if (!id) { test.skip(true, 'Brak ćwiczeń'); return }
-      await go(page, `/pacjent/cwiczenie/${id}`)
-      await page.locator('a[href="/pacjent/cwiczenia"]').first().click()
-      await expect(page).toHaveURL(/\/pacjent\/cwiczenia/)
-    })
+  test('Papuga → zmienia URL', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    await page.click('a[href="/pacjent/papuga"]')
+    await expect(page).toHaveURL(/\/pacjent\/papuga/)
+  })
 
-    test('kliknięcie +1 powtórzenie zwiększa licznik', async ({ page }) => {
-      const id = await getFirstExerciseId(page)
-      if (!id) { test.skip(true, 'Brak ćwiczeń'); return }
-      await go(page, `/pacjent/cwiczenie/${id}`)
+  test('powrót z Kalendarza → Ćwiczenia', async ({ page }) => {
+    await go(page, '/pacjent/kalendarz')
+    await page.click('a[href="/pacjent/cwiczenia"]')
+    await expect(page).toHaveURL(/\/pacjent\/cwiczenia/)
+  })
+})
 
-      const btn = page.getByRole('button').filter({ hasText: /powtórzenie|Zacznij/ }).first()
-      if (!await btn.isVisible({ timeout: 3000 }).catch(() => false)) {
-        test.skip(true, 'Ćwiczenie już ukończone')
-        return
-      }
+// ── LISTA ĆWICZEŃ ─────────────────────────────────────────────────────────────
+// Sprawdza ekran główny pacjenta: gwiazdki postępu, karty ćwiczeń
 
-      // Pobierz stan przed
-      const svgBefore = await page.locator('text=/\\d+/').first().innerText().catch(() => '0')
-      await btn.click()
-      await page.waitForTimeout(400)
+test.describe('Lista ćwiczeń (ekran główny)', () => {
+  test('ładuje się poprawnie', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    await expect(page.locator('body')).toBeVisible()
+  })
 
-      // Sprawdź że licznik się zmienił lub button zmienił tekst
-      const btnAfter = await page.locator('button').first().innerText()
-      expect(btnAfter).toMatch(/powtórzenie|Zrobione|Ostatnie/)
-    })
+  test('imię pacjenta widoczne w nagłówku', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    // Nagłówek z "Cześć, {imię}!"
+    const header = page.getByText(/Cześć/).first()
+    await expect(header).toBeVisible()
+  })
 
-    test('po ukończeniu pojawia się przycisk Powtórz', async ({ page }) => {
-      const id = await getFirstExerciseId(page)
-      if (!id) { test.skip(true, 'Brak ćwiczeń'); return }
-      await go(page, `/pacjent/cwiczenie/${id}`)
+  test('pasek postępu lub gwiazdki widoczne', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    const stars = page.locator('text=⭐').first()
+    await expect(stars).toBeVisible({ timeout: 5000 })
+  })
 
-      // Jeśli ćwiczenie już ukończone — sprawdź od razu
-      const doneBtn = page.locator('button', { hasText: 'Zrobione' })
-      const repeatBtn = page.locator('button', { hasText: /Powtórz/ })
+  test('karta ćwiczenia jest tapowalna (link do widoku)', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await expect(link).toBeVisible()
+  })
 
-      if (await doneBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-        await expect(repeatBtn).toBeVisible()
-        return
-      }
+  test('przycisk Gotowe! widoczny na aktywnej karcie', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    // Przycisk szybkiego zaznaczenia bez otwierania widoku
+    const btn = page.getByRole('button', { name: /Gotowe/ }).first()
+    await expect(btn).toBeVisible({ timeout: 5000 })
+  })
+})
 
-      // Klikaj aż do ukończenia (max 20 reps)
-      for (let i = 0; i < 20; i++) {
-        const addBtn = page.locator('button').filter({ hasText: /powtórzenie|Zacznij|Ostatnie/ }).first()
-        if (!await addBtn.isVisible({ timeout: 1000 }).catch(() => false)) break
-        await addBtn.click()
-        await page.waitForTimeout(300)
-        if (await repeatBtn.isVisible({ timeout: 500 }).catch(() => false)) break
-      }
+// ── WIDOK ĆWICZENIA ───────────────────────────────────────────────────────────
+// Sprawdza szczegółowy widok ćwiczenia: licznik, kroki, przycisk +1
 
-      await expect(repeatBtn).toBeVisible({ timeout: 3000 })
-    })
+test.describe('Widok ćwiczenia — przepływ', () => {
+  test('widok ładuje się i pokazuje tytuł', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+    await expect(page.locator('h1').first()).toBeVisible()
+  })
 
-    test('Powtórz resetuje licznik do 0', async ({ page }) => {
-      const id = await getFirstExerciseId(page)
-      if (!id) { test.skip(true, 'Brak ćwiczeń'); return }
-      await go(page, `/pacjent/cwiczenie/${id}`)
+  test('kołowy licznik SVG jest widoczny', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+    // SVG licznika z circle progress
+    await expect(page.locator('svg').first()).toBeVisible()
+  })
 
-      const repeatBtn = page.locator('button', { hasText: /Powtórz/ })
+  test('kółka powtórzeń są widoczne', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+    // Kółka div z rounded-full
+    const circles = page.locator('.rounded-full.border-2')
+    expect(await circles.count()).toBeGreaterThan(0)
+  })
 
-      // Ukończ ćwiczenie
-      for (let i = 0; i < 20; i++) {
-        const addBtn = page.locator('button').filter({ hasText: /powtórzenie|Zacznij|Ostatnie/ }).first()
-        if (!await addBtn.isVisible({ timeout: 500 }).catch(() => false)) break
-        await addBtn.click()
-        await page.waitForTimeout(300)
-        if (await repeatBtn.isVisible({ timeout: 500 }).catch(() => false)) break
-      }
+  test('instrukcje (kroki) są widoczne', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+    // Kroki z numerkami 1, 2, 3
+    await expect(page.locator('text=1').first()).toBeVisible()
+  })
 
-      if (!await repeatBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
-        test.skip(true, 'Nie można ukończyć ćwiczenia')
-        return
-      }
+  test('przycisk +1 / Zrobione jest widoczny i klikalny', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
 
-      await repeatBtn.click()
+    const btn = page.locator('button').first()
+    await expect(btn).toBeVisible()
+    const text = await btn.innerText()
+    // Może być w stanie: Zacznij, +1 powtórzenie, Zrobione, lub Powtórz
+    expect(text).toMatch(/powtórzenie|Zrobione|Zacznij|Ostatnie|Powtórz/)
+  })
+
+  test('← wraca do listy ćwiczeń', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+    await page.locator('a[href="/pacjent/cwiczenia"]').first().click()
+    await expect(page).toHaveURL(/\/pacjent\/cwiczenia/)
+  })
+
+  test('kliknięcie +1 zmienia stan przycisku', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+
+    // Tylko jeśli nie ukończono — tap +1
+    const addBtn = page.locator('button').filter({ hasText: /powtórzenie|Zacznij/ }).first()
+    if (!await addBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+      test.skip(true, 'Ćwiczenie już ukończone — skip')
+      return
+    }
+
+    const textBefore = await addBtn.innerText()
+    await addBtn.click()
+    await page.waitForTimeout(400)
+    const textAfter = await page.locator('button').first().innerText()
+    // Tekst się zmienił (licznik wzrósł) lub ćwiczenie ukończone
+    expect(textAfter).not.toBe(textBefore)
+  })
+
+  test('po ukończeniu: stan Zrobione + przycisk Powtórz', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+
+    const doneState = page.locator('button', { hasText: /Powtórz/ })
+    const addBtn    = page.locator('button').filter({ hasText: /powtórzenie|Zacznij|Ostatnie/ }).first()
+
+    // Jeśli już ukończone — sprawdź od razu
+    if (await doneState.isVisible({ timeout: 1000 }).catch(() => false)) {
+      await expect(doneState).toBeVisible()
+      return
+    }
+
+    // Klikaj aż do ukończenia (max 20 reps)
+    for (let i = 0; i < 20; i++) {
+      if (!await addBtn.isVisible({ timeout: 500 }).catch(() => false)) break
+      await addBtn.click()
       await page.waitForTimeout(300)
+      if (await doneState.isVisible({ timeout: 300 }).catch(() => false)) break
+    }
 
-      // Po kliknięciu Powtórz — button powinien wrócić do "+1 powtórzenie"
-      const addBtnAfter = page.locator('button').filter({ hasText: /powtórzenie|Zacznij/ }).first()
-      await expect(addBtnAfter).toBeVisible({ timeout: 2000 })
-    })
-
-    test('nieistniejące ID → 404 lub redirect', async ({ page }) => {
-      await go(page, '/pacjent/cwiczenia')
-      await page.goto('/pacjent/cwiczenie/nieistnieje-abc-123')
-      await page.waitForLoadState('networkidle')
-      const has404 = await page.locator('text=404').isVisible().catch(() => false)
-      const redirected = page.url().includes('/cwiczenia')
-      expect(has404 || redirected).toBeTruthy()
-    })
+    await expect(doneState).toBeVisible({ timeout: 3000 })
+    // Zielony banner też powinien być widoczny
+    await expect(page.locator('text=Zrobione').first()).toBeVisible()
   })
 
-  test.describe('Kalendarz', () => {
-    test('ekran kalendarza się ładuje', async ({ page }) => {
-      await go(page, '/pacjent/kalendarz')
-      await expect(page.locator('body')).toBeVisible()
-    })
+  test('Powtórz → resetuje licznik (przycisk wraca do +1)', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
 
-    test('dolna nawigacja widoczna', async ({ page }) => {
-      await go(page, '/pacjent/kalendarz')
-      await expect(page.locator('nav').first()).toBeVisible()
-    })
+    const repeatBtn = page.locator('button', { hasText: /Powtórz/ })
+    const addBtn    = page.locator('button').filter({ hasText: /powtórzenie|Zacznij|Ostatnie/ }).first()
+
+    // Ukończ jeśli nie ukończone
+    for (let i = 0; i < 20; i++) {
+      if (!await addBtn.isVisible({ timeout: 500 }).catch(() => false)) break
+      await addBtn.click()
+      await page.waitForTimeout(300)
+      if (await repeatBtn.isVisible({ timeout: 300 }).catch(() => false)) break
+    }
+
+    if (!await repeatBtn.isVisible({ timeout: 2000 }).catch(() => false)) {
+      test.skip(true, 'Nie można ukończyć — skip')
+      return
+    }
+
+    await repeatBtn.click()
+    await page.waitForTimeout(400)
+
+    // Po Powtórz — licznik wraca do 0, przycisk pokazuje "Zacznij" lub "1/N"
+    const addBtnAfter = page.locator('button').filter({ hasText: /powtórzenie|Zacznij/ }).first()
+    await expect(addBtnAfter).toBeVisible({ timeout: 2000 })
   })
 
-  test.describe('Nagrody', () => {
-    test('ekran nagród się ładuje', async ({ page }) => {
-      await go(page, '/pacjent/nagrody')
-      await expect(page.locator('body')).toBeVisible()
-    })
+  test('nieistniejące ID → 404 lub redirect do listy', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    await page.goto('/pacjent/cwiczenie/nie-istnieje-000-abc')
+    await page.waitForLoadState('networkidle')
+    const has404     = await page.locator('text=404').isVisible().catch(() => false)
+    const redirected = page.url().includes('/cwiczenia')
+    expect(has404 || redirected).toBeTruthy()
+  })
+})
 
-    test('dolna nawigacja widoczna', async ({ page }) => {
-      await go(page, '/pacjent/nagrody')
-      await expect(page.locator('nav').first()).toBeVisible()
-    })
+// ── INNE EKRANY ──────────────────────────────────────────────────────────────
+
+test.describe('Kalendarz', () => {
+  test('ekran kalendarza się ładuje', async ({ page }) => {
+    await go(page, '/pacjent/kalendarz')
+    await expect(page.locator('body')).toBeVisible()
   })
 
-  test.describe('Papuga', () => {
-    test('ekran papugi się ładuje', async ({ page }) => {
-      await go(page, '/pacjent/papuga')
-      await expect(page.locator('body')).toBeVisible()
-    })
+  test('nawigacja dolna widoczna', async ({ page }) => {
+    await go(page, '/pacjent/kalendarz')
+    await expect(page.locator('nav').first()).toBeVisible()
+  })
+})
 
-    test('SVG papugi jest w DOM', async ({ page }) => {
-      await go(page, '/pacjent/papuga')
-      await expect(page.locator('svg').first()).toBeVisible()
-    })
-
-    test('dolna nawigacja widoczna', async ({ page }) => {
-      await go(page, '/pacjent/papuga')
-      await expect(page.locator('nav').first()).toBeVisible()
-    })
+test.describe('Nagrody', () => {
+  test('ekran nagród się ładuje', async ({ page }) => {
+    await go(page, '/pacjent/nagrody')
+    await expect(page.locator('body')).toBeVisible()
   })
 
-  test.describe('Responsywność mobilna (390px)', () => {
-    test('brak poziomego scrollowania', async ({ page }) => {
-      await go(page, '/pacjent/cwiczenia')
-      const overflow = await page.evaluate(() => document.body.scrollWidth - document.body.clientWidth)
-      expect(overflow).toBeLessThanOrEqual(2)
-    })
+  test('nawigacja dolna widoczna', async ({ page }) => {
+    await go(page, '/pacjent/nagrody')
+    await expect(page.locator('nav').first()).toBeVisible()
+  })
+})
 
-    test('nawigacja mieści się w viewporcie', async ({ page }) => {
-      await go(page, '/pacjent/cwiczenia')
-      const box = await page.locator('nav').first().boundingBox()
-      if (box) expect(box.width).toBeLessThanOrEqual(395)
-    })
+test.describe('Papuga', () => {
+  test('ekran papugi się ładuje', async ({ page }) => {
+    await go(page, '/pacjent/papuga')
+    await expect(page.locator('body')).toBeVisible()
+  })
+
+  test('wielka papuga (SVG) jest w DOM', async ({ page }) => {
+    await go(page, '/pacjent/papuga')
+    await expect(page.locator('svg').first()).toBeVisible()
+  })
+
+  test('nawigacja dolna widoczna', async ({ page }) => {
+    await go(page, '/pacjent/papuga')
+    await expect(page.locator('nav').first()).toBeVisible()
+  })
+})
+
+// ── RESPONSYWNOŚĆ ─────────────────────────────────────────────────────────────
+// Viewport 390x844 (iPhone) — ustawiony w playwright.config.ts dla projektu patient
+
+test.describe('Responsywność mobilna (390px)', () => {
+  test('brak poziomego scrollowania', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    const overflow = await page.evaluate(() => document.body.scrollWidth - document.body.clientWidth)
+    expect(overflow).toBeLessThanOrEqual(2)
+  })
+
+  test('nawigacja mieści się w viewporcie', async ({ page }) => {
+    await go(page, '/pacjent/cwiczenia')
+    const box = await page.locator('nav').first().boundingBox()
+    if (box) expect(box.width).toBeLessThanOrEqual(395)
+  })
+
+  test('przycisk +1 ma odpowiednią wysokość (min 56px)', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+    const btn = page.locator('button').first()
+    const box = await btn.boundingBox()
+    if (box) expect(box.height).toBeGreaterThanOrEqual(56)
   })
 })
