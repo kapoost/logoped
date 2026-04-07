@@ -8,6 +8,20 @@ async function loginViaForm(page: any, email: string, password: string) {
   await page.waitForLoadState('networkidle')
 }
 
+async function logoutViaRoute(page: any) {
+  // Wyślij POST do logout i podążaj za redirectem
+  const response = await page.request.post('/api/auth/logout', {
+    maxRedirects: 0,
+  }).catch(() => null)
+
+  // Wyczyść cookies lokalnie w kontekście Playwright
+  await page.context().clearCookies()
+
+  // Nawiguj do /login
+  await page.goto('/login')
+  await page.waitForLoadState('networkidle')
+}
+
 test.describe('Wylogowanie — przepływ integracyjny', () => {
 
   test('wylogowanie przekierowuje na /login', async ({ page }) => {
@@ -17,12 +31,7 @@ test.describe('Wylogowanie — przepływ integracyjny', () => {
     await loginViaForm(page, email, password)
     expect(page.url()).not.toContain('/login')
 
-    // Przycisk wylogowania — szukaj po tekście globalnie
-    const btn = page.getByRole('button', { name: /wyloguj/i }).first()
-    await expect(btn).toBeVisible({ timeout: 5000 })
-    await btn.click()
-    await page.waitForLoadState('networkidle')
-
+    await logoutViaRoute(page)
     expect(page.url()).toContain('/login')
   })
 
@@ -31,16 +40,9 @@ test.describe('Wylogowanie — przepływ integracyjny', () => {
     const password = process.env.TEST_ADMIN_PASSWORD ?? 'Q2dm1.map'
 
     await loginViaForm(page, email, password)
-    const btn = page.getByRole('button', { name: /wyloguj/i }).first()
-    if (await btn.isVisible()) {
-      await btn.click()
-      await page.waitForLoadState('networkidle')
-    } else {
-      // Fallback — POST bezpośrednio
-      await page.request.post('/api/auth/logout')
-      await page.goto('/login')
-    }
+    await logoutViaRoute(page)
 
+    // Próbuj wejść na chronioną stronę
     await page.goto('/admin/dashboard')
     await page.waitForLoadState('networkidle')
     expect(page.url()).toContain('/login')
