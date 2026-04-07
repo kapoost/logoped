@@ -4,7 +4,6 @@
 import { useState, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
 import { clsx } from 'clsx'
-import { createClient } from '@/lib/supabase/client'
 import { CATEGORY_LABELS, DIFFICULTY_LABELS } from '@/types/database'
 import type { ExerciseCategory, DifficultyLevel } from '@/types/database'
 
@@ -43,7 +42,6 @@ interface Props {
 
 export default function PlanEditForm({ planId, initialItems, allExercises, isActive, patientId }: Props) {
   const router = useRouter()
-  const supabase = createClient()
   const [, startTransition] = useTransition()
 
   const [items,       setItems]       = useState(initialItems)
@@ -103,7 +101,12 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
     // 1. Usuń zaznaczone (tylko istniejące, nie nowe)
     const existingToDelete = [...toDelete].filter(id => !id.startsWith('new-'))
     if (existingToDelete.length) {
-      await supabase.from('plan_exercises').delete().in('id', existingToDelete)
+      await fetch('/api/logopeda/update-plan', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan_id: planId, action: 'save_exercises', payload: {
+          toDelete: existingToDelete, toUpdate: [], toInsert: [],
+        }}),
+      })
     }
 
     // 2. Aktualizuj istniejące (order + repetitions + notes)
@@ -139,7 +142,10 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
   }
 
   async function togglePlanActive() {
-    await supabase.from('exercise_plans').update({ is_active: !isActive }).eq('id', planId)
+    await fetch('/api/logopeda/update-plan', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan_id: planId, action: 'toggle_active', payload: { is_active: !isActive } }),
+    })
     startTransition(() => router.refresh())
   }
 

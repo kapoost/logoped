@@ -2,7 +2,7 @@
 import { useState, useEffect, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+// Używamy API route zamiast bezpośredniego klienta (sesja httpOnly)
 import { isDemo, getAllDemoCompleted, setDemoReps } from '@/lib/demoProgress'
 import { addDemoExercisePoints, addDemoSessionBonus } from '@/lib/demoStats'
 import { playExerciseDone, playSessionComplete } from '@/lib/sounds'
@@ -66,13 +66,11 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
       return
     }
 
-    const supabase = createClient()
-    const { error } = await supabase.from('exercise_completions').insert({
-      patient_id:       ex.patient_id,
-      plan_exercise_id: ex.plan_exercise_id,
-      session_date:     new Date().toISOString().split('T')[0],
+    const res = await fetch('/api/pacjent/complete-exercise', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan_exercise_id: ex.plan_exercise_id }),
     })
-    if (error) {
+    if (!res.ok) {
       setExercises(initial)
     } else {
       startTransition(() => router.refresh())

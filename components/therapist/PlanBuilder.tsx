@@ -4,7 +4,6 @@
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { clsx } from 'clsx'
-import { createClient } from '@/lib/supabase/client'
 import { CATEGORY_LABELS, DIFFICULTY_LABELS } from '@/types/database'
 import type { ExerciseCategory, DifficultyLevel } from '@/types/database'
 
@@ -37,8 +36,6 @@ const DAYS = ['Pn','Wt','Śr','Cz','Pt','So','Nd']
 
 export default function PlanBuilder({ patients, exercises, therapistId, preselectedPatientId }: Props) {
   const router  = useRouter()
-  const supabase = createClient()
-
   // ── Stan planu ────────────────────────────────────────────
   const [patientId,   setPatientId]   = useState(preselectedPatientId ?? '')
   const [planName,    setPlanName]    = useState('')
@@ -107,57 +104,33 @@ export default function PlanBuilder({ patients, exercises, therapistId, preselec
     setSaving(true)
     setError(null)
 
-    // 1. Utwórz plan
-    const { data: plan, error: planErr } = await supabase
-      .from('exercise_plans')
-      .insert({
-        therapist_id: therapistId,
-        patient_id:   patientId,
-        name:         planName.trim(),
-        description:  planDesc.trim() || null,
-        is_active:    true,
-        start_date:   new Date().toISOString().split('T')[0],
-      })
-      .select('id')
-      .single()
-
-    if (planErr || !plan) {
-      setError('Błąd tworzenia planu: ' + planErr?.message)
-      setSaving(false)
-      return
-    }
-
-    // 2. Dodaj ćwiczenia do planu
-    const { error: itemsErr } = await supabase
-      .from('plan_exercises')
-      .insert(
-        items.map((item, idx) => ({
-          plan_id:     plan.id,
+    // Użyj API route — serwer widzi sesję z httpOnly cookies
+    const res = await fetch('/api/logopeda/create-plan', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        patient_id:  patientId,
+        name:        planName.trim(),
+        description: planDesc.trim() || null,
+        exercises: items.map((item, idx) => ({
           exercise_id: item.exercise.id,
           order_index: idx,
           repetitions: item.repetitions,
           notes:       item.notes.trim() || null,
-        }))
-      )
+        })),
+        schedule: { days_of_week: daysOfWeek, reminder_time: reminderTime },
+      }),
+    })
 
-    if (itemsErr) {
-      setError('Błąd dodawania ćwiczeń: ' + itemsErr.message)
+    const result = await res.json()
+    if (!res.ok) {
+      setError('Błąd tworzenia planu: ' + result.error)
       setSaving(false)
       return
     }
+    const plan = { id: result.plan_id }
 
-    // 3. Utwórz harmonogram
-    const { error: schedErr } = await supabase
-      .from('schedules')
-      .insert({
-        plan_id:       plan.id,
-        days_of_week:  daysOfWeek,
-        reminder_time: reminderTime,
-        is_active:     true,
-      })
-
-    if (schedErr) {
-      console.warn('Harmonogram nie zapisany:', schedErr.message)
+    if (false) {
+      console.warn('Harmonogram nie zapisany:', '')
     }
 
     router.push(`/logopeda/pacjenci/${patientId}`)

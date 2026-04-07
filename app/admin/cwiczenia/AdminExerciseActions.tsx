@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@/lib/supabase/client'
+
 
 export default function AdminExerciseActions({ exerciseId, title }: { exerciseId: string; title: string }) {
   const router = useRouter()
@@ -12,8 +12,10 @@ export default function AdminExerciseActions({ exerciseId, title }: { exerciseId
   async function deleteExercise() {
     if (!confirm(`Usunąć ćwiczenie "${title}"? Nie można cofnąć tej operacji.`)) return
     setLoading(true)
-    const supabase = createClient()
-    await supabase.from('exercises').delete().eq('id', exerciseId)
+    await fetch('/api/admin/delete-exercise', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ exercise_id: exerciseId }),
+    })
     router.refresh()
     setLoading(false)
   }

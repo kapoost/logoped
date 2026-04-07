@@ -3,7 +3,6 @@ import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/client'
 import { isDemo, getDemoReps, getDemoCompleted, setDemoReps } from '@/lib/demoProgress'
 import { playRep, playExerciseDone, playSessionComplete } from '@/lib/sounds'
 import { addDemoExercisePoints, addDemoSessionBonus } from '@/lib/demoStats'
@@ -25,8 +24,7 @@ interface Props {
 
 export default function ExerciseView({ exercise: ex, nextId, patientId, isLastExercise }: Props) {
   const router   = useRouter()
-  const supabase = createClient()
-  const demo     = isDemo(patientId)
+  const demo = isDemo(patientId)
 
   const initCompleted = demo ? getDemoCompleted(ex.plan_exercise_id) : ex.completed_today
   const initReps      = demo ? getDemoReps(ex.plan_exercise_id) : (ex.completed_today ? ex.repetitions : 0)
@@ -83,11 +81,11 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
     setSaving(true)
     isLastExercise ? playSessionComplete() : playExerciseDone()
 
-    const { error } = await supabase.from('exercise_completions').insert({
-      patient_id:       patientId,
-      plan_exercise_id: ex.plan_exercise_id,
-      session_date:     new Date().toISOString().split('T')[0],
-    }).select().single()
+    const res = await fetch('/api/pacjent/complete-exercise', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ plan_exercise_id: ex.plan_exercise_id }),
+    })
+    const error = res.ok ? null : (await res.json()).error
 
     setSaving(false)
     if (!error) await celebrate()
