@@ -44,6 +44,12 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'], storageState: 'e2e/.auth/therapist.json' },
     },
     {
+      name: 'completion',
+      testMatch: /e2e\/patient\/completion\.spec\.ts/,
+      dependencies: ['setup'],
+      use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 }, storageState: 'e2e/.auth/patient.json' },
+    },
+    {
       name: 'api',
       testMatch: /e2e\/api\/.*/,
       use: { ...devices['Desktop Chrome'] },
