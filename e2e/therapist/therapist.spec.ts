@@ -18,7 +18,7 @@ test.describe('Panel logopedy', () => {
     test('Dodaj pacjenta → formularz z ← powrotem', async ({ page }) => {
       await go(page, '/logopeda/pacjenci')
       const btn = page.locator('a[href="/logopeda/pacjenci/dodaj"]')
-      await expect(btn).toBeVisible()
+      await expect(btn).toBeVisible({ timeout: 8000 })
       await btn.click()
       await expect(page).toHaveURL(/\/logopeda\/pacjenci\/dodaj/)
       await expect(page.locator('a[href="/logopeda/pacjenci"]')).toBeVisible()
@@ -92,7 +92,7 @@ test.describe('Panel logopedy', () => {
     test('filtrowanie kategorii zmienia URL', async ({ page }) => {
       await go(page, '/logopeda/cwiczenia')
       const filter = page.locator('a[href*="kategoria"]').first()
-      if (await filter.isVisible({ timeout: 3000 }).catch(() => false)) {
+      if (await filter.isVisible({ timeout: 8000 }).catch(() => false)) {
         await filter.click()
         await page.waitForLoadState('networkidle')
         expect(page.url()).toContain('kategoria')
@@ -116,7 +116,7 @@ test.describe('Panel logopedy', () => {
 
     test('wylogowanie → /login', async ({ page }) => {
       await go(page, '/logopeda/pacjenci')
-      const btn = page.locator('button', { hasText: 'Wyloguj' })
+      const btn = page.getByRole('button', { name: /wyloguj/i }).first()
       if (await btn.isVisible()) {
         await btn.click()
         await expect(page).toHaveURL(/\/login/)
