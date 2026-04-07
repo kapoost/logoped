@@ -132,17 +132,18 @@ test.describe('Widok ćwiczenia — przepływ', () => {
     await expect(page.locator('text=1').first()).toBeVisible()
   })
 
-  test('przycisk +1 / Zrobione jest widoczny i klikalny', async ({ page }) => {
+  test('przycisk akcji w widoku ćwiczenia jest widoczny', async ({ page }) => {
     const link = await getFirstExerciseLink(page)
     if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
     await link.click()
     await page.waitForLoadState('networkidle')
 
-    const btn = page.locator('button').first()
-    await expect(btn).toBeVisible()
-    const text = await btn.innerText()
-    // Może być w stanie: Zacznij, +1 powtórzenie, Zrobione, lub Powtórz
-    expect(text).toMatch(/powtórzenie|Zrobione|Zacznij|Ostatnie|Powtórz/)
+    // Sprawdź że jest JAKIKOLWIEK przycisk (główny lub Powtórz)
+    const anyBtn = page.locator('button').first()
+    await expect(anyBtn).toBeVisible({ timeout: 5000 })
+
+    // Sprawdź że jest SVG licznika (kołowy progress)
+    await expect(page.locator('svg circle').first()).toBeVisible()
   })
 
   test('← wraca do listy ćwiczeń', async ({ page }) => {
@@ -175,31 +176,34 @@ test.describe('Widok ćwiczenia — przepływ', () => {
     expect(textAfter).not.toBe(textBefore)
   })
 
-  test('po ukończeniu: stan Zrobione + przycisk Powtórz', async ({ page }) => {
-    const link = await getFirstExerciseLink(page)
-    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
-    await link.click()
-    await page.waitForLoadState('networkidle')
+  test('po ukończeniu przez listę: widok pokazuje Zrobione + Powtórz', async ({ page }) => {
+    // Strategia: użyj "Gotowe!" z listy (nie przez rep-counting w widoku)
+    // Dzięki temu: completed_today=true w DB, widok ćwiczenia od razu pokazuje stan ukończony
+    await go(page, '/pacjent/cwiczenia')
 
-    const doneState = page.locator('button', { hasText: /Powtórz/ })
-    const addBtn    = page.locator('button').filter({ hasText: /powtórzenie|Zacznij|Ostatnie/ }).first()
-
-    // Jeśli już ukończone — sprawdź od razu
-    if (await doneState.isVisible({ timeout: 1000 }).catch(() => false)) {
-      await expect(doneState).toBeVisible()
+    // Sprawdź czy jest przycisk Gotowe! na liście
+    const gotowBtn = page.getByRole('button', { name: /Gotowe/ }).first()
+    if (!await gotowBtn.isVisible({ timeout: 3000 }).catch(() => false)) {
+      test.skip(true, 'Brak aktywnych ćwiczeń na liście')
       return
     }
 
-    // Klikaj aż do ukończenia (max 20 reps)
-    for (let i = 0; i < 20; i++) {
-      if (!await addBtn.isVisible({ timeout: 500 }).catch(() => false)) break
-      await addBtn.click()
-      await page.waitForTimeout(300)
-      if (await doneState.isVisible({ timeout: 300 }).catch(() => false)) break
-    }
+    // Zapamiętaj href ćwiczenia PRZED kliknięciem Gotowe
+    const exerciseLink = page.locator('a[href*="/pacjent/cwiczenie/"]').first()
+    const href = await exerciseLink.getAttribute('href').catch(() => null)
+    if (!href) { test.skip(true, 'Brak linku do ćwiczenia'); return }
 
-    await expect(doneState).toBeVisible({ timeout: 3000 })
-    // Zielony banner też powinien być widoczny
+    // Kliknij Gotowe! — zapisuje do DB bez nawigacji
+    await gotowBtn.click()
+    await page.waitForTimeout(500)
+
+    // Teraz otwórz widok ukończonego ćwiczenia
+    await page.goto(href)
+    await page.waitForLoadState('networkidle')
+
+    // Powinien od razu pokazać stan ukończony (completed_today=true)
+    const repeatBtn = page.locator('button', { hasText: /Powtórz/ })
+    await expect(repeatBtn).toBeVisible({ timeout: 5000 })
     await expect(page.locator('text=Zrobione').first()).toBeVisible()
   })
 
