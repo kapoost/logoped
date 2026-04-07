@@ -1,6 +1,7 @@
 // app/api/auth/login/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
+import { createClient } from '@supabase/supabase-js'
 
 const DASHBOARD: Record<string, string> = {
   admin:     '/admin',
@@ -9,7 +10,6 @@ const DASHBOARD: Record<string, string> = {
 }
 
 function baseUrl(request: NextRequest): string {
-  // Fly.io proxy ustawia X-Forwarded-Host z prawdziwą domeną
   const host = request.headers.get('x-forwarded-host')
     ?? request.headers.get('host')
     ?? 'logoped.fly.dev'
@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     }
   )
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password })
+  const { data: authData, error } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error) {
     const msg = error.message.toLowerCase().includes('invalid') ? 'invalid' : 'unknown'
@@ -48,7 +48,18 @@ export async function POST(request: NextRequest) {
     fetch(`${base}/api/demo/reset`, { method: 'POST' }).catch(() => {})
   }
 
-  const { data: profile } = await supabase.from('profiles').select('role').single()
+  // Użyj service role do odczytu roli — omija RLS
+  const adminClient = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    { auth: { autoRefreshToken: false, persistSession: false } }
+  )
+  const { data: profile } = await adminClient
+    .from('profiles')
+    .select('role')
+    .eq('id', authData.user.id)
+    .single()
+
   const dest = DASHBOARD[profile?.role ?? ''] ?? '/pacjent/cwiczenia'
 
   const redirect = NextResponse.redirect(`${base}${dest}`, { status: 303 })
