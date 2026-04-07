@@ -28,6 +28,25 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Nieprawidłowe dane formularza.' }, { status: 400 })
     }
 
+    // Sprawdź unikalność imienia pacjenta dla tego logopedy
+    const { data: existingPatients } = await supabase
+      .from('therapist_patients')
+      .select('patient_id, profiles!therapist_patients_patient_id_fkey(full_name)')
+      .eq('therapist_id', therapist_id)
+
+    if (existingPatients) {
+      const nameTaken = existingPatients.some((row: any) => {
+        const name = row.profiles?.full_name ?? ''
+        return name.trim().toLowerCase() === full_name.trim().toLowerCase()
+      })
+      if (nameTaken) {
+        return NextResponse.json(
+          { error: `Masz już pacjenta o imieniu "${full_name}". Podaj inne imię lub dodaj nazwisko, żeby odróżnić pacjentów.` },
+          { status: 409 }
+        )
+      }
+    }
+
     // Logopeda może tworzyć tylko swoich pacjentów
     if (therapist_id !== user.id && therapistProfile.role !== 'admin') {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })

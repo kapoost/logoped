@@ -1,14 +1,15 @@
 'use client'
 // app/logopeda/pacjenci/dodaj/AddPatientForm.tsx
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 interface Props {
-  therapistId: string  // przekazywany z server component — bezpieczne
+  therapistId: string
+  existingNames: string[]  // imiona istniejących pacjentów — do live walidacji
 }
 
-export default function AddPatientForm({ therapistId }: Props) {
+export default function AddPatientForm({ therapistId, existingNames }: Props) {
   const router = useRouter()
 
   const [fullName,  setFullName]  = useState('')
@@ -19,18 +20,21 @@ export default function AddPatientForm({ therapistId }: Props) {
   const [error,     setError]     = useState<string | null>(null)
   const [success,   setSuccess]   = useState(false)
 
+  // Live walidacja duplikatu imienia
+  const isDuplicate = fullName.trim().length > 0 &&
+    existingNames.some(n => n.trim().toLowerCase() === fullName.trim().toLowerCase())
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(null)
 
-    // Walidacja po stronie klienta
     if (!fullName.trim()) { setError('Podaj imię dziecka.'); return }
-    if (!email.trim())    { setError('Podaj adres email.'); return }
+    if (isDuplicate) { setError(`Masz już pacjenta o imieniu "${fullName}". Dodaj nazwisko lub inicjał.`); return }
+    if (!email.trim()) { setError('Podaj adres email.'); return }
     if (password.length < 8) { setError('Hasło musi mieć minimum 8 znaków.'); return }
 
     setLoading(true)
 
-    // therapistId pochodzi z serwera — nie trzeba wywoływać supabase.auth.getUser()
     const res = await fetch('/api/admin/create-patient', {
       method:  'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -77,8 +81,17 @@ export default function AddPatientForm({ therapistId }: Props) {
           value={fullName}
           onChange={e => setFullName(e.target.value)}
           placeholder="np. Zosia Kowalska"
-          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-600/20 focus:border-green-700 text-sm transition"
+          className={`w-full px-4 py-3 rounded-xl border text-sm transition focus:outline-none focus:ring-2
+            ${isDuplicate
+              ? 'border-amber-400 bg-amber-50 focus:ring-amber-400/20 focus:border-amber-500'
+              : 'border-gray-200 focus:ring-green-600/20 focus:border-green-700'
+            }`}
         />
+        {isDuplicate && (
+          <p className="text-amber-600 text-xs mt-1.5 flex items-center gap-1">
+            ⚠️ Masz już pacjenta o tym imieniu. Dodaj nazwisko lub inicjał, np. &quot;{fullName} K.&quot;
+          </p>
+        )}
       </div>
 
       <div>
@@ -98,7 +111,6 @@ export default function AddPatientForm({ therapistId }: Props) {
         <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">
           Dane logowania dla rodzica / dziecka
         </p>
-
         <div className="space-y-3">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -113,7 +125,6 @@ export default function AddPatientForm({ therapistId }: Props) {
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-600/20 focus:border-green-700 text-sm transition"
             />
           </div>
-
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Hasło <span className="text-red-500">*</span>
@@ -140,8 +151,8 @@ export default function AddPatientForm({ therapistId }: Props) {
 
       <button
         type="submit"
-        disabled={loading}
-        className="w-full bg-green-700 hover:bg-green-800 disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition active:scale-95"
+        disabled={loading || isDuplicate}
+        className="w-full bg-green-700 hover:bg-green-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl transition active:scale-95"
       >
         {loading ? 'Tworzę konto…' : 'Dodaj pacjenta'}
       </button>
