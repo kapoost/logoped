@@ -41,6 +41,11 @@ export default async function CwiczeniaPage() {
         streak={stats?.current_streak ?? 0}
         done={done}
         total={total}
+        patientId={userId}
+        dbPoints={stats?.points ?? 0}
+        dbLevel={stats?.level ?? 1}
+        dbStreak={stats?.current_streak ?? 0}
+        dbTotalExercises={stats?.total_exercises ?? 0}
       />
 
       {/* Lista ćwiczeń */}

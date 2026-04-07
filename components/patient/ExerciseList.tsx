@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { isDemo, getAllDemoCompleted, setDemoReps } from '@/lib/demoProgress'
+import { addDemoExercisePoints, addDemoSessionBonus } from '@/lib/demoStats'
 import { playExerciseDone, playSessionComplete } from '@/lib/sounds'
 import type { TodayExercise } from '@/types/database'
 
@@ -57,6 +58,10 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
 
     if (demo) {
       setDemoReps(ex.plan_exercise_id, ex.repetitions, true)
+      addDemoExercisePoints()
+      const newDoneCount = exercises.filter(e => e.completed_today).length + 1
+      if (newDoneCount === total) addDemoSessionBonus()
+      window.dispatchEvent(new Event('demo-stats-updated'))
       return
     }
 

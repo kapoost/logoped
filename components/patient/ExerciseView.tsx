@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { isDemo, getDemoReps, getDemoCompleted, setDemoReps } from '@/lib/demoProgress'
 import { playRep, playExerciseDone, playSessionComplete } from '@/lib/sounds'
+import { addDemoExercisePoints, addDemoSessionBonus } from '@/lib/demoStats'
 import type { TodayExercise } from '@/types/database'
 
 interface Props {
@@ -54,6 +55,9 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
     if (next >= totalReps) {
       if (demo) {
         setDemoReps(ex.plan_exercise_id, next, true)
+        addDemoExercisePoints()
+        if (isLastExercise) addDemoSessionBonus()
+        window.dispatchEvent(new Event('demo-stats-updated'))
         isLastExercise ? playSessionComplete() : playExerciseDone()
         await celebrate()
       } else {
