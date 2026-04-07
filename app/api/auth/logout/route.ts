@@ -8,7 +8,7 @@ function base(req: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const cookieJar: Array<{ name: string; value: string; options: any }> = []
+  const redirect = NextResponse.redirect(`${base(request)}/login`, { status: 303 })
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -16,24 +16,21 @@ export async function POST(request: NextRequest) {
     {
       cookies: {
         getAll: () => request.cookies.getAll(),
-        setAll: (cs) => cookieJar.push(...cs),
+        setAll: (cs) => cs.forEach(({ name, value, options }) =>
+          redirect.cookies.set(name, value, { ...options, path: '/' })
+        ),
       },
     }
   )
 
   await supabase.auth.signOut()
 
-  const redirect = NextResponse.redirect(`${base(request)}/login`, { status: 303 })
-
-  // Usuń wszystkie cookies sesji Supabase
+  // Dodatkowo wyczyść wszystkie cookies sesji Supabase
   request.cookies.getAll()
     .filter(c => c.name.startsWith('sb-'))
-    .forEach(c => redirect.cookies.delete(c.name))
-
-  // Zapisz nowe (wyczyszczone) cookies od Supabase
-  cookieJar.forEach(({ name, value, options }) =>
-    redirect.cookies.set(name, value, { ...options, path: '/' })
-  )
+    .forEach(c => redirect.cookies.set(c.name, '', {
+      maxAge: 0, path: '/', httpOnly: true, sameSite: 'lax'
+    }))
 
   return redirect
 }
