@@ -1,22 +1,37 @@
 'use client'
-// components/patient/ExerciseList.tsx
-
-import { useState, useTransition } from 'react'
+import { useState, useEffect, useTransition } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { clsx } from 'clsx'
 import { createClient } from '@/lib/supabase/client'
+import { isDemo, getAllDemoCompleted, setDemoReps } from '@/lib/demoProgress'
 import type { TodayExercise } from '@/types/database'
 import { CATEGORY_LABELS } from '@/types/database'
 
-interface Props { exercises: TodayExercise[] }
+interface Props {
+  exercises: TodayExercise[]
+  patientId: string
+}
 
-export default function ExerciseList({ exercises: initial }: Props) {
+export default function ExerciseList({ exercises: initial, patientId }: Props) {
   const router = useRouter()
+  const demo   = isDemo(patientId)
   const [exercises, setExercises] = useState(initial)
   const [isPending, startTransition] = useTransition()
 
-  // Optymistyczne zaznaczenie — natychmiastowy feedback
+  // Dla demo: odczytaj ukończone z localStorage i nałóż na listę
+  useEffect(() => {
+    if (!demo) return
+    const completed = getAllDemoCompleted()
+    if (completed.length === 0) return
+    setExercises(prev =>
+      prev.map(e =>
+        completed.includes(e.plan_exercise_id)
+          ? { ...e, completed_today: true }
+          : e
+      )
+    )
+  }, [demo])
+
   async function markDone(ex: TodayExercise) {
     if (ex.completed_today) return
 
@@ -29,6 +44,12 @@ export default function ExerciseList({ exercises: initial }: Props) {
       )
     )
 
+    if (demo) {
+      // Demo: zapisz do localStorage, nie do bazy
+      setDemoReps(ex.plan_exercise_id, ex.repetitions, true)
+      return
+    }
+
     const supabase = createClient()
     const { error } = await supabase
       .from('exercise_completions')
@@ -39,7 +60,6 @@ export default function ExerciseList({ exercises: initial }: Props) {
       })
 
     if (error) {
-      // Rollback przy błędzie
       setExercises(initial)
       console.error('Błąd zapisu:', error.message)
       return
@@ -48,8 +68,8 @@ export default function ExerciseList({ exercises: initial }: Props) {
     startTransition(() => router.refresh())
   }
 
-  const done  = exercises.filter(e => e.completed_today).length
-  const total = exercises.length
+  const done    = exercises.filter(e => e.completed_today).length
+  const total   = exercises.length
   const allDone = done === total && total > 0
 
   return (
@@ -58,7 +78,9 @@ export default function ExerciseList({ exercises: initial }: Props) {
         <div className="bg-green-50 border border-green-200 rounded-2xl p-4 text-center animate-pop">
           <div className="text-4xl mb-2">🎉</div>
           <p className="font-bold text-green-800">Brawo! Wszystko zrobione!</p>
-          <p className="text-green-600 text-sm mt-0.5">Zarobiłeś +50 punktów bonusowych!</p>
+          <p className="text-green-600 text-sm mt-0.5">
+            {demo ? 'Świetna robota!' : 'Zarobiłeś +50 punktów bonusowych!'}
+          </p>
         </div>
       )}
 
@@ -82,8 +104,6 @@ export default function ExerciseList({ exercises: initial }: Props) {
     </>
   )
 }
-
-// ── Karta pojedynczego ćwiczenia ─────────────────────────────────────────
 
 function ExerciseCard({
   exercise: ex,
@@ -114,7 +134,6 @@ function ExerciseCard({
   if (isNext) {
     return (
       <div className="exercise-card-active rounded-2xl overflow-hidden animate-slide-up">
-        {/* Klikalna część — otwiera widok ćwiczenia */}
         <Link
           href={`/pacjent/cwiczenie/${ex.plan_exercise_id}`}
           className="flex items-center gap-3 px-4 pt-3 pb-2"
@@ -132,8 +151,6 @@ function ExerciseCard({
             Teraz!
           </span>
         </Link>
-
-        {/* Szybkie zaznaczenie bez otwierania widoku */}
         <div className="border-t border-brand-200 px-4 py-2 flex items-center justify-between">
           <p className="text-xs text-brand-400">Dotknij, żeby zobaczyć instrukcję</p>
           <button
@@ -147,7 +164,6 @@ function ExerciseCard({
     )
   }
 
-  // Ćwiczenie czeka (nie jest następne)
   return (
     <div className="bg-white border border-gray-100 rounded-2xl px-4 py-3 flex items-center gap-3 opacity-60">
       <div className="w-11 h-11 bg-gray-100 rounded-xl flex items-center justify-center text-xl flex-shrink-0">

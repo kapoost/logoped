@@ -1,11 +1,10 @@
 'use client'
-// components/patient/ExerciseView.tsx
-
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import { isDemo, getDemoReps, getDemoCompleted, setDemoReps } from '@/lib/demoProgress'
 import type { TodayExercise } from '@/types/database'
 import { DIFFICULTY_LABELS } from '@/types/database'
 
@@ -16,17 +15,21 @@ interface Props {
 }
 
 export default function ExerciseView({ exercise: ex, nextId, patientId }: Props) {
-  const router  = useRouter()
+  const router   = useRouter()
   const supabase = createClient()
+  const demo     = isDemo(patientId)
 
-  const [repsDone, setRepsDone] = useState(ex.completed_today ? ex.repetitions : 0)
-  const [saving, setSaving]     = useState(false)
+  // Inicjalizuj z localStorage jeśli demo, lub z ex.completed_today
+  const [repsDone, setRepsDone] = useState(() => {
+    if (demo) return getDemoReps(ex.plan_exercise_id)
+    return ex.completed_today ? ex.repetitions : 0
+  })
+  const [saving, setSaving]           = useState(false)
   const [showCelebration, setShowCelebration] = useState(false)
 
   const totalReps   = ex.repetitions
-  const isCompleted = ex.completed_today || repsDone >= totalReps
+  const isCompleted = (demo ? getDemoCompleted(ex.plan_exercise_id) : ex.completed_today) || repsDone >= totalReps
 
-  // Parsuj instrukcje z Markdown-like kroków
   const steps = ex.instructions
     .split('\n')
     .map(s => s.replace(/^\d+\.\s*/, '').trim())
@@ -37,8 +40,12 @@ export default function ExerciseView({ exercise: ex, nextId, patientId }: Props)
     const next = repsDone + 1
     setRepsDone(next)
 
-    if (next >= totalReps && !ex.completed_today) {
-      await markComplete()
+    if (demo) {
+      // Demo: zapisz do localStorage
+      setDemoReps(ex.plan_exercise_id, next, next >= totalReps)
+      if (next >= totalReps) await celebrateAndNav()
+    } else {
+      if (next >= totalReps && !ex.completed_today) await markComplete()
     }
   }
 
@@ -55,23 +62,27 @@ export default function ExerciseView({ exercise: ex, nextId, patientId }: Props)
       .single()
 
     setSaving(false)
-    if (!error) {
-      setShowCelebration(true)
-      setTimeout(() => {
-        setShowCelebration(false)
-        if (nextId) {
-          router.push(`/pacjent/cwiczenie/${nextId}`)
-        } else {
-          router.push('/pacjent/cwiczenia')
-        }
-        router.refresh()
-      }, 1800)
-    }
+    if (!error) await celebrateAndNav()
   }
+
+  async function celebrateAndNav() {
+    setShowCelebration(true)
+    await new Promise(r => setTimeout(r, 1800))
+    setShowCelebration(false)
+    if (nextId) {
+      router.push(`/pacjent/cwiczenie/${nextId}`)
+    } else {
+      router.push('/pacjent/cwiczenia')
+    }
+    router.refresh()
+  }
+
+  // Parsuj kroki
+  const circumference = 2 * Math.PI * 36
+  const progress      = totalReps > 0 ? repsDone / totalReps : 0
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Nagłówek */}
       <div className="bg-brand-600 text-white px-4 pt-4 pb-6">
         <div className="flex items-center gap-3 mb-4">
           <Link
@@ -81,159 +92,111 @@ export default function ExerciseView({ exercise: ex, nextId, patientId }: Props)
             ←
           </Link>
           <div className="flex-1 min-w-0">
-            <p className="text-white font-bold truncate">{ex.title}</p>
-            <p className="text-brand-200 text-xs">{ex.plan_name}</p>
+            <p className="text-xs text-brand-200 uppercase tracking-wide font-medium">Ćwiczenie</p>
+            <h1 className="text-lg font-bold truncate">{ex.title}</h1>
           </div>
-          <span className="bg-white/20 text-white text-xs px-2.5 py-1 rounded-full font-medium flex-shrink-0">
-            +20 ⭐
-          </span>
+          <span className="text-2xl">{ex.emoji}</span>
         </div>
 
-        {/* Difficulty badge */}
+        {/* Kołowy licznik powtórzeń */}
+        <div className="flex flex-col items-center py-2">
+          <div className="relative w-28 h-28">
+            <svg className="w-28 h-28 -rotate-90" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="36" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="6"/>
+              <circle
+                cx="40" cy="40" r="36" fill="none"
+                stroke="white" strokeWidth="6"
+                strokeDasharray={circumference}
+                strokeDashoffset={circumference * (1 - progress)}
+                strokeLinecap="round"
+                style={{ transition: 'stroke-dashoffset 0.3s ease' }}
+              />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-3xl font-bold">{repsDone}</span>
+              <span className="text-xs text-brand-200">/ {totalReps}</span>
+            </div>
+          </div>
+          <p className="text-brand-200 text-sm mt-2">powtórzeń</p>
+        </div>
+      </div>
+
+      <div className="flex-1 px-4 py-6 space-y-4">
+        {/* Trudność */}
         <div className="flex gap-2">
-          <span className="bg-white/15 text-white/80 text-xs px-2.5 py-1 rounded-full">
+          <span className="text-xs bg-brand-100 text-brand-700 px-2 py-1 rounded-full font-medium">
             {DIFFICULTY_LABELS[ex.difficulty]}
           </span>
           {ex.target_sounds && ex.target_sounds.length > 0 && (
-            <span className="bg-white/15 text-white/80 text-xs px-2.5 py-1 rounded-full">
-              Głoski: {ex.target_sounds.join(', ')}
+            <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
+              głoski: {ex.target_sounds.join(', ')}
             </span>
           )}
         </div>
-      </div>
 
-      {/* Ilustracja emoji */}
-      <div className="bg-brand-50 border-b border-brand-100 flex items-center justify-center py-8 relative">
-        <motion.div
-          animate={isCompleted ? { scale: [1, 1.15, 1], rotate: [0, -5, 5, 0] } : {}}
-          transition={{ duration: 0.5 }}
-          className="text-[80px] leading-none select-none"
-        >
-          {ex.emoji}
-        </motion.div>
-        {ex.media_url && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={ex.media_url}
-            alt={ex.title}
-            className="absolute inset-0 w-full h-full object-contain p-4"
-          />
+        {/* Opis */}
+        {ex.description && (
+          <p className="text-sm text-gray-500">{ex.description}</p>
         )}
-      </div>
 
-      {/* Treść */}
-      <div className="flex-1 px-4 py-5 space-y-5 overflow-y-auto">
         {/* Kroki instrukcji */}
-        <div>
-          <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wide mb-3">Jak to zrobić</h2>
-          <ol className="space-y-2">
-            {steps.map((step, i) => (
-              <li key={i} className="flex gap-3">
-                <span className="w-6 h-6 bg-brand-600 text-white rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
-                  {i + 1}
-                </span>
-                <p className="text-sm text-gray-700 leading-relaxed">{step}</p>
-              </li>
-            ))}
-          </ol>
+        <div className="bg-white rounded-2xl p-4 space-y-3 shadow-sm">
+          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide">Jak to zrobić?</p>
+          {steps.map((step, i) => (
+            <div key={i} className="flex gap-3">
+              <span className="w-6 h-6 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">
+                {i + 1}
+              </span>
+              <p className="text-sm text-gray-700 leading-relaxed">{step}</p>
+            </div>
+          ))}
         </div>
 
         {/* Notatka logopedy */}
-        {ex.therapist_notes && (
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3">
-            <p className="text-xs font-semibold text-amber-700 mb-1">💬 Uwaga od logopedy</p>
-            <p className="text-sm text-amber-800">{ex.therapist_notes}</p>
+        {ex.notes && (
+          <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4">
+            <p className="text-xs font-semibold text-amber-700 mb-1">💬 Wskazówka logopedy</p>
+            <p className="text-sm text-amber-800">{ex.notes}</p>
           </div>
         )}
+      </div>
 
-        {/* Licznik powtórzeń */}
-        <div>
-          <h2 className="text-sm font-bold text-gray-400 uppercase tracking-wide mb-3">
-            Powtórzenia ({repsDone}/{totalReps})
-          </h2>
-          <div className="flex gap-2 flex-wrap">
-            {Array.from({ length: totalReps }).map((_, i) => (
-              <motion.div
-                key={i}
-                animate={i < repsDone ? { scale: [1, 1.3, 1] } : {}}
-                transition={{ duration: 0.2 }}
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all ${
-                  i < repsDone
-                    ? 'bg-green-500 text-white shadow-sm'
-                    : i === repsDone
-                    ? 'bg-brand-100 border-2 border-brand-600 text-brand-600'
-                    : 'bg-gray-100 text-gray-400'
-                }`}
-              >
-                {i < repsDone ? '✓' : i + 1}
-              </motion.div>
-            ))}
+      {/* Przycisk +1 / Gotowe */}
+      <div className="px-4 pb-8 pt-4 bg-white border-t border-gray-100">
+        {isCompleted ? (
+          <div className="bg-green-500 text-white font-bold py-4 rounded-2xl text-center text-lg">
+            ✓ Zrobione! +20 ⭐
           </div>
-        </div>
+        ) : (
+          <button
+            onClick={addRep}
+            disabled={saving}
+            className="w-full bg-brand-600 hover:bg-brand-700 disabled:opacity-60 text-white font-bold py-4 rounded-2xl text-lg active:scale-95 transition"
+          >
+            {saving ? 'Zapisuję…' : repsDone === totalReps - 1 ? '🎉 Ostatnie!' : `+1 powtórzenie`}
+          </button>
+        )}
+        {demo && repsDone > 0 && !isCompleted && (
+          <p className="text-center text-xs text-gray-400 mt-2">
+            Postęp zapisany lokalnie 🔒
+          </p>
+        )}
       </div>
 
-      {/* Przycisk akcji */}
-      <div className="px-4 pb-8 pt-3 bg-white border-t border-gray-100">
-        <AnimatePresence mode="wait">
-          {isCompleted ? (
-            <motion.div
-              key="done"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-center"
-            >
-              <div className="text-3xl mb-2">🎉</div>
-              <p className="text-green-700 font-bold mb-3">Brawo! Ćwiczenie ukończone!</p>
-              {nextId ? (
-                <Link
-                  href={`/pacjent/cwiczenie/${nextId}`}
-                  className="w-full block bg-brand-600 text-white font-bold py-4 rounded-2xl text-center active:scale-95 transition"
-                >
-                  Następne ćwiczenie →
-                </Link>
-              ) : (
-                <Link
-                  href="/pacjent/cwiczenia"
-                  className="w-full block bg-green-500 text-white font-bold py-4 rounded-2xl text-center active:scale-95 transition"
-                >
-                  🏆 Wróć do listy
-                </Link>
-              )}
-            </motion.div>
-          ) : (
-            <motion.button
-              key="tap"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={addRep}
-              disabled={saving}
-              className="w-full bg-brand-600 hover:bg-brand-700 disabled:opacity-60 text-white font-bold py-4 rounded-2xl text-lg transition shadow-lg shadow-brand-600/30 active:scale-95"
-            >
-              {saving ? 'Zapisuję…' : `✓ Gotowe! (${repsDone + 1}/${totalReps})`}
-            </motion.button>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* Animacja confetti po ukończeniu */}
+      {/* Celebracja */}
       <AnimatePresence>
         {showCelebration && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 flex items-center justify-center bg-black/20 z-50 pointer-events-none"
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
           >
-            <motion.div
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              className="bg-white rounded-3xl p-8 text-center shadow-2xl"
-            >
-              <div className="text-6xl mb-3">⭐</div>
-              <p className="text-2xl font-bold text-brand-600">+20 punktów!</p>
-              <p className="text-gray-500 text-sm mt-1">Świetna robota!</p>
-            </motion.div>
+            <div className="bg-white rounded-3xl p-8 text-center mx-4">
+              <div className="text-6xl mb-3">🎉</div>
+              <p className="text-2xl font-bold text-gray-900">Brawo!</p>
+              <p className="text-gray-500 mt-1">+20 punktów!</p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
