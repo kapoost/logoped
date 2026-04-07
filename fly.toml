@@ -34,9 +34,3 @@ primary_region = "fra"
     protocol        = "http"
     timeout         = "2s"
     type            = "http"
-
-[build.args]
-  NEXT_PUBLIC_SUPABASE_URL = "https://qeoeqjotlwbbwhdevwxu.supabase.co"
-  NEXT_PUBLIC_SUPABASE_ANON_KEY = "sb_publishable_nR2IzbPhMHczzQYEqrpbVA_Z7qoZU6o"
-  NEXT_PUBLIC_APP_URL = "https://logoped.fly.dev"
-  NEXT_PUBLIC_VAPID_PUBLIC_KEY = "BJQKs2CxfGnJMjaP1D3S5O4pBl4PxakF_PrZk0O0RwZdhpWen1Xzr-444D6fOLaix11ZcX_eS63U0WTuQY8Dy1Y"
