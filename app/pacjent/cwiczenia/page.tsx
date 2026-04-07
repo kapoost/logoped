@@ -39,8 +39,6 @@ export default async function CwiczeniaPage() {
       <TodayHeader
         name={session.profile.full_name.split(' ')[0]}
         streak={stats?.current_streak ?? 0}
-        points={stats?.points ?? 0}
-        level={stats?.level ?? 1}
         done={done}
         total={total}
       />
