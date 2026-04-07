@@ -1,5 +1,8 @@
 import { test, expect } from '@playwright/test'
 
+const ADMIN_EMAIL    = process.env.TEST_ADMIN_EMAIL    ?? 'kapoost@gmail.com'
+const ADMIN_PASSWORD = process.env.TEST_ADMIN_PASSWORD ?? 'Q2dm1.map'
+
 async function loginViaForm(page: any, email: string, password: string) {
   await page.goto('/login')
   await page.locator('input[name="email"]:visible').fill(email)
@@ -8,42 +11,52 @@ async function loginViaForm(page: any, email: string, password: string) {
   await page.waitForLoadState('networkidle')
 }
 
-async function logoutViaRoute(page: any) {
-  // Wyślij POST do logout i podążaj za redirectem
-  const response = await page.request.post('/api/auth/logout', {
-    maxRedirects: 0,
-  }).catch(() => null)
-
-  // Wyczyść cookies lokalnie w kontekście Playwright
-  await page.context().clearCookies()
-
-  // Nawiguj do /login
-  await page.goto('/login')
-  await page.waitForLoadState('networkidle')
+async function clickLogoutButton(page: any) {
+  // Szukaj przycisku Wyloguj gdziekolwiek na stronie (admin layout, therapist nav, etc.)
+  const btn = page.getByRole('button', { name: /wyloguj/i }).first()
+  if (await btn.isVisible({ timeout: 3000 }).catch(() => false)) {
+    await btn.click()
+    await page.waitForLoadState('networkidle')
+    return true
+  }
+  // Fallback: submit formularza logout bezpośrednio przez przeglądarkę (nie page.request)
+  const submitted = await page.evaluate(async () => {
+    const form = document.querySelector('form[action="/api/auth/logout"]') as HTMLFormElement
+    if (!form) return false
+    form.submit()
+    return true
+  })
+  if (submitted) {
+    await page.waitForLoadState('networkidle')
+    return true
+  }
+  return false
 }
 
 test.describe('Wylogowanie — przepływ integracyjny', () => {
 
   test('wylogowanie przekierowuje na /login', async ({ page }) => {
-    const email    = process.env.TEST_ADMIN_EMAIL    ?? 'kapoost@gmail.com'
-    const password = process.env.TEST_ADMIN_PASSWORD ?? 'Q2dm1.map'
-
-    await loginViaForm(page, email, password)
+    await loginViaForm(page, ADMIN_EMAIL, ADMIN_PASSWORD)
     expect(page.url()).not.toContain('/login')
 
-    await logoutViaRoute(page)
+    const loggedOut = await clickLogoutButton(page)
+    expect(loggedOut).toBe(true)
     expect(page.url()).toContain('/login')
   })
 
   test('po wylogowaniu chroniona strona → redirect do /login', async ({ page }) => {
-    const email    = process.env.TEST_ADMIN_EMAIL    ?? 'kapoost@gmail.com'
-    const password = process.env.TEST_ADMIN_PASSWORD ?? 'Q2dm1.map'
+    await loginViaForm(page, ADMIN_EMAIL, ADMIN_PASSWORD)
+    const currentUrl = page.url()
 
-    await loginViaForm(page, email, password)
-    await logoutViaRoute(page)
+    await clickLogoutButton(page)
+    expect(page.url()).toContain('/login')
 
-    // Próbuj wejść na chronioną stronę
-    await page.goto('/admin/dashboard')
+    // Wejdź na tę samą chronioną stronę — powinna zredirectować
+    const protectedPath = currentUrl.includes('/admin') ? '/admin/dashboard'
+      : currentUrl.includes('/logopeda') ? '/logopeda/pacjenci'
+      : '/admin/dashboard'
+
+    await page.goto(protectedPath)
     await page.waitForLoadState('networkidle')
     expect(page.url()).toContain('/login')
   })
