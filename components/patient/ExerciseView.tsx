@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { isDemo, getDemoReps, getDemoCompleted, setDemoReps } from '@/lib/demoProgress'
 import { playRep, playExerciseDone, playSessionComplete } from '@/lib/sounds'
 import { addDemoExercisePoints, addDemoSessionBonus } from '@/lib/demoStats'
+import Confetti from './Confetti'
 import type { TodayExercise } from '@/types/database'
 
 const DIFFICULTY_COLOR = {
@@ -103,6 +104,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col select-none">
+      <Confetti trigger={showCelebration} type={isLastExercise ? 'levelup' : 'celebration'} />
 
       {/* Nagłówek */}
       <div className="bg-brand-600 px-4 pt-5 pb-8 relative overflow-hidden">
@@ -114,7 +116,13 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
         </Link>
 
         <div className="flex flex-col items-center pt-2">
-          <div className="text-7xl mb-2 drop-shadow">{ex.emoji}</div>
+          <motion.div
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+            className="text-7xl mb-2 drop-shadow"
+          >
+            {ex.emoji}
+          </motion.div>
           <h1 className="text-xl font-black text-white text-center px-8">{ex.title}</h1>
           <span className={`mt-2 text-xs font-bold px-3 py-1 rounded-full ${DIFFICULTY_COLOR[ex.difficulty]}`}>
             {DIFFICULTY_LABEL[ex.difficulty]}
@@ -149,12 +157,17 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
         {/* Kółka powtórzeń */}
         <div className="flex gap-1.5 mt-3 flex-wrap justify-center px-8 max-w-xs">
           {Array.from({ length: totalReps }).map((_, i) => (
-            <div key={i}
-              className={`w-6 h-6 rounded-full border-2 transition-all duration-200 ${
-                i < repsDone
-                  ? completed ? 'bg-green-500 border-green-500 scale-110' : 'bg-brand-600 border-brand-600 scale-110'
-                  : 'bg-white border-gray-200'
-              }`}
+            <motion.div key={i}
+              initial={false}
+              animate={i < repsDone
+                ? { scale: 1.15, backgroundColor: completed ? '#22c55e' : '#7c3aed', borderColor: completed ? '#22c55e' : '#7c3aed' }
+                : { scale: 1, backgroundColor: '#ffffff', borderColor: '#e5e7eb' }
+              }
+              transition={i === repsDone - 1
+                ? { type: 'spring', stiffness: 500, damping: 15 }
+                : { duration: 0.2 }
+              }
+              className="w-6 h-6 rounded-full border-2"
             />
           ))}
         </div>
