@@ -18,6 +18,7 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
   const demo   = isDemo(patientId)
   const [exercises, setExercises] = useState(initial)
   const [justDone, setJustDone]   = useState<string | null>(null)
+  const [replaying, setReplaying] = useState(false)
   const [, startTransition]       = useTransition()
 
   // Demo: nakładaj localStorage na listę
@@ -103,12 +104,21 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
       </div>
 
       {/* Wszystko zrobione */}
-      {allDone && (
+      {allDone && !replaying && (
         <div className="bg-gradient-to-br from-green-400 to-emerald-500 rounded-3xl p-6 text-center text-white shadow-lg shadow-green-200 animate-pop">
           <div className="text-6xl mb-2">🎉</div>
           <p className="text-xl font-black">Super robota!</p>
           <p className="text-green-100 text-sm mt-1">Ćwiczenia na dziś zrobione!</p>
           <p className="text-yellow-200 font-bold mt-2">+50 ⭐ punktów!</p>
+          <button
+            onClick={() => {
+              setReplaying(true)
+              setExercises(prev => prev.map(e => ({ ...e, completed_today: false })))
+            }}
+            className="mt-4 bg-white/20 hover:bg-white/30 text-white font-bold py-3 px-6 rounded-2xl transition active:scale-95 text-base"
+          >
+            🔁 Jeszcze raz!
+          </button>
         </div>
       )}
 
