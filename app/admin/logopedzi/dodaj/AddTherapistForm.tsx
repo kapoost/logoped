@@ -43,7 +43,7 @@ export default function AddTherapistForm() {
     <form onSubmit={handleSubmit} className="space-y-4">
       {[
         { label: 'Imię i nazwisko', value: fullName, set: setFullName, type: 'text',     placeholder: 'np. Anna Kowalska' },
-        { label: 'Email',           value: email,    set: setEmail,    type: 'email',    placeholder: 'logopeda@email.pl'  },
+        { label: 'Email',           value: email,    set: setEmail,    type: 'email',    placeholder: 'logopeda@email.pl'   },
         { label: 'Hasło startowe',  value: password, set: setPassword, type: 'password', placeholder: 'minimum 8 znaków'   },
       ].map(f => (
         <div key={f.label}>

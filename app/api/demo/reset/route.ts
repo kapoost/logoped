@@ -5,7 +5,7 @@
 import { NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 
-const DEMO_EMAIL = 'demo@logoped.pl'
+const DEMO_EMAIL = 'demo@logoped.app'
 
 export async function POST() {
   const admin = createAdminClient()

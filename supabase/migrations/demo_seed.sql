@@ -29,7 +29,7 @@ BEGIN
 
 -- ── 1. Konto logopedy demo ───────────────────────────────────
 SELECT id INTO v_therapist_id
-  FROM auth.users WHERE email = 'logopeda-demo@logoped.pl';
+  FROM auth.users WHERE email = 'logopeda-demo@logoped.app';
 
 IF v_therapist_id IS NULL THEN
   INSERT INTO auth.users (
@@ -38,7 +38,7 @@ IF v_therapist_id IS NULL THEN
     confirmation_token, recovery_token, aud, role
   ) VALUES (
     gen_random_uuid(),
-    'logopeda-demo@logoped.pl',
+    'logopeda-demo@logoped.app',
     crypt('DemoLogopeda123!', gen_salt('bf')),
     NOW(),
     '{"full_name":"Pani Logopeda (Demo)"}'::jsonb,
@@ -51,7 +51,7 @@ UPDATE public.profiles SET role = 'therapist', full_name = 'Pani Logopeda (Demo)
 
 -- ── 2. Konto pacjenta demo ───────────────────────────────────
 SELECT id INTO v_patient_id
-  FROM auth.users WHERE email = 'demo@logoped.pl';
+  FROM auth.users WHERE email = 'demo@logoped.app';
 
 IF v_patient_id IS NULL THEN
   INSERT INTO auth.users (
@@ -60,7 +60,7 @@ IF v_patient_id IS NULL THEN
     confirmation_token, recovery_token, aud, role
   ) VALUES (
     gen_random_uuid(),
-    'demo@logoped.pl',
+    'demo@logoped.app',
     crypt('Demo2026!', gen_salt('bf')),
     NOW(),
     '{"full_name":"Zosia Zaczarowana"}'::jsonb,
@@ -291,7 +291,7 @@ VALUES
 ON CONFLICT (patient_id, badge_key) DO NOTHING;
 
 RAISE NOTICE '✓ Demo gotowe!';
-RAISE NOTICE '  Email: demo@logoped.pl';
+RAISE NOTICE '  Email: demo@logoped.app';
 RAISE NOTICE '  Hasło: Demo2026!';
 RAISE NOTICE '  Pacjentka: Zosia Zaczarowana';
 RAISE NOTICE '  Plany: 3 aktywne + 1 ukończony';
@@ -311,5 +311,5 @@ SELECT
 FROM auth.users u
 JOIN public.profiles p ON p.id = u.id
 LEFT JOIN public.patient_stats ps ON ps.patient_id = p.id
-WHERE u.email IN ('demo@logoped.pl', 'logopeda-demo@logoped.pl')
+WHERE u.email IN ('demo@logoped.app', 'logopeda-demo@logoped.app')
 ORDER BY p.role DESC;

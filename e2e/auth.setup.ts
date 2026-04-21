@@ -45,7 +45,7 @@ for (const role of ROLES) {
     await page.goto(`${BASE}/login`)
     await page.waitForLoadState('networkidle')
 
-    await page.locator('input[name="email"]:visible').fill(role.email)
+    await page.locator('input[name="login"]:visible').fill(role.email)
     await page.locator('input[name="password"]:visible').fill(role.password)
     await page.getByRole('button', { name: 'Zaloguj się' }).click()
     await page.waitForLoadState('networkidle')

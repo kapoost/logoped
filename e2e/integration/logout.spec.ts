@@ -5,7 +5,7 @@ const ADMIN_PASSWORD = process.env.TEST_ADMIN_PASSWORD ?? 'Q2dm1.map'
 
 async function loginViaForm(page: any, email: string, password: string) {
   await page.goto('/login')
-  await page.locator('input[name="email"]:visible').fill(email)
+  await page.locator('input[name="login"]:visible').fill(email)
   await page.locator('input[name="password"]:visible').fill(password)
   await page.getByRole('button', { name: 'Zaloguj się' }).click()
   await page.waitForLoadState('networkidle')

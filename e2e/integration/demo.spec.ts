@@ -31,7 +31,7 @@ test.describe('Demo — Zosia Zaczarowana', () => {
 
   test('kredencjały widoczne na stronie logowania', async ({ page }) => {
     await page.goto('/login')
-    await expect(page.locator('code', { hasText: 'demo@logoped.pl' })).toBeVisible()
+    await expect(page.locator('code', { hasText: 'demo' })).toBeVisible()
     await expect(page.locator('code', { hasText: 'Demo2026!' })).toBeVisible()
   })
 })

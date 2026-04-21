@@ -17,13 +17,11 @@ const MAX_PATIENTS: Record<string, number> = {
 
 interface Props {
   profile: Record<string, any>
-  email: string
 }
 
-export default function TherapistEditForm({ profile, email }: Props) {
+export default function TherapistEditForm({ profile }: Props) {
   const router = useRouter()
   const [saving,    setSaving]    = useState(false)
-  const [resetting, setResetting] = useState(false)
   const [msg,       setMsg]       = useState<{ type: 'ok' | 'err'; text: string } | null>(null)
 
   const [form, setForm] = useState({
@@ -79,20 +77,6 @@ export default function TherapistEditForm({ profile, email }: Props) {
     }
   }
 
-  async function handleResetPassword() {
-    if (!confirm('Wysłać link do resetu hasła na adres ' + email + '?')) return
-    setResetting(true)
-    const res = await fetch('/api/admin/reset-password', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: profile.id, email }),
-    })
-    const data = await res.json()
-    setResetting(false)
-    setMsg(res.ok
-      ? { type: 'ok', text: 'Link do resetu hasła został wysłany.' }
-      : { type: 'err', text: data.error ?? 'Błąd.' })
-  }
 
   return (
     <form onSubmit={handleSave} className="bg-white rounded-2xl border border-gray-100 p-5 space-y-5">
@@ -206,10 +190,6 @@ export default function TherapistEditForm({ profile, email }: Props) {
             className="mt-1 w-full px-3 py-2 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-300"/>
         </div>
 
-        <button type="button" onClick={handleResetPassword} disabled={resetting}
-          className="w-full text-sm text-blue-700 bg-blue-50 hover:bg-blue-100 py-2 rounded-xl font-medium transition disabled:opacity-50">
-          {resetting ? 'Wysyłanie...' : '📧 Wyślij link do resetu hasła'}
-        </button>
       </div>
 
       {/* MSG */}

@@ -18,7 +18,7 @@ export const CRON_SECRET = process.env.CRON_SECRET
   ?? '94a8267d726eb64ffe100d5ade91b07b7900a1616249d74675d294e4868a1e52'
 
 export const DEMO = {
-  email:    'demo@logoped.pl',
+  login:    'demo',
   password: 'Demo2026!',
 }
 

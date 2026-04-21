@@ -1,5 +1,6 @@
 'use client'
 // app/(auth)/register/RegisterForm.tsx
+// Logopeda rejestruje się z mailem, pacjent z loginem (dostaje go od logopedy)
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -11,16 +12,23 @@ const ROLES: { value: Role; label: string; emoji: string; desc: string }[] = [
   { value: 'patient',   label: 'Pacjent',   emoji: '🧒', desc: 'Chcę ćwiczyć i zbierać punkty' },
 ]
 
+/** Login → email wewnętrzny dla Supabase (tylko pacjenci) */
+function loginToEmail(login: string): string {
+  return login.includes('@') ? login : `${login.toLowerCase().trim()}@logoped.app`
+}
+
 export default function RegisterForm() {
   const router  = useRouter()
   const supabase = createClient()
 
   const [role, setRole]         = useState<Role>('patient')
   const [fullName, setFullName] = useState('')
-  const [email, setEmail]       = useState('')
+  const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState<string | null>(null)
+
+  const isPatient = role === 'patient'
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -33,27 +41,32 @@ export default function RegisterForm() {
       return
     }
 
-    const { error: authError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: { role, full_name: fullName },
-        // Callback po weryfikacji email (jeśli włączona)
-        emailRedirectTo: `${location.origin}/auth/callback`,
-      },
-    })
-
-    if (authError) {
-      setError(
-        authError.message.includes('already registered')
-          ? 'Ten email jest już zarejestrowany.'
-          : authError.message
-      )
+    if (isPatient && identifier.length < 3) {
+      setError('Login musi mieć co najmniej 3 znaki.')
       setLoading(false)
       return
     }
 
-    // Dla MVP — email confirm wyłączony, od razu przekieruj
+    const email = isPatient ? loginToEmail(identifier) : identifier
+
+    const metadata: Record<string, string> = { role, full_name: fullName }
+    if (isPatient) metadata.login = identifier.toLowerCase().trim()
+
+    const { error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { data: metadata },
+    })
+
+    if (authError) {
+      const msg = authError.message.includes('already registered')
+        ? isPatient ? 'Ten login jest już zajęty.' : 'Ten email jest już zarejestrowany.'
+        : authError.message
+      setError(msg)
+      setLoading(false)
+      return
+    }
+
     switch (role) {
       case 'therapist': router.push('/logopeda'); break
       case 'patient':   router.push('/pacjent/cwiczenia'); break
@@ -74,7 +87,7 @@ export default function RegisterForm() {
             <button
               key={r.value}
               type="button"
-              onClick={() => setRole(r.value)}
+              onClick={() => { setRole(r.value); setIdentifier('') }}
               className={`p-3 rounded-xl border-2 text-left transition ${
                 role === r.value
                   ? 'border-brand-600 bg-brand-50'
@@ -91,7 +104,7 @@ export default function RegisterForm() {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">
-          {role === 'patient' ? 'Imię dziecka' : 'Imię i nazwisko'}
+          {isPatient ? 'Imię dziecka' : 'Imię i nazwisko'}
         </label>
         <input
           type="text"
@@ -99,21 +112,26 @@ export default function RegisterForm() {
           value={fullName}
           onChange={e => setFullName(e.target.value)}
           className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-600/30 focus:border-brand-600 text-sm transition"
-          placeholder={role === 'patient' ? 'np. Zosia' : 'np. Anna Kowalska'}
+          placeholder={isPatient ? 'np. Zosia' : 'np. Anna Kowalska'}
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          {isPatient ? 'Login' : 'Email'}
+        </label>
         <input
-          type="email"
+          type={isPatient ? 'text' : 'email'}
           required
-          autoComplete="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
+          autoComplete={isPatient ? 'username' : 'email'}
+          value={identifier}
+          onChange={e => setIdentifier(e.target.value)}
           className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-600/30 focus:border-brand-600 text-sm transition"
-          placeholder="twoj@email.pl"
+          placeholder={isPatient ? 'np. zosia123' : 'twoj@email.pl'}
         />
+        {isPatient && (
+          <p className="text-xs text-gray-400 mt-1">Otrzymasz login od logopedy na wizycie</p>
+        )}
       </div>
 
       <div>

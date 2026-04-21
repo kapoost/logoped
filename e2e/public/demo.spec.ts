@@ -11,9 +11,9 @@ test.describe('Demo — Zosia Zaczarowana', () => {
   test('formularz logowania ma puste pola (nie nadpisane przez demo)', async ({ page }) => {
     await page.goto('/login')
     await page.waitForLoadState('networkidle')
-    // Widoczne pole email powinno być puste
-    const emailVal = await page.locator('input[name="email"]:visible').inputValue()
-    expect(emailVal).toBe('')
+    // Widoczne pole login powinno być puste
+    const loginVal = await page.locator('input[name="login"]:visible').inputValue()
+    expect(loginVal).toBe('')
   })
 
   test('/api/demo/reset nie jest zablokowany przez middleware', async ({ page }) => {

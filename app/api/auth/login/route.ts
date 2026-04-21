@@ -17,12 +17,18 @@ function baseUrl(request: NextRequest): string {
   return `${proto}://${host}`
 }
 
+/** Login → email: jeśli brak @, dopisz @logoped.app */
+function loginToEmail(login: string): string {
+  return login.includes('@') ? login : `${login.toLowerCase().trim()}@logoped.app`
+}
+
 export async function POST(request: NextRequest) {
   const form     = await request.formData()
-  const email    = form.get('email')    as string
+  const login    = form.get('login')    as string
   const password = form.get('password') as string
   const isDemo   = form.get('isDemo')   === 'true'
   const base     = baseUrl(request)
+  const email    = loginToEmail(login)
 
   const cookieJar: Array<{ name: string; value: string; options: any }> = []
 

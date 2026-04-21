@@ -11,7 +11,7 @@ test.describe('Logowanie — przepływ integracyjny', () => {
     const password = process.env.TEST_ADMIN_PASSWORD ?? 'Q2dm1.map'
 
     await page.goto('/login')
-    await page.locator('input[name="email"]:visible').fill(email)
+    await page.locator('input[name="login"]:visible').fill(email)
     await page.locator('input[name="password"]:visible').fill(password)
     await page.getByRole('button', { name: 'Zaloguj się' }).click()
     await page.waitForLoadState('networkidle')
@@ -22,7 +22,7 @@ test.describe('Logowanie — przepływ integracyjny', () => {
 
   test('złe hasło → zostaje na /login', async ({ page }) => {
     await page.goto('/login')
-    await page.locator('input[name="email"]:visible').fill('zly@email.pl')
+    await page.locator('input[name="login"]:visible').fill('zly@email.pl')
     await page.locator('input[name="password"]:visible').fill('zlehaslo123')
     await page.getByRole('button', { name: 'Zaloguj się' }).click()
     await page.waitForLoadState('networkidle')

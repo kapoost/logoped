@@ -20,10 +20,16 @@ export async function signOut() {
   redirect('/login')
 }
 
+/** Login → email: jeśli brak @, dopisz @logoped.app */
+function loginToEmail(login: string): string {
+  return login.includes('@') ? login : `${login.toLowerCase().trim()}@logoped.app`
+}
+
 export async function signIn(_: unknown, formData: FormData) {
-  const email    = formData.get('email')    as string
+  const login    = formData.get('login')    as string
   const password = formData.get('password') as string
   const isDemo   = formData.get('isDemo')   === 'true'
+  const email    = loginToEmail(login)
 
   const cookieStore = cookies()
   const supabase = createServerClient(
@@ -43,7 +49,7 @@ export async function signIn(_: unknown, formData: FormData) {
   if (error) {
     return {
       error: error.message.toLowerCase().includes('invalid')
-        ? 'Nieprawidłowy email lub hasło.'
+        ? 'Nieprawidłowy login lub hasło.'
         : 'Wystąpił błąd. Spróbuj ponownie.'
     }
   }

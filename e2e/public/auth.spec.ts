@@ -5,7 +5,7 @@ test.describe('Strona logowania', () => {
   test('pokazuje formularz logowania', async ({ page }) => {
     await page.goto('/login')
     await page.waitForLoadState('networkidle')
-    await expect(page.locator('input[type="email"]')).toBeVisible()
+    await expect(page.locator('input[name="login"]')).toBeVisible()
     await expect(page.locator('input[type="password"]')).toBeVisible()
     // Przycisk Zaloguj się (nie Demo)
     await expect(page.getByRole('button', { name: 'Zaloguj się' })).toBeVisible()
@@ -25,35 +25,19 @@ test.describe('Strona logowania', () => {
 
   test('baner demo pokazuje kredencjały', async ({ page }) => {
     await page.goto('/login')
-    await expect(page.locator('code', { hasText: 'demo@logoped.pl' })).toBeVisible()
+    await expect(page.locator('code', { hasText: 'demo' })).toBeVisible()
     await expect(page.locator('code', { hasText: 'Demo2026!' })).toBeVisible()
   })
 
-  test('link do rejestracji działa', async ({ page }) => {
+  test('info o danych od logopedy jest widoczne', async ({ page }) => {
     await page.goto('/login')
-    await page.click('a[href="/register"]')
-    await expect(page).toHaveURL(/\/register/)
-  })
-
-  test('link powrotu z rejestracji do logowania', async ({ page }) => {
-    await page.goto('/register')
-    await page.waitForLoadState('networkidle')
-    // Link może być "Zaloguj się" lub inny tekst prowadzący do /login
-    const link = page.locator('a[href="/login"]').first()
-    if (!await link.isVisible({ timeout: 5000 }).catch(() => false)) {
-      // Strona register może przekierowywać na login jeśli brak sesji
-      if (page.url().includes('/login')) return
-      test.skip(true, 'Link do /login nie jest widoczny na stronie rejestracji')
-      return
-    }
-    await link.click()
-    await expect(page).toHaveURL(/\/login/)
+    await expect(page.locator('text=Dane do logowania otrzymasz od logopedy')).toBeVisible()
   })
 
   test('złe hasło → zostaje na /login z błędem', async ({ page }) => {
     await page.goto('/login')
     // Wypełnij widoczne pola (nie hidden inputs demo)
-    await page.locator('input[name="email"]:visible').fill('zly@email.pl')
+    await page.locator('input[name="login"]:visible').fill('zly@email.pl')
     await page.locator('input[name="password"]:visible').fill('zlehaslo')
     await page.getByRole('button', { name: 'Zaloguj się' }).click()
     await page.waitForLoadState('networkidle')

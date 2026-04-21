@@ -79,7 +79,7 @@ export default async function TherapistDetailPage({ params }: { params: { id: st
 
       <div className="grid grid-cols-2 gap-6">
         {/* EDIT FORM */}
-        <TherapistEditForm profile={profile} email={user?.email ?? ''} />
+        <TherapistEditForm profile={profile} />
 
         {/* SIDEBAR */}
         <div className="space-y-4">
@@ -100,12 +100,6 @@ export default async function TherapistDetailPage({ params }: { params: { id: st
                 <dt className="text-gray-500">Ostatnie logowanie</dt>
                 <dd className="text-gray-600">
                   {user?.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString('pl-PL') : 'Nigdy'}
-                </dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-gray-500">Email potwierdzony</dt>
-                <dd className={user?.email_confirmed_at ? 'text-green-600 font-medium' : 'text-red-500'}>
-                  {user?.email_confirmed_at ? '✓ Tak' : '✗ Nie'}
                 </dd>
               </div>
             </dl>

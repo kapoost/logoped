@@ -1,11 +1,13 @@
 // LoginForm.tsx — zwykły HTML form, POST do /api/auth/login
 // Zero JS client-side — działa na każdej przeglądarce i iOS PWA
-const DEMO_EMAIL    = 'demo@logoped.pl'
+// Admin/logopeda loguje się mailem, pacjent loginem
+// Jedno pole — jeśli ma @ to email, jeśli nie to login → {login}@logoped.app
+const DEMO_LOGIN    = 'demo'
 const DEMO_PASSWORD = 'Demo2026!'
 
 export default function LoginForm({ error }: { error?: string }) {
   const errorMsg = error === 'invalid'
-    ? 'Nieprawidłowy email lub hasło.'
+    ? 'Nieprawidłowy login lub hasło.'
     : error === 'unknown'
     ? 'Wystąpił błąd. Spróbuj ponownie.'
     : null
@@ -24,7 +26,7 @@ export default function LoginForm({ error }: { error?: string }) {
           z 45-dniową historią ćwiczeń i odznakami.
         </p>
         <form action="/api/auth/login" method="POST">
-          <input type="hidden" name="email"    value={DEMO_EMAIL} />
+          <input type="hidden" name="login"    value={DEMO_LOGIN} />
           <input type="hidden" name="password" value={DEMO_PASSWORD} />
           <input type="hidden" name="isDemo"   value="true" />
           <button type="submit"
@@ -33,7 +35,7 @@ export default function LoginForm({ error }: { error?: string }) {
           </button>
         </form>
         <div className="flex items-center gap-2 mt-2 justify-center">
-          <code className="text-xs text-amber-600 bg-amber-100 px-2 py-0.5 rounded">{DEMO_EMAIL}</code>
+          <code className="text-xs text-amber-600 bg-amber-100 px-2 py-0.5 rounded">{DEMO_LOGIN}</code>
           <span className="text-xs text-amber-500">·</span>
           <code className="text-xs text-amber-600 bg-amber-100 px-2 py-0.5 rounded">{DEMO_PASSWORD}</code>
         </div>
@@ -49,10 +51,10 @@ export default function LoginForm({ error }: { error?: string }) {
       <form action="/api/auth/login" method="POST" className="space-y-4">
         <input type="hidden" name="isDemo" value="false" />
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-          <input type="email" name="email" required autoComplete="email"
+          <label className="block text-sm font-medium text-gray-700 mb-1">Email lub login</label>
+          <input type="text" name="login" required autoComplete="username"
             className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-600/30 focus:border-brand-600 text-sm transition"
-            placeholder="twoj@email.pl" />
+            placeholder="email lub login dziecka" />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Hasło</label>
