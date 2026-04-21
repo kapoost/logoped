@@ -30,7 +30,7 @@ export default function AddPatientForm({ therapistId, existingNames }: Props) {
 
     if (!fullName.trim()) { setError('Podaj imię dziecka.'); return }
     if (isDuplicate) { setError(`Masz już pacjenta o imieniu "${fullName}". Dodaj nazwisko lub inicjał.`); return }
-    if (!email.trim()) { setError('Podaj adres email.'); return }
+    if (!email.trim()) { setError('Podaj login.'); return }
     if (password.length < 8) { setError('Hasło musi mieć minimum 8 znaków.'); return }
 
     setLoading(true)
@@ -114,14 +114,15 @@ export default function AddPatientForm({ therapistId, existingNames }: Props) {
         <div className="space-y-3">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email <span className="text-red-500">*</span>
+              Login <span className="text-red-500">*</span>
             </label>
             <input
-              type="email"
+              type="text"
               required
+              autoComplete="username"
               value={email}
               onChange={e => setEmail(e.target.value)}
-              placeholder="rodzic@email.pl"
+              placeholder="np. zosia123"
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-600/20 focus:border-green-700 text-sm transition"
             />
           </div>

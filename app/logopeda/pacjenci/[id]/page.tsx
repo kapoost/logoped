@@ -67,8 +67,14 @@ export default async function PatientProfilePage({ params }: Props) {
     <div className="animate-fade-in">
       {/* Nagłówek pacjenta */}
       <div className="bg-green-800 text-white px-5 pt-5 pb-8">
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center justify-between mb-4">
           <Link href="/logopeda/pacjenci" className="text-green-300 text-sm hover:text-white">← Pacjenci</Link>
+          <Link
+            href={`/logopeda/pacjenci/${params.id}/edytuj`}
+            className="text-green-300 text-sm hover:text-white font-medium"
+          >
+            Edytuj
+          </Link>
         </div>
         <div className="flex items-center gap-4">
           <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center text-xl font-bold text-white flex-shrink-0">
