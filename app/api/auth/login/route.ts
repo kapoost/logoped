@@ -23,12 +23,13 @@ function loginToEmail(login: string): string {
 }
 
 export async function POST(request: NextRequest) {
-  const form     = await request.formData()
-  const login    = form.get('login')    as string
-  const password = form.get('password') as string
-  const isDemo   = form.get('isDemo')   === 'true'
-  const base     = baseUrl(request)
-  const email    = loginToEmail(login)
+  const form         = await request.formData()
+  const login        = form.get('login')    as string
+  const password     = form.get('password') as string
+  const isDemo       = form.get('isDemo')   === 'true'
+  const redirectPath = (form.get('redirect') as string) || '/login'
+  const base         = baseUrl(request)
+  const email        = loginToEmail(login)
 
   const cookieJar: Array<{ name: string; value: string; options: any }> = []
 
@@ -47,7 +48,7 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     const msg = error.message.toLowerCase().includes('invalid') ? 'invalid' : 'unknown'
-    return NextResponse.redirect(`${base}/login?error=${msg}`, { status: 303 })
+    return NextResponse.redirect(`${base}${redirectPath}?error=${msg}`, { status: 303 })
   }
 
   if (isDemo) {
