@@ -112,6 +112,29 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
         </div>
       )}
 
+      {/* Duży przycisk START */}
+      {!allDone && (() => {
+        const nextEx = exercises.find(e => !e.completed_today)
+        if (!nextEx) return null
+        return (
+          <Link
+            href={`/pacjent/cwiczenie/${nextEx.plan_exercise_id}`}
+            className="block bg-gradient-to-br from-brand-500 to-brand-700 rounded-3xl p-6 text-center text-white shadow-lg shadow-brand-200 active:scale-95 transition-transform"
+          >
+            <div className="text-5xl mb-2">{nextEx.emoji}</div>
+            <p className="text-2xl font-black">
+              {done === 0 ? 'Zacznij ćwiczenia!' : 'Kontynuuj!'}
+            </p>
+            <p className="text-brand-200 text-sm mt-1">
+              {done === 0
+                ? `${total} ćwiczeń na dziś`
+                : `Jeszcze ${total - done} do zrobienia`
+              }
+            </p>
+          </Link>
+        )
+      })()}
+
       {/* Karty ćwiczeń */}
       {exercises.map((ex, idx) => {
         const isNext = !ex.completed_today && exercises.slice(0, idx).every(e => e.completed_today)
