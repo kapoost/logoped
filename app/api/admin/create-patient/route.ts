@@ -22,11 +22,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
-    const { full_name, email, password, date_of_birth, therapist_id } = await request.json()
+    const { full_name, email: rawLogin, password, date_of_birth, therapist_id } = await request.json()
 
-    if (!full_name || !email || !password || password.length < 8) {
+    if (!full_name || !rawLogin || !password || password.length < 8) {
       return NextResponse.json({ error: 'Nieprawidłowe dane formularza.' }, { status: 400 })
     }
+
+    // Login → email: jeśli brak @, dopisz @logoped.app (spójne z logowaniem)
+    const email = rawLogin.includes('@') ? rawLogin : `${rawLogin.toLowerCase().trim()}@logoped.app`
 
     // Sprawdź unikalność imienia pacjenta dla tego logopedy
     const { data: existingPatients } = await supabase
