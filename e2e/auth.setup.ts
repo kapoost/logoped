@@ -42,7 +42,9 @@ for (const role of ROLES) {
     }
 
     // Loguj przez HTML form — identycznie jak użytkownik
-    await page.goto(`${BASE}/login`)
+    // Admin/therapist → /login/logopeda, patient → /login
+    const loginPath = role.name === 'patient' ? '/login' : '/login/logopeda'
+    await page.goto(`${BASE}${loginPath}`)
     await page.waitForLoadState('networkidle')
 
     await page.locator('input[name="login"]:visible').fill(role.email)

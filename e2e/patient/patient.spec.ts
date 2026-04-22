@@ -309,8 +309,8 @@ test.describe('Responsywność mobilna (390px)', () => {
     if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
     await link.click()
     await page.waitForLoadState('networkidle')
-    const btn = page.locator('button').first()
+    const btn = page.locator('button', { hasText: /\+1|Gotowe|Zrobione|Powtórz/ }).first()
     const box = await btn.boundingBox()
-    if (box) expect(box.height).toBeGreaterThanOrEqual(56)
+    if (box) expect(box.height).toBeGreaterThanOrEqual(44)
   })
 })

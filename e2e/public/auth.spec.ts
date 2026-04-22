@@ -5,7 +5,7 @@ test.describe('Strona logowania', () => {
   test('pokazuje formularz logowania', async ({ page }) => {
     await page.goto('/login')
     await page.waitForLoadState('networkidle')
-    await expect(page.locator('input[name="login"]')).toBeVisible()
+    await expect(page.locator('input[name="login"]:visible')).toBeVisible()
     await expect(page.locator('input[type="password"]')).toBeVisible()
     // Przycisk Zaloguj się (nie Demo)
     await expect(page.getByRole('button', { name: 'Zaloguj się' })).toBeVisible()
@@ -25,13 +25,13 @@ test.describe('Strona logowania', () => {
 
   test('baner demo pokazuje kredencjały', async ({ page }) => {
     await page.goto('/login')
-    await expect(page.locator('code', { hasText: 'demo' })).toBeVisible()
-    await expect(page.locator('code', { hasText: 'Demo2026!' })).toBeVisible()
+    await expect(page.getByText('demo', { exact: true })).toBeVisible()
+    await expect(page.getByText('Demo2026!')).toBeVisible()
   })
 
-  test('info o danych od logopedy jest widoczne', async ({ page }) => {
+  test('link do logowania logopedy jest widoczny', async ({ page }) => {
     await page.goto('/login')
-    await expect(page.locator('text=Dane do logowania otrzymasz od logopedy')).toBeVisible()
+    await expect(page.getByRole('link', { name: /Zaloguj się tutaj/ })).toBeVisible()
   })
 
   test('złe hasło → zostaje na /login z błędem', async ({ page }) => {
