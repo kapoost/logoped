@@ -24,6 +24,7 @@ export default async function NowyPlanPage({ searchParams }: Props) {
     .from('exercises')
     .select('id, title, category, difficulty, emoji, duration_seconds, target_sounds')
     .or(`is_public.eq.true,created_by.eq.${session.profile.id}`)
+    .is('archived_at', null)
     .order('category')
     .order('title')
 

@@ -2,7 +2,7 @@
 import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import { getSessionUser } from '@/lib/supabase/server'
-import NewExerciseForm from '@/app/logopeda/cwiczenia/nowe/NewExerciseForm'
+import ExerciseForm from '@/app/logopeda/cwiczenia/nowe/ExerciseForm'
 import Link from 'next/link'
 
 export const metadata: Metadata = { title: 'Admin — Nowe ćwiczenie' }
@@ -25,7 +25,7 @@ export default async function AdminNoweCwiczeniePage() {
         </p>
       </div>
       <div className="bg-white rounded-2xl border border-gray-100 p-6">
-        <NewExerciseForm therapistId={session.profile.id} isAdmin={true} />
+        <ExerciseForm therapistId={session.profile.id} isAdmin={true} />
       </div>
     </div>
   )

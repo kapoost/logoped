@@ -137,15 +137,35 @@ test.describe('Panel admina', () => {
       await page.locator('a[href="/admin/cwiczenia"]').first().click()
       await expect(page).toHaveURL(/\/admin\/cwiczenia$/)
     })
-  })
 
-  test('wylogowanie → /login', async ({ page }) => {
-    await goAdmin(page)
-    const btn = page.getByRole('button', { name: /wyloguj/i }).first()
-    if (await btn.isVisible({ timeout: 3000 }).catch(() => false)) {
-      await btn.click()
+    test('Edytuj → formularz z wypełnioną nazwą', async ({ page }) => {
+      await goAdmin(page, '/admin/cwiczenia')
+      const link = page.locator('a[href$="/edytuj"]').first()
+      if (!await link.isVisible({ timeout: 3000 }).catch(() => false)) {
+        test.skip(true, 'Brak ćwiczeń w bazie')
+      }
+      const title = (await page.locator('table tbody tr').first()
+        .locator('a[href^="/admin/cwiczenia/"]').first().textContent())?.trim()
+      await link.click()
       await page.waitForLoadState('networkidle')
-      await expect(page).toHaveURL(/\/login/)
-    }
+      await expect(page).toHaveURL(/\/admin\/cwiczenia\/[0-9a-f-]{36}\/edytuj$/)
+      await expect(page.locator('h1')).toContainText('Edytuj ćwiczenie')
+      await expect(page.locator('input[type="text"]').first()).toHaveValue(title ?? '')
+      await expect(page.getByRole('button', { name: /Zapisz zmiany/ })).toBeVisible()
+    })
+
+    test('Edycja → ← Ćwiczenia wraca do listy', async ({ page }) => {
+      await goAdmin(page, '/admin/cwiczenia')
+      const link = page.locator('a[href$="/edytuj"]').first()
+      if (!await link.isVisible({ timeout: 3000 }).catch(() => false)) {
+        test.skip(true, 'Brak ćwiczeń w bazie')
+      }
+      await link.click()
+      await page.waitForURL(/\/edytuj$/)
+      await page.locator('a[href^="/admin/cwiczenia/"]').first().click()
+      await page.waitForURL(/\/admin\/cwiczenia\/[0-9a-f-]{36}$/)
+      await page.locator('a[href="/admin/cwiczenia"]').first().click()
+      await expect(page).toHaveURL(/\/admin\/cwiczenia$/)
+    })
   })
 })

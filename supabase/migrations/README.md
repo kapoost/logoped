@@ -9,6 +9,11 @@ supabase/migrations/
 ├── 003_plans.sql              # Plany ćwiczeń + harmonogramy + RLS
 ├── 004_completions_and_stats.sql  # Wykonania + gamifikacja + triggery punktów/odznak
 ├── 005_views.sql              # Widoki i funkcje pomocnicze dla frontendu
+├── 006_storage.sql            # Bucket na media ćwiczeń
+├── 007_licenses.sql           # Licencje logopedów
+├── 008_login_bez_maila.sql    # Logowanie loginem zamiast e-maila
+├── 009_security_fixes.sql     # security_invoker na widokach
+├── 010_exercise_archive.sql   # Archiwizacja ćwiczeń + widok exercise_usage
 └── seed.sql                   # 50+ ćwiczeń publicznych (uruchom po migracjach)
 ```
 

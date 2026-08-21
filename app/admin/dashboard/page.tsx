@@ -22,7 +22,7 @@ export default async function AdminDashboardPage() {
   ] = await Promise.all([
     admin.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'therapist'),
     admin.from('profiles').select('*', { count: 'exact', head: true }).eq('role', 'patient'),
-    admin.from('exercises').select('*', { count: 'exact', head: true }),
+    admin.from('exercises').select('*', { count: 'exact', head: true }).is('archived_at', null),
     admin.from('exercise_completions').select('*', { count: 'exact', head: true }),
     admin.from('profiles')
       .select('id, full_name, created_at')

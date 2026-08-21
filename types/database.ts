@@ -45,8 +45,18 @@ export interface Exercise {
   emoji: string
   created_by: string | null   // null = publiczne (admin)
   is_public: boolean
+  archived_at: string | null  // null = w obiegu; data = wycofane z bazy i kreatora planów
+  archived_by: string | null
   created_at: string
   updated_at: string
+}
+
+/** Widok public.exercise_usage — ile planów używa ćwiczenia */
+export interface ExerciseUsage {
+  exercise_id: string
+  plan_count: number
+  active_plan_count: number
+  patient_count: number
 }
 
 export interface ExercisePlan {

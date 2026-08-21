@@ -27,6 +27,7 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
   let query = supabase
     .from('exercises')
     .select('id, title, description, category, difficulty, target_sounds, emoji, duration_seconds, created_by, is_public')
+    .is('archived_at', null)
     .order('category')
     .order('title')
 
@@ -36,6 +37,14 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
   if (sp.q)         query = query.ilike('title', `%${sp.q}%`)
 
   const { data: exercises } = await query.limit(100)
+
+  // Własne archiwum — tylko swoje, żeby dało się przywrócić
+  const { data: archived } = await supabase
+    .from('exercises')
+    .select('id, title, emoji, archived_at')
+    .eq('created_by', session.profile.id)
+    .not('archived_at', 'is', null)
+    .order('archived_at', { ascending: false })
 
   // Grupuj wg kategorii
   const byCategory = (exercises ?? []).reduce((acc, ex) => {
@@ -104,9 +113,10 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
             </h2>
             <div className="space-y-2">
               {exs!.map(ex => (
-                <div
+                <Link
                   key={ex.id}
-                  className="bg-white border border-gray-100 rounded-2xl px-4 py-3 flex items-center gap-3"
+                  href={`/logopeda/cwiczenia/${ex.id}`}
+                  className="bg-white border border-gray-100 rounded-2xl px-4 py-3 flex items-center gap-3 hover:border-green-200 hover:bg-green-50/30 active:scale-[0.99] transition"
                 >
                   <span className="text-2xl w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center flex-shrink-0">
                     {ex.emoji}
@@ -134,11 +144,40 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
                   <span className="text-xs text-gray-300 flex-shrink-0">
                     {ex.duration_seconds}s
                   </span>
-                </div>
+                  <span className="text-gray-300 flex-shrink-0">›</span>
+                </Link>
               ))}
             </div>
           </section>
         ))}
+
+        {archived && archived.length > 0 && (
+          <section>
+            <h2 className="text-sm font-bold text-gray-500 uppercase tracking-wide mb-2">
+              Twoje archiwum ({archived.length})
+            </h2>
+            <div className="space-y-2">
+              {archived.map(ex => (
+                <Link
+                  key={ex.id}
+                  href={`/logopeda/cwiczenia/${ex.id}`}
+                  className="bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 flex items-center gap-3 hover:border-gray-200 transition"
+                >
+                  <span className="text-2xl w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 grayscale">
+                    {ex.emoji}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-gray-500 truncate">{ex.title}</p>
+                    <p className="text-[10px] text-gray-400">
+                      zarchiwizowane {new Date(ex.archived_at!).toLocaleDateString('pl-PL')}
+                    </p>
+                  </div>
+                  <span className="text-gray-300 flex-shrink-0">›</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
 
         {!exercises?.length && (
           <div className="text-center py-12">

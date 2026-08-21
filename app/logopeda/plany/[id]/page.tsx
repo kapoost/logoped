@@ -48,6 +48,7 @@ export default async function PlanDetailPage({ params }: Props) {
     .from('exercises')
     .select('id, title, emoji, category, difficulty, duration_seconds, target_sounds')
     .or(`is_public.eq.true,created_by.eq.${session.profile.id}`)
+    .is('archived_at', null)
     .order('category').order('title')
 
   const DAYS = ['Pn','Wt','Śr','Cz','Pt','So','Nd']

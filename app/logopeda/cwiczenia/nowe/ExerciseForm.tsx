@@ -1,34 +1,46 @@
 'use client'
-// app/logopeda/cwiczenia/nowe/NewExerciseForm.tsx
+// app/logopeda/cwiczenia/nowe/ExerciseForm.tsx
+// Jeden formularz w dwóch trybach: dodawanie (brak `exercise`) i edycja (`exercise` podane).
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CATEGORY_LABELS } from '@/types/database'
-import type { ExerciseCategory, DifficultyLevel } from '@/types/database'
+import type { Exercise, ExerciseCategory, DifficultyLevel } from '@/types/database'
 
 const EMOJIS = ['👅','👄','💨','🔤','👂','🐍','🐱','🔔','🎯','🦷','🎤','🐸','💪','🌸','🎈','🥤','🪶','🧘','🐘','😛','😮','😁']
 
 interface Props {
   therapistId: string
   isAdmin?:    boolean
+  exercise?:   Exercise    // podane = tryb edycji
   onSuccess?:  () => void
 }
 
-export default function NewExerciseForm({ therapistId, isAdmin, onSuccess }: Props) {
+export default function ExerciseForm({ therapistId, isAdmin, exercise, onSuccess }: Props) {
   const router = useRouter()
+  const isEdit = !!exercise
 
-  const [title,        setTitle]        = useState('')
-  const [description,  setDescription]  = useState('')
-  const [instructions, setInstructions] = useState('')
-  const [category,     setCategory]     = useState<ExerciseCategory>('jezyka')
-  const [difficulty,   setDifficulty]   = useState<DifficultyLevel>('latwe')
-  const [emoji,        setEmoji]        = useState('👅')
-  const [sounds,       setSounds]       = useState('')
-  const [duration,     setDuration]     = useState(60)
-  const [isPublic,     setIsPublic]     = useState(false)
+  const [title,        setTitle]        = useState(exercise?.title ?? '')
+  const [description,  setDescription]  = useState(exercise?.description ?? '')
+  const [instructions, setInstructions] = useState(exercise?.instructions ?? '')
+  const [category,     setCategory]     = useState<ExerciseCategory>(exercise?.category ?? 'jezyka')
+  const [difficulty,   setDifficulty]   = useState<DifficultyLevel>(exercise?.difficulty ?? 'latwe')
+  const [emoji,        setEmoji]        = useState(exercise?.emoji ?? '👅')
+  const [sounds,       setSounds]       = useState(exercise?.target_sounds?.join(', ') ?? '')
+  const [duration,     setDuration]     = useState(exercise?.duration_seconds ?? 60)
+  const [isPublic,     setIsPublic]     = useState(exercise?.is_public ?? false)
   const [saving,       setSaving]       = useState(false)
   const [error,        setError]        = useState<string | null>(null)
   const [success,      setSuccess]      = useState(false)
+
+  // Ćwiczenie może mieć ikonę spoza palety — pokaż ją, żeby picker nie wyglądał na pusty
+  const palette = exercise?.emoji && !EMOJIS.includes(exercise.emoji)
+    ? [exercise.emoji, ...EMOJIS]
+    : EMOJIS
+
+  // Przy dodawaniu przez admina widoczność jest wymuszona (publiczna baza),
+  // więc przełącznik pokazujemy tylko logopedzie. W edycji admin steruje nią wprost.
+  const showVisibilityToggle = isEdit || !isAdmin
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -45,22 +57,31 @@ export default function NewExerciseForm({ therapistId, isAdmin, onSuccess }: Pro
       .map(s => s.trim().toLowerCase())
       .filter(Boolean)
 
+    const payload = {
+      title:            title.trim(),
+      description:      description.trim() || null,
+      instructions:     instructions.trim(),
+      category,
+      difficulty,
+      emoji,
+      target_sounds,
+      duration_seconds: duration,
+      is_public:        showVisibilityToggle ? isPublic : true,
+    }
+
     // Użyj API route (serwer widzi sesję z httpOnly cookies)
-    const res = await fetch('/api/logopeda/create-exercise', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title:            title.trim(),
-        description:      description.trim() || null,
-        instructions:     instructions.trim(),
-        category,
-        difficulty,
-        emoji,
-        target_sounds,
-        duration_seconds: duration,
-        is_public:        isAdmin ? true : isPublic,
-      }),
-    })
+    const endpoint = isEdit
+      ? (isAdmin ? '/api/admin/update-exercise' : '/api/logopeda/update-exercise')
+      : '/api/logopeda/create-exercise'
+
+    const res = await fetch(
+      endpoint,
+      {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(isEdit ? { ...payload, exercise_id: exercise!.id } : payload),
+      }
+    )
 
     const data = await res.json()
     setSaving(false)
@@ -73,7 +94,9 @@ export default function NewExerciseForm({ therapistId, isAdmin, onSuccess }: Pro
     setSuccess(true)
     onSuccess?.()
     setTimeout(() => {
-      router.push(isAdmin ? '/admin/cwiczenia' : '/logopeda/cwiczenia')
+      if (isAdmin)      router.push('/admin/cwiczenia')
+      else if (isEdit)  router.push(`/logopeda/cwiczenia/${exercise!.id}`)
+      else              router.push('/logopeda/cwiczenia')
       router.refresh()
     }, 1200)
   }
@@ -81,7 +104,9 @@ export default function NewExerciseForm({ therapistId, isAdmin, onSuccess }: Pro
   if (success) return (
     <div className="text-center py-8">
       <div className="text-5xl mb-3">✅</div>
-      <p className="font-bold text-green-700 text-lg">Ćwiczenie dodane!</p>
+      <p className="font-bold text-green-700 text-lg">
+        {isEdit ? 'Zmiany zapisane!' : 'Ćwiczenie dodane!'}
+      </p>
       <p className="text-sm text-gray-500 mt-1">Przekierowuję…</p>
     </div>
   )
@@ -92,7 +117,7 @@ export default function NewExerciseForm({ therapistId, isAdmin, onSuccess }: Pro
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Ikona ćwiczenia</label>
         <div className="flex flex-wrap gap-2">
-          {EMOJIS.map(e => (
+          {palette.map(e => (
             <button key={e} type="button" onClick={() => setEmoji(e)}
               className={`text-2xl w-10 h-10 rounded-xl border-2 flex items-center justify-center transition
                 ${emoji === e ? 'border-green-600 bg-green-50 scale-110' : 'border-gray-200 hover:border-gray-300'}`}>
@@ -169,7 +194,7 @@ export default function NewExerciseForm({ therapistId, isAdmin, onSuccess }: Pro
       </div>
 
       {/* Prywatne/publiczne */}
-      {!isAdmin && (
+      {showVisibilityToggle && (
         <label className="flex items-center gap-3 cursor-pointer">
           <div onClick={() => setIsPublic(!isPublic)}
             className={`w-11 h-6 rounded-full transition-colors ${isPublic ? 'bg-green-600' : 'bg-gray-300'} relative`}>
@@ -177,7 +202,11 @@ export default function NewExerciseForm({ therapistId, isAdmin, onSuccess }: Pro
           </div>
           <div>
             <div className="text-sm font-medium text-gray-900">{isPublic ? 'Publiczne' : 'Prywatne'}</div>
-            <div className="text-xs text-gray-400">{isPublic ? 'Widoczne dla innych logopedów' : 'Tylko Twoje ćwiczenie'}</div>
+            <div className="text-xs text-gray-400">
+              {isEdit && exercise!.created_by === null
+                ? (isPublic ? 'Widoczne dla wszystkich logopedów' : 'Ukryte — nikt go nie zobaczy w bazie')
+                : (isPublic ? 'Widoczne dla innych logopedów' : 'Tylko Twoje ćwiczenie')}
+            </div>
           </div>
         </label>
       )}
@@ -186,7 +215,7 @@ export default function NewExerciseForm({ therapistId, isAdmin, onSuccess }: Pro
 
       <button type="submit" disabled={saving}
         className="w-full bg-green-700 hover:bg-green-800 disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition active:scale-95 flex items-center justify-center gap-2">
-        {saving ? 'Zapisuję…' : '✓ Dodaj ćwiczenie'}
+        {saving ? 'Zapisuję…' : isEdit ? '✓ Zapisz zmiany' : '✓ Dodaj ćwiczenie'}
       </button>
     </form>
   )
