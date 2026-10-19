@@ -27,7 +27,7 @@ export default async function PlanDetailPage({ params }: Props) {
       *,
       plan_exercises (
         id, order_index, repetitions, notes,
-        exercises ( id, title, emoji, category, difficulty, duration_seconds )
+        exercises ( id, title, emoji, media_url, category, difficulty, duration_seconds )
       ),
       schedules ( id, days_of_week, reminder_time, is_active ),
       profiles!patient_id ( full_name )
@@ -46,7 +46,7 @@ export default async function PlanDetailPage({ params }: Props) {
   // Pobierz dostępne ćwiczenia do ewentualnego dodania
   const { data: allExercises } = await supabase
     .from('exercises')
-    .select('id, title, emoji, category, difficulty, duration_seconds, target_sounds')
+    .select('id, title, emoji, media_url, category, difficulty, duration_seconds, target_sounds')
     .or(`is_public.eq.true,created_by.eq.${session.profile.id}`)
     .is('archived_at', null)
     .order('category').order('title')

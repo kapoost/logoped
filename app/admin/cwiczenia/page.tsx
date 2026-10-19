@@ -8,6 +8,7 @@ import { CATEGORY_LABELS, DIFFICULTY_LABELS } from '@/types/database'
 import type { ExerciseCategory, DifficultyLevel } from '@/types/database'
 import AdminExerciseActions from './AdminExerciseActions'
 import { plany } from '@/lib/plural'
+import ExerciseImage from '@/components/shared/ExerciseImage'
 
 export const metadata: Metadata = { title: 'Admin — Ćwiczenia' }
 export const revalidate = 0
@@ -21,7 +22,7 @@ export default async function AdminCwiczeniaPage() {
   const [{ data: exercises }, usage] = await Promise.all([
     admin
       .from('exercises')
-      .select('id, title, category, difficulty, emoji, is_public, created_by, duration_seconds, target_sounds, archived_at')
+      .select('id, title, category, difficulty, emoji, media_url, is_public, created_by, duration_seconds, target_sounds, archived_at')
       .order('category')
       .order('title'),
     getUsageMap(),
@@ -73,7 +74,11 @@ export default async function AdminCwiczeniaPage() {
             <tbody className="divide-y divide-gray-50">
               {publicEx.map(ex => (
                 <tr key={ex.id} className="hover:bg-gray-50">
-                  <td className="px-5 py-3 text-xl">{ex.emoji}</td>
+                  <td className="px-5 py-3 text-xl">
+                    <span className="w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center">
+                      <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={72} />
+                    </span>
+                  </td>
                   <td className="px-5 py-3">
                     <Link href={`/admin/cwiczenia/${ex.id}`} className="font-medium text-gray-900 hover:text-green-800">
                       {ex.title}
@@ -135,7 +140,11 @@ export default async function AdminCwiczeniaPage() {
               <tbody className="divide-y divide-gray-50">
                 {privateEx.map(ex => (
                   <tr key={ex.id} className="hover:bg-gray-50">
-                    <td className="px-5 py-3 text-xl">{ex.emoji}</td>
+                    <td className="px-5 py-3 text-xl">
+                    <span className="w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center">
+                      <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={72} />
+                    </span>
+                  </td>
                     <td className="px-5 py-3">
                       <Link href={`/admin/cwiczenia/${ex.id}`} className="font-medium text-gray-900 hover:text-green-800">
                         {ex.title}
@@ -193,7 +202,11 @@ export default async function AdminCwiczeniaPage() {
               <tbody className="divide-y divide-gray-50">
                 {archived.map(ex => (
                   <tr key={ex.id} className="hover:bg-gray-50">
-                    <td className="px-5 py-3 text-xl grayscale">{ex.emoji}</td>
+                    <td className="px-5 py-3 text-xl grayscale">
+                      <span className="w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center">
+                        <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={72} />
+                      </span>
+                    </td>
                     <td className="px-5 py-3">
                       <Link href={`/admin/cwiczenia/${ex.id}`} className="font-medium text-gray-500 hover:text-green-800">
                         {ex.title}

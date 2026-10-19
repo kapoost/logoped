@@ -8,6 +8,7 @@ import { CATEGORY_LABELS, DIFFICULTY_LABELS } from '@/types/database'
 import Link from 'next/link'
 import ExerciseLifecycleActions from '@/components/shared/ExerciseLifecycleActions'
 import { plural } from '@/lib/plural'
+import ExerciseImage from '@/components/shared/ExerciseImage'
 
 export const metadata: Metadata = { title: 'Admin — Podgląd ćwiczenia' }
 export const revalidate = 0
@@ -38,8 +39,8 @@ export default async function AdminPodgladCwiczeniaPage({ params }: { params: { 
       </Link>
 
       <div className="flex items-start gap-4">
-        <span className="text-3xl w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center flex-shrink-0">
-          {ex.emoji}
+        <span className="text-3xl w-14 h-14 bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center flex-shrink-0">
+          <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
         </span>
         <div className="min-w-0">
           <div className="flex items-center gap-2 flex-wrap">

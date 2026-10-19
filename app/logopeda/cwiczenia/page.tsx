@@ -5,6 +5,7 @@ import type { Metadata } from 'next'
 import type { ExerciseCategory, DifficultyLevel } from '@/types/database'
 import { CATEGORY_LABELS, DIFFICULTY_LABELS } from '@/types/database'
 import Link from 'next/link'
+import ExerciseImage from '@/components/shared/ExerciseImage'
 
 export const metadata: Metadata = { title: 'Baza ćwiczeń' }
 export const revalidate = 60
@@ -26,7 +27,7 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
 
   let query = supabase
     .from('exercises')
-    .select('id, title, description, category, difficulty, target_sounds, emoji, duration_seconds, created_by, is_public')
+    .select('id, title, description, category, difficulty, target_sounds, emoji, media_url, duration_seconds, created_by, is_public')
     .is('archived_at', null)
     .order('category')
     .order('title')
@@ -41,7 +42,7 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
   // Własne archiwum — tylko swoje, żeby dało się przywrócić
   const { data: archived } = await supabase
     .from('exercises')
-    .select('id, title, emoji, archived_at')
+    .select('id, title, emoji, media_url, archived_at')
     .eq('created_by', session.profile.id)
     .not('archived_at', 'is', null)
     .order('archived_at', { ascending: false })
@@ -119,8 +120,8 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
                   href={`/logopeda/cwiczenia/${ex.id}`}
                   className="bg-white border border-gray-100 rounded-2xl px-4 py-3 flex items-center gap-3 hover:border-green-200 hover:bg-green-50/30 active:scale-[0.99] transition"
                 >
-                  <span className="text-2xl w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                    {ex.emoji}
+                  <span className="text-2xl w-10 h-10 bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0">
+                    <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={80} />
                   </span>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-gray-800 truncate">{ex.title}</p>
@@ -164,8 +165,8 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
                   href={`/logopeda/cwiczenia/${ex.id}`}
                   className="bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 flex items-center gap-3 hover:border-gray-200 transition"
                 >
-                  <span className="text-2xl w-10 h-10 bg-white rounded-xl flex items-center justify-center flex-shrink-0 grayscale">
-                    {ex.emoji}
+                  <span className="text-2xl w-10 h-10 bg-white rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0 grayscale">
+                    <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={80} />
                   </span>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-500 truncate">{ex.title}</p>

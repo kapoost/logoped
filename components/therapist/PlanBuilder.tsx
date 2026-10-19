@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { clsx } from 'clsx'
 import { CATEGORY_LABELS, DIFFICULTY_LABELS } from '@/types/database'
 import type { ExerciseCategory, DifficultyLevel } from '@/types/database'
+import ExerciseImage from '@/components/shared/ExerciseImage'
 
 interface Exercise {
   id: string
@@ -13,6 +14,7 @@ interface Exercise {
   category: ExerciseCategory
   difficulty: DifficultyLevel
   emoji: string
+  media_url: string | null
   duration_seconds: number
   target_sounds: string[] | null
 }
@@ -260,7 +262,9 @@ export default function PlanBuilder({ patients, exercises, therapistId, preselec
                         >▼</button>
                       </div>
 
-                      <span className="text-xl">{item.exercise.emoji}</span>
+                      <span className="text-xl w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
+                        <ExerciseImage src={item.exercise.media_url} emoji={item.exercise.emoji} title={item.exercise.title} size={72} />
+                      </span>
 
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-gray-800 truncate">
@@ -346,7 +350,9 @@ export default function PlanBuilder({ patients, exercises, therapistId, preselec
                       isAdded ? 'opacity-40 cursor-not-allowed' : 'hover:bg-green-50 active:bg-green-100'
                     )}
                   >
-                    <span className="text-xl">{ex.emoji}</span>
+                    <span className="text-xl w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
+                      <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={72} />
+                    </span>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-800 truncate">{ex.title}</p>
                       <p className="text-xs text-gray-400">

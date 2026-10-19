@@ -7,6 +7,7 @@ import { isDemo, getDemoReps, getDemoCompleted, setDemoReps } from '@/lib/demoPr
 import { playRep, playExerciseDone, playSessionComplete } from '@/lib/sounds'
 import { addDemoExercisePoints, addDemoSessionBonus } from '@/lib/demoStats'
 import Confetti from './Confetti'
+import ExerciseImage from '@/components/shared/ExerciseImage'
 import type { TodayExercise } from '@/types/database'
 
 const DIFFICULTY_COLOR = {
@@ -119,9 +120,9 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-7xl mb-2 drop-shadow"
+            className="text-7xl mb-2 drop-shadow w-28 h-28 rounded-3xl overflow-hidden flex items-center justify-center"
           >
-            {ex.emoji}
+            <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={224} priority />
           </motion.div>
           <h1 className="text-xl font-black text-white text-center px-8">{ex.title}</h1>
           <span className={`mt-2 text-xs font-bold px-3 py-1 rounded-full ${DIFFICULTY_COLOR[ex.difficulty]}`}>

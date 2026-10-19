@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { clsx } from 'clsx'
 import { CATEGORY_LABELS, DIFFICULTY_LABELS } from '@/types/database'
 import type { ExerciseCategory, DifficultyLevel } from '@/types/database'
+import ExerciseImage from '@/components/shared/ExerciseImage'
 
 interface PlanExerciseRow {
   id: string
@@ -16,6 +17,7 @@ interface PlanExerciseRow {
     id: string
     title: string
     emoji: string
+    media_url: string | null
     category: ExerciseCategory
     difficulty: DifficultyLevel
     duration_seconds: number
@@ -26,6 +28,7 @@ interface AvailableExercise {
   id: string
   title: string
   emoji: string
+  media_url: string | null
   category: ExerciseCategory
   difficulty: DifficultyLevel
   duration_seconds: number
@@ -76,7 +79,7 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
       order_index: prev.length,
       repetitions: 5,
       notes: null,
-      exercises: { id: ex.id, title: ex.title, emoji: ex.emoji,
+      exercises: { id: ex.id, title: ex.title, emoji: ex.emoji, media_url: ex.media_url,
                    category: ex.category, difficulty: ex.difficulty,
                    duration_seconds: ex.duration_seconds },
     }])
@@ -229,7 +232,9 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
                       className="text-gray-300 hover:text-gray-600 disabled:opacity-20 text-xs leading-none">▼</button>
                   </div>
 
-                  <span className="text-lg">{item.exercises.emoji}</span>
+                  <span className="text-lg w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
+                    <ExerciseImage src={item.exercises.media_url} emoji={item.exercises.emoji} title={item.exercises.title} size={64} />
+                  </span>
 
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-gray-800 truncate">
@@ -306,7 +311,9 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
             ) : filtered.map(ex => (
               <button key={ex.id} onClick={() => addExercise(ex)}
                 className="w-full px-4 py-3 flex items-center gap-3 text-left hover:bg-green-50 transition">
-                <span className="text-lg">{ex.emoji}</span>
+                <span className="text-lg w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
+                  <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={64} />
+                </span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-800 truncate">{ex.title}</p>
                   <p className="text-xs text-gray-400">

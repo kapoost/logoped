@@ -22,7 +22,7 @@ export default async function NowyPlanPage({ searchParams }: Props) {
 
   const { data: exercises } = await supabase
     .from('exercises')
-    .select('id, title, category, difficulty, emoji, duration_seconds, target_sounds')
+    .select('id, title, category, difficulty, emoji, media_url, duration_seconds, target_sounds')
     .or(`is_public.eq.true,created_by.eq.${session.profile.id}`)
     .is('archived_at', null)
     .order('category')

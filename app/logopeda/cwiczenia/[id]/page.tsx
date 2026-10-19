@@ -9,6 +9,7 @@ import ExercisePreviewActions from './ExercisePreviewActions'
 import ExerciseLifecycleActions from '@/components/shared/ExerciseLifecycleActions'
 import { getExerciseUsage } from '@/lib/exercises/usage'
 import { plural } from '@/lib/plural'
+import ExerciseImage from '@/components/shared/ExerciseImage'
 
 export const metadata: Metadata = { title: 'Podgląd ćwiczenia' }
 export const revalidate = 0
@@ -39,8 +40,8 @@ export default async function PodgladCwiczeniaPage({ params }: { params: { id: s
           ← Baza ćwiczeń
         </Link>
         <div className="flex items-start gap-3 mt-3">
-          <span className="text-3xl w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center flex-shrink-0">
-            {ex.emoji}
+          <span className="text-3xl w-14 h-14 bg-white/15 rounded-2xl overflow-hidden flex items-center justify-center flex-shrink-0">
+            <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
           </span>
           <div className="min-w-0">
             <h1 className="text-xl font-bold">{ex.title}</h1>
