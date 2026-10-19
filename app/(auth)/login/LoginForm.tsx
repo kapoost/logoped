@@ -71,7 +71,11 @@ export default function LoginForm({ error }: { error?: string }) {
         </button>
       </form>
 
-      <p className="text-center text-xs text-gray-400 mt-4">
+      <p className="text-center text-xs text-gray-400">
+        <Link href="/login/reset" className="text-gray-500 hover:text-gray-700 hover:underline">Nie pamiętam hasła</Link>
+      </p>
+
+      <p className="text-center text-xs text-gray-400">
         Jesteś logopedą? <Link href="/login/logopeda" className="text-brand-600 hover:underline font-medium">Zaloguj się tutaj</Link>
       </p>
     </div>

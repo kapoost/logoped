@@ -3,7 +3,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 import type { Database } from '@/types/database'
 
-const PUBLIC_ROUTES       = ['/', '/login', '/register', '/auth/callback', '/auth/error']
+const PUBLIC_ROUTES       = ['/', '/login', '/register', '/haslo', '/auth/callback', '/auth/error']
 const PUBLIC_API_PREFIXES = ['/api/push/', '/api/health', '/api/auth/', '/api/demo/']
 
 const ROLE_ROUTES: Array<{ prefix: string; roles: string[] }> = [
