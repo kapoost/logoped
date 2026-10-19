@@ -14,8 +14,15 @@ supabase/migrations/
 ├── 008_login_bez_maila.sql    # Logowanie loginem zamiast e-maila
 ├── 009_security_fixes.sql     # security_invoker na widokach
 ├── 010_exercise_archive.sql   # Archiwizacja ćwiczeń + widok exercise_usage
+├── 011_kategorie_polykanie_zuchwa.sql   # Kategorie: połykanie i żuchwa
+├── 012_seed_cwiczenia_logopedyczne.sql  # 92 ćwiczenia z materiałów logopedy
 └── seed.sql                   # 50+ ćwiczeń publicznych (uruchom po migracjach)
+
 ```
+**Uwaga do 011 i 012:** muszą iść w DWÓCH osobnych uruchomieniach. Postgres nie
+pozwala użyć nowej wartości enuma w tej samej transakcji, w której została dodana,
+a SQL Editor w panelu Supabase opakowuje wklejony skrypt w jedną transakcję.
+012 jest idempotentny — można go puścić ponownie bez dublowania wierszy.
 
 ## Sposób uruchomienia
 

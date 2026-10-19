@@ -312,4 +312,11 @@ $$ LANGUAGE sql IMMUTABLE SET search_path = '';
 -- ════════════════════════════════════════════════════════════
 
 CREATE SCHEMA IF NOT EXISTS extensions;
-ALTER EXTENSION IF EXISTS pg_trgm SET SCHEMA extensions;
+-- ALTER EXTENSION nie zna składni IF EXISTS — guard musi być po stronie PL/pgSQL,
+-- inaczej odtworzenie bazy od zera wywala się na tej linii.
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_trgm') THEN
+    ALTER EXTENSION pg_trgm SET SCHEMA extensions;
+  END IF;
+END $$;

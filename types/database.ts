@@ -9,6 +9,8 @@ export type ExerciseCategory =
   | 'artykulacyjne'
   | 'podniebienia'
   | 'sluchowe'
+  | 'polykanie'   // 011 — prawidłowy wzorzec połykania
+  | 'zuchwa'      // 011 — ruchomość i stabilizacja żuchwy
 export type DifficultyLevel = 'latwe' | 'srednie' | 'trudne'
 
 // ── Tabele ────────────────────────────────────────────────────────────────
@@ -199,6 +201,8 @@ export const CATEGORY_LABELS: Record<ExerciseCategory, string> = {
   artykulacyjne: 'Artykulacyjne 🔤',
   podniebienia:  'Podniebienie',
   sluchowe:      'Słuchowe 👂',
+  polykanie:     'Połykanie 💧',
+  zuchwa:        'Żuchwa 🦷',
 }
 
 export const DIFFICULTY_LABELS: Record<DifficultyLevel, string> = {
