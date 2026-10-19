@@ -4,6 +4,9 @@ import { createClient } from '@/lib/supabase/server'
 type UpdateItem = { id: string; order_index?: number; repetitions?: number; notes?: string | null }
 type InsertItem = { exercise_id: string; order_index?: number; repetitions?: number; notes?: string | null }
 
+/** Wiersze planu w kształcie, którego oczekuje PlanEditForm. */
+const PLAN_ROWS = 'id, order_index, repetitions, notes, exercises(id, title, emoji, category, difficulty, duration_seconds)'
+
 export async function POST(request: Request) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -25,24 +28,9 @@ export async function POST(request: Request) {
       toInsert?: InsertItem[]
     }
 
-    if (toDelete?.length) {
-      const { error } = await supabase.from('plan_exercises').delete().in('id', toDelete)
-      if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-
-    if (toUpdate?.length) {
-      // order_index też — kolejność ustawiona strzałkami w UI musi trafić do bazy
-      const results = await Promise.all(toUpdate.map(u =>
-        supabase.from('plan_exercises').update({
-          order_index: u.order_index,
-          repetitions: u.repetitions,
-          notes:       u.notes ?? null,
-        }).eq('id', u.id)
-      ))
-      const failed = results.find(r => r.error)
-      if (failed?.error) return NextResponse.json({ error: failed.error.message }, { status: 500 })
-    }
-
+    // Wstawiamy PRZED usuwaniem — to nie jest transakcja (trzy osobne wywołania
+    // PostgREST), więc gdy insert padnie na FK albo CHECK repetitions, plan ma
+    // nadal komplet ćwiczeń zamiast zostać okrojony w połowie zapisu.
     if (toInsert?.length) {
       // plan_id bierzemy ze sprawdzonego parametru, nie z wiersza od klienta
       const rows = toInsert.map(i => ({
@@ -55,9 +43,43 @@ export async function POST(request: Request) {
       const { error } = await supabase.from('plan_exercises').insert(rows)
       if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     }
+
+    if (toUpdate?.length) {
+      // Tylko pola faktycznie przysłane — inaczej brak `notes` w payloadzie
+      // kasowałby notatkę logopedy, a brak order_index i tak nic nie robi.
+      const results = await Promise.all(toUpdate.map(u => {
+        const patch: Record<string, unknown> = {}
+        if ('order_index' in u) patch.order_index = u.order_index
+        if ('repetitions' in u) patch.repetitions = u.repetitions
+        if ('notes'       in u) patch.notes       = u.notes ?? null
+        return supabase.from('plan_exercises')
+          .update(patch)
+          .eq('id', u.id)
+          .eq('plan_id', plan_id)   // nie pozwól adresować wierszy z innego planu
+      }))
+      const failed = results.find(r => r.error)
+      if (failed?.error) return NextResponse.json({ error: failed.error.message }, { status: 500 })
+    }
+
+    if (toDelete?.length) {
+      const { error } = await supabase
+        .from('plan_exercises')
+        .delete()
+        .in('id', toDelete)
+        .eq('plan_id', plan_id)     // jw. — id samo w sobie nie dowodzi, że to ten plan
+      if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+    }
   } else {
     return NextResponse.json({ error: `Nieznana akcja: ${action}` }, { status: 400 })
   }
 
-  return NextResponse.json({ ok: true })
+  // Zwracamy stan po zapisie, żeby klient odtworzył listę z bazy zamiast trzymać
+  // własne pozycje `new-…` — inaczej drugi zapis wstawiłby je po raz kolejny.
+  const { data: items } = await supabase
+    .from('plan_exercises')
+    .select(PLAN_ROWS)
+    .eq('plan_id', plan_id)
+    .order('order_index')
+
+  return NextResponse.json({ ok: true, items: items ?? [] })
 }

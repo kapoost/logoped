@@ -34,7 +34,10 @@ export async function POST(request: NextRequest) {
         },
       }
     )
-    await supabase.auth.signOut()
+    // scope: 'local' — domyślny 'global' unieważnia wszystkie sesje użytkownika,
+    // więc wylogowanie na telefonie wywalało logopedę z komputera (i rozsypywało
+    // zestaw E2E, bo projekt `integration` ubijał sesję projektowi `admin`).
+    await supabase.auth.signOut({ scope: 'local' })
   } catch (_) {}
 
   return redirect

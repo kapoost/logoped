@@ -16,6 +16,11 @@ playwright-report/
 test-results/
 e2e/.auth/
 
+# Artefakty builda — generowane przy każdym typecheck/build
+tsconfig.tsbuildinfo
+public/sw.js
+public/workbox-*.js
+
 # Misc
 .DS_Store
 *.bak

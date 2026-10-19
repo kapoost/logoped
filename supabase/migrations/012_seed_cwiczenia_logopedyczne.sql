@@ -9,9 +9,11 @@
 -- ON DELETE RESTRICT i wiszą na nim istniejące plany pacjentów.
 --
 -- Skrypt jest idempotentny: INSERT-y są strzeżone przez NOT EXISTS, UPDATE-y działają
--- po tytule. Na końcu DO-blok raportuje, czego nie udało się dopasować.
-
-BEGIN;
+-- po tytule. Nadpisania mają fallback na INSERT, więc na świeżej bazie (bez seed.sql)
+-- wchodzi komplet 92 ćwiczeń, a nie tylko te 78 nowych.
+--
+-- Bez jawnego BEGIN/COMMIT — `supabase db push` i SQL Editor same owijają skrypt
+-- w transakcję, a zagnieżdżony COMMIT zamykał ją przedwcześnie.
 -- ══════════════════════════════════════════════════════════════
 -- KONTROLA PRZED NADPISANIEM
 -- Jeśli któryś tytuł zniknął z bazy (ktoś zmienił nazwę, ćwiczenie usunięto),
@@ -47,7 +49,7 @@ BEGIN
   );
 
   IF brakujace IS NOT NULL THEN
-    RAISE WARNING 'Nie znaleziono do nadpisania (wejdą jako nowe lub wcale): %', brakujace;
+    RAISE NOTICE 'Nie znaleziono do nadpisania — wejdą jako nowe wiersze: %', brakujace;
   ELSE
     RAISE NOTICE 'Wszystkie 14 ćwiczenia do nadpisania odnalezione.';
   END IF;
@@ -70,6 +72,21 @@ UPDATE public.exercises SET
 WHERE title = 'Wąchanie kwiatka'
   AND category = 'oddechowe'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Wąchanie kwiatków', 'Nauka spokojnego wdechu nosem.', '1. Weź do ręki kwiatek.
+2. Powoli wciągnij powietrze nosem.
+3. Spokojnie wypuść powietrze ustami.',
+       'oddechowe'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 45, '🌸', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Wąchanie kwiatków' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Gaszenie świeczki',
   description      = 'Wydłużanie i kontrolowanie wydechu.',
@@ -84,6 +101,21 @@ UPDATE public.exercises SET
 WHERE title = 'Zgaś świeczkę'
   AND category = 'oddechowe'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Gaszenie świeczki', 'Wydłużanie i kontrolowanie wydechu.', '1. Nabierz powietrze nosem.
+2. Dmuchaj równym strumieniem na świeczkę.
+3. Staraj się nie robić gwałtownych wydechów.',
+       'oddechowe'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 45, '🕯️', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Gaszenie świeczki' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Bańki mydlane',
   description      = 'Regulacja siły wydechu.',
@@ -98,6 +130,21 @@ UPDATE public.exercises SET
 WHERE title = 'Bańki mydlane'
   AND category = 'oddechowe'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Bańki mydlane', 'Regulacja siły wydechu.', '1. Nabierz powietrze nosem.
+2. Powoli dmuchaj przez obręcz.
+3. Twórz jak największe bańki.',
+       'oddechowe'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 60, '🫧', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Bańki mydlane' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Nadmuchiwanie balonu',
   description      = 'Wzmacnianie mięśni oddechowych.',
@@ -111,6 +158,20 @@ UPDATE public.exercises SET
 WHERE title = 'Dmuchanie balonka'
   AND category = 'oddechowe'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Nadmuchiwanie balonu', 'Wzmacnianie mięśni oddechowych.', '1. Wykonaj głęboki wdech nosem.
+2. Nadmuchuj balon spokojnie i równomiernie.',
+       'oddechowe'::public.exercise_category, 'srednie'::public.difficulty_level,
+       NULL, 60, '🎈', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Nadmuchiwanie balonu' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Cmokanie',
   description      = 'Wzmacnianie mięśnia okrężnego warg.',
@@ -125,6 +186,21 @@ UPDATE public.exercises SET
 WHERE title = 'Całuski'
   AND category = 'warg'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Cmokanie', 'Wzmacnianie mięśnia okrężnego warg.', '1. Wysuń i zaokrąglij wargi.
+2. Zetknij szczęki.
+3. Cmokaj głośno kilka razy.',
+       'warg'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 30, '🐶', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Cmokanie' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Ryjek świnki',
   description      = 'Nauka wysuwania i zaokrąglania warg.',
@@ -138,6 +214,20 @@ UPDATE public.exercises SET
 WHERE title = 'Ryjek / trąbka'
   AND category = 'warg'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Ryjek świnki', 'Nauka wysuwania i zaokrąglania warg.', '1. Wysuń zaokrąglone wargi do przodu.
+2. Utrzymaj pozycję ryjka przez kilka sekund.',
+       'warg'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 30, '🐷', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Ryjek świnki' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Ryjek i uśmiech',
   description      = 'Naprzemienna praca mięśni warg.',
@@ -152,6 +242,21 @@ UPDATE public.exercises SET
 WHERE title = 'Uśmiech ↔ ryjek'
   AND category = 'warg'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Ryjek i uśmiech', 'Naprzemienna praca mięśni warg.', '1. Ułóż wargi w ryjek.
+2. Rozsuń je do szerokiego uśmiechu.
+3. Powtarzaj naprzemiennie.',
+       'warg'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 30, '🐰', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Ryjek i uśmiech' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Balonikowe policzki',
   description      = 'Kontrola powietrza w jamie ustnej.',
@@ -166,6 +271,21 @@ UPDATE public.exercises SET
 WHERE title = 'Dmuchanie policzków'
   AND category = 'warg'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Balonikowe policzki', 'Kontrola powietrza w jamie ustnej.', '1. Nadmuchaj policzki.
+2. Utrzymaj powietrze przez chwilę.
+3. Powoli je wypuść.',
+       'warg'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 30, '🐿️', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Balonikowe policzki' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Kląskający konik',
   description      = 'Pionizacja języka.',
@@ -180,6 +300,21 @@ UPDATE public.exercises SET
 WHERE title = 'Klaskanie językiem'
   AND category = 'jezyka'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Kląskający konik', 'Pionizacja języka.', '1. Przyklej język do podniebienia.
+2. Odklej go z głośnym kląśnięciem.
+3. Naśladuj konika uderzającego kopytami o bruk.',
+       'jezyka'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 45, '🐴', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Kląskający konik' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Liczenie zębów',
   description      = 'Precyzja ruchów czubka języka.',
@@ -194,6 +329,21 @@ UPDATE public.exercises SET
 WHERE title = 'Liczenie zębów językiem'
   AND category = 'jezyka'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Liczenie zębów', 'Precyzja ruchów czubka języka.', '1. Otwórz szeroko usta.
+2. Dotykaj czubkiem języka górnych zębów od wewnętrznej strony.
+3. Policz zęby po kolei.',
+       'jezyka'::public.exercise_category, 'srednie'::public.difficulty_level,
+       NULL, 60, '🦷', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Liczenie zębów' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Ziewający miś',
   description      = 'Unoszenie podniebienia miękkiego.',
@@ -207,6 +357,20 @@ UPDATE public.exercises SET
 WHERE title = 'Ziewanie'
   AND category = 'podniebienia'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Ziewający miś', 'Unoszenie podniebienia miękkiego.', '1. Opuść żuchwę.
+2. Ziewaj szeroko i spokojnie.',
+       'podniebienia'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 30, '🐻', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Ziewający miś' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Dziadek chrapie',
   description      = 'Aktywizacja podniebienia miękkiego.',
@@ -220,6 +384,20 @@ UPDATE public.exercises SET
 WHERE title = 'Chrapanie'
   AND category = 'podniebienia'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Dziadek chrapie', 'Aktywizacja podniebienia miękkiego.', '1. Naśladuj chrapanie na wdechu.
+2. Naśladuj chrapanie na wydechu.',
+       'podniebienia'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 30, '😴', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Dziadek chrapie' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Gołąbek grucha',
   description      = 'Praca podniebienia miękkiego.',
@@ -233,6 +411,20 @@ UPDATE public.exercises SET
 WHERE title = 'Płukanie gardła'
   AND category = 'podniebienia'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Gołąbek grucha', 'Praca podniebienia miękkiego.', '1. Nabierz do ust ciepłą wodę.
+2. Płucz gardło albo naśladuj płukanie bez wody.',
+       'podniebienia'::public.exercise_category, 'srednie'::public.difficulty_level,
+       NULL, 45, '🕊️', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Gołąbek grucha' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
+);
 UPDATE public.exercises SET
   title            = 'Echo w jaskini',
   description      = 'Przedłużona fonacja samogłosek.',
@@ -246,6 +438,20 @@ UPDATE public.exercises SET
 WHERE title = 'AAAA — głośne i długie'
   AND category = 'podniebienia'::public.exercise_category
   AND created_by IS NULL;
+
+-- Fallback: na świeżej bazie nie ma czego nadpisywać (seed.sql leci dopiero po
+-- migracjach), więc ćwiczenie musi wejść jako nowe.
+INSERT INTO public.exercises
+  (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
+SELECT 'Echo w jaskini', 'Przedłużona fonacja samogłosek.', '1. Zrób wdech nosem.
+2. Przeciągaj samogłoski: aaa, ooo, uuu.',
+       'podniebienia'::public.exercise_category, 'latwe'::public.difficulty_level,
+       NULL, 45, '🏔️', NULL, TRUE
+WHERE NOT EXISTS (
+  SELECT 1 FROM public.exercises
+  WHERE title = 'Echo w jaskini' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
+);
 
 -- ══════════════════════════════════════════════════════════════
 -- NOWE ĆWICZENIA (78)
@@ -261,6 +467,7 @@ SELECT 'Piórko w powietrzu', 'Ćwiczenie siły i kierunku wydechu.', '1. Połó
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Piórko w powietrzu' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -272,6 +479,7 @@ SELECT 'Wyścigi papierowych kulek', 'Kontrola wydechu.', '1. Przygotuj kulkę z
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Wyścigi papierowych kulek' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -282,6 +490,7 @@ SELECT 'Wiatraczek', 'Wydłużanie wydechu.', '1. Nabierz powietrza nosem.
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Wiatraczek' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -292,6 +501,7 @@ SELECT 'Statek na wodzie', 'Ćwiczenie kierunkowego wydechu.', '1. Umieść papi
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Statek na wodzie' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -302,6 +512,7 @@ SELECT 'Syczenie i szumienie', 'Nauka przedłużonego wydechu.', '1. Zrób wdech
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Syczenie i szumienie' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -312,6 +523,7 @@ SELECT 'Lokomotywa', 'Koordynacja oddechu i fonacji.', '1. Nabierz powietrze nos
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Lokomotywa' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -323,6 +535,7 @@ SELECT 'Huśtanie misia', 'Trening oddechu przeponowego.', '1. Połóż się na 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Huśtanie misia' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -334,6 +547,7 @@ SELECT 'Skłony', 'Koordynacja oddechu i ruchu.', '1. Stań prosto.
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Skłony' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -344,6 +558,7 @@ SELECT 'Głoskowa zabawa', 'Połączenie oddychania z głosem.', '1. Zrób wdech
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Głoskowa zabawa' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -354,6 +569,7 @@ SELECT 'Gwizdanie', 'Wydłużanie fazy wydechowej.', '1. Zrób głęboki wdech n
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Gwizdanie' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -364,6 +580,7 @@ SELECT 'Zimne rączki', 'Trening wydechu.', '1. Chuchaj na dłonie.
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Zimne rączki' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -374,6 +591,7 @@ SELECT 'Siła słomki', 'Trening fazy wdechowej.', '1. Zasysaj przez słomkę le
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Siła słomki' AND category = 'oddechowe'::public.exercise_category
+    AND created_by IS NULL
 );
 
 -- ── warg ──
@@ -388,6 +606,7 @@ SELECT 'Wesołe odgłosy', 'Ruchomość warg w zabawie dźwiękowej.', '1. Naśl
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Wesołe odgłosy' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -398,6 +617,7 @@ SELECT 'Otwórz i zamknij', 'Kontrola ruchu warg.', '1. Wysuń wargi do przodu.
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Otwórz i zamknij' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -409,6 +629,7 @@ SELECT 'Silne wargi', 'Wzmacnianie siły zwarcia warg.', '1. Włóż między war
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Silne wargi' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -419,6 +640,7 @@ SELECT 'Mocny zacisk', 'Wzmacnianie zwarcia warg.', '1. Silnie zaciśnij wargi.
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Mocny zacisk' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -429,6 +651,7 @@ SELECT 'Warga na wardze', 'Niezależna praca wargi górnej i dolnej.', '1. Nał�
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Warga na wardze' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -439,6 +662,7 @@ SELECT 'Ssanie warg', 'Wzmacnianie mięśni warg.', '1. Delikatnie zassij obie w
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Ssanie warg' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -449,6 +673,7 @@ SELECT 'Ołówek między wargami', 'Utrzymanie napięcia warg.', '1. Włóż oł
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Ołówek między wargami' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -459,6 +684,7 @@ SELECT 'Wędrujące powietrze', 'Kontrola powietrza i praca policzków.', '1. Na
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Wędrujące powietrze' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -470,6 +696,7 @@ SELECT 'Górna i dolna warga', 'Izolowana praca każdej wargi.', '1. Zamknij szc
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Górna i dolna warga' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -480,6 +707,7 @@ SELECT 'Dmuchamy!', 'Łączenie pracy warg z wydechem.', '1. Ułóż wargi do dm
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Dmuchamy!' AND category = 'warg'::public.exercise_category
+    AND created_by IS NULL
 );
 
 -- ── jezyka ──
@@ -492,6 +720,7 @@ SELECT 'Żucie boków języka', 'Rozciąganie powierzchni języka.', '1. Delikat
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Żucie boków języka' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -502,6 +731,7 @@ SELECT 'Oblizywanka', 'Ruchomość języka przy zamkniętych ustach.', '1. Zamkn
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Oblizywanka' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -512,6 +742,7 @@ SELECT 'Szczoteczka', 'Ruchy poziome i pionowe języka.', '1. Otwórz usta.
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Szczoteczka' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -523,6 +754,7 @@ SELECT 'Przyklejony język', 'Utrzymanie pionizacji języka.', '1. Otwórz szero
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Przyklejony język' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -533,6 +765,7 @@ SELECT 'Język w głąb', 'Praca tylnej części języka.', '1. Cofnij język w 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Język w głąb' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -543,6 +776,7 @@ SELECT 'Zlizywanie chrupki', 'Pionizacja i precyzja czubka języka.', '1. Przykl
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Zlizywanie chrupki' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -553,6 +787,7 @@ SELECT 'Ssanie cukierka', 'Wzmacnianie unoszenia języka.', '1. Ułóż mały cu
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Ssanie cukierka' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -563,6 +798,7 @@ SELECT 'Mlaskanie', 'Ruchomość środkowej części języka.', '1. Naśladuj ml
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Mlaskanie' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -573,6 +809,7 @@ SELECT 'Śpiewające sylaby', 'Koordynacja języka i głosu.', '1. Wybierz znan�
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Śpiewające sylaby' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -583,6 +820,7 @@ SELECT 'Chomik', 'Siła języka i praca policzków.', '1. Otwórz szeroko usta.
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Chomik' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -593,6 +831,7 @@ SELECT 'Motylek', 'Kontrola szerokości języka.', '1. Oprzyj czubek języka na 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Motylek' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -603,6 +842,7 @@ SELECT 'Łopatka', 'Spłaszczanie i rozszerzanie języka.', '1. Wysuń szeroki, 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Łopatka' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -613,6 +853,7 @@ SELECT 'Łyżeczka', 'Unoszenie boków języka.', '1. Ułóż język w kształt 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Łyżeczka' AND category = 'jezyka'::public.exercise_category
+    AND created_by IS NULL
 );
 
 -- ── podniebienia ──
@@ -625,6 +866,7 @@ SELECT 'Ciche ziewanie', 'Unoszenie podniebienia bez fonacji.', '1. Ziewaj szero
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Ciche ziewanie' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -635,6 +877,7 @@ SELECT 'Kaszlący miś', 'Zwarcie podniebienno-gardłowe.', '1. Delikatnie pokas
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Kaszlący miś' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -645,6 +888,7 @@ SELECT 'Sowa Hu-Hu', 'Przedłużona fonacja przy uniesionym podniebieniu.', '1. 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Sowa Hu-Hu' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -655,6 +899,7 @@ SELECT 'Kukułka Ku-Ku', 'Aktywizacja tylnej części języka i podniebienia.', 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Kukułka Ku-Ku' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -665,6 +910,7 @@ SELECT 'Gagatek G', 'Artykulacja głoski G.', '1. Powtarzaj: ga, go, ge, gu, gi,
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Gagatek G' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -675,6 +921,7 @@ SELECT 'Kotek K', 'Artykulacja głoski K.', '1. Powtarzaj: ka, ko, ke, ku, ki, k
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Kotek K' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -685,6 +932,7 @@ SELECT 'Pociąg sylabowy G', 'Utrwalanie G w sylabach zamkniętych.', '1. Powtar
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Pociąg sylabowy G' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -695,6 +943,7 @@ SELECT 'Wagoniki K', 'Utrwalanie K w sylabach zamkniętych.', '1. Powtarzaj: aka
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Wagoniki K' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -705,6 +954,7 @@ SELECT 'Mostki K', 'Artykulacja K w wygłosie.', '1. Powtarzaj: ak, ok, ek, uk, 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Mostki K' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -715,6 +965,7 @@ SELECT 'Sylabowe echo', 'Różnicowanie G i K.', '1. Powtarzaj naprzemiennie: ga
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Sylabowe echo' AND category = 'podniebienia'::public.exercise_category
+    AND created_by IS NULL
 );
 
 -- ── polykanie ──
@@ -728,6 +979,7 @@ SELECT 'Języczek na górce', 'Pionizacja języka i nauka pozycji spoczynkowej.'
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Języczek na górce' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -738,6 +990,7 @@ SELECT 'Cukierek na podniebieniu', 'Wzmacnianie unoszenia języka.', '1. Przytrz
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Cukierek na podniebieniu' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -748,6 +1001,7 @@ SELECT 'Kląskający konik', 'Doskonalenie pionizacji języka.', '1. Rytmicznie 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Kląskający konik' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -758,6 +1012,7 @@ SELECT 'Powolny konik', 'Zwiększanie kontroli ruchów języka.', '1. Kląskaj b
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Powolny konik' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -769,6 +1024,7 @@ SELECT 'Ślina jak profesjonalista', 'Nauka prawidłowego połykania śliny.', '
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Ślina jak profesjonalista' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -780,6 +1036,7 @@ SELECT 'Magiczna kropelka', 'Utrwalanie właściwego wzorca połykania.', '1. Zg
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Magiczna kropelka' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -790,6 +1047,7 @@ SELECT 'Zamknięte usta', 'Aktywizacja mięśni żucia podczas połykania.', '1.
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Zamknięte usta' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -800,6 +1058,7 @@ SELECT 'Łyk po łyku', 'Przeniesienie umiejętności na picie płynów.', '1. P
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Łyk po łyku' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -811,6 +1070,7 @@ SELECT 'Zatrzymaj i połknij', 'Świadoma kontrola aktu połykania.', '1. Nabier
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Zatrzymaj i połknij' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -821,6 +1081,7 @@ SELECT 'Fontanna ze słomki', 'Koordynacja oddychania, języka i połykania.', '
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Fontanna ze słomki' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -832,6 +1093,7 @@ SELECT 'Król języczek', 'Utrwalanie pozycji języka podczas połykania.', '1. 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Król języczek' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -842,6 +1104,7 @@ SELECT 'Ciche połykanie', 'Automatyzacja prawidłowego wzorca.', '1. Wykonaj ki
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Ciche połykanie' AND category = 'polykanie'::public.exercise_category
+    AND created_by IS NULL
 );
 
 -- ── zuchwa ──
@@ -855,6 +1118,7 @@ SELECT 'Ziewający księżyc', 'Znalezienie naturalnego opadu żuchwy.', '1. Obs
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Ziewający księżyc' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -865,6 +1129,7 @@ SELECT 'Mądre paluszki', 'Określenie optymalnego otwarcia ust.', '1. Umieść 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Mądre paluszki' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -875,6 +1140,7 @@ SELECT 'Ciche ziewanie', 'Rozluźnienie mięśni żuchwy.', '1. Ziewaj szeroko i
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Ciche ziewanie' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -886,6 +1152,7 @@ SELECT 'Wolna winda', 'Zwiększenie zakresu ruchu żuchwy.', '1. Powoli opuszcza
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Wolna winda' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -896,6 +1163,7 @@ SELECT 'Szybka winda', 'Usprawnienie tempa ruchu.', '1. Rytmicznie opuszczaj i u
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Szybka winda' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -907,6 +1175,7 @@ SELECT 'Otwieranie i zamykanie domku', 'Kontrola ruchu otwierania ust.', '1. Sze
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Otwieranie i zamykanie domku' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -917,6 +1186,7 @@ SELECT 'Krokodyl', 'Zwiększenie ruchomości stawu skroniowo-żuchwowego.', '1. 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Krokodyl' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -927,6 +1197,7 @@ SELECT 'Koparka', 'Nauka prawidłowego opuszczania żuchwy.', '1. Powoli opuszcz
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Koparka' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -937,6 +1208,7 @@ SELECT 'Krówka gryzie', 'Usprawnienie ruchów bocznych.', '1. Naśladuj przeżu
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Krówka gryzie' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -947,6 +1219,7 @@ SELECT 'Żujemy gumę', 'Koordynacja ruchów żuchwy.', '1. Zamknij usta.
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Żujemy gumę' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -958,6 +1231,7 @@ SELECT 'Coraz większa guma', 'Zwiększenie zakresu ruchów.', '1. Wyobraź sobi
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Coraz większa guma' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -968,6 +1242,7 @@ SELECT 'Ciągliwy cukierek', 'Wzmacnianie mięśni żwaczy.', '1. Żuj wyobrażo
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Ciągliwy cukierek' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -978,6 +1253,7 @@ SELECT 'Małpka', 'Wysuwanie żuchwy do przodu.', '1. Maksymalnie wysuń żuchw�
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Małpka' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -988,6 +1264,7 @@ SELECT 'Piła', 'Rozwijanie ruchów wielokierunkowych.', '1. Przesuwaj żuchwę 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Piła' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -998,6 +1275,7 @@ SELECT 'Grzebień', 'Usprawnienie wysuwania i cofania żuchwy.', '1. Dolnymi zę
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Grzebień' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -1008,6 +1286,7 @@ SELECT 'Kląskający konik', 'Koordynacja pracy języka i żuchwy.', '1. Kląska
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Kląskający konik' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -1018,6 +1297,7 @@ SELECT 'Broda do szyi', 'Stabilizacja żuchwy i ustawienie głowy.', '1. Oprzyj 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Broda do szyi' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -1028,6 +1308,7 @@ SELECT 'Nieme sylaby', 'Kontrola ruchów żuchwy podczas mówienia.', '1. Bezgł
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Nieme sylaby' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -1038,6 +1319,7 @@ SELECT 'Zamiatanie podłogi', 'Rozluźnianie napięć mięśniowych.', '1. Pochy
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Zamiatanie podłogi' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -1048,6 +1330,7 @@ SELECT 'Zdziwiona mina', 'Połączenie pracy oddechowej i ruchów żuchwy.', '1.
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Zdziwiona mina' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 INSERT INTO public.exercises
   (title, description, instructions, category, difficulty, target_sounds, duration_seconds, emoji, created_by, is_public)
@@ -1058,6 +1341,7 @@ SELECT 'Warga w pułapce', 'Wzmacnianie mięśni żuchwy i warg.', '1. Nagryzaj 
 WHERE NOT EXISTS (
   SELECT 1 FROM public.exercises
   WHERE title = 'Warga w pułapce' AND category = 'zuchwa'::public.exercise_category
+    AND created_by IS NULL
 );
 
 -- ══════════════════════════════════════════════════════════════
@@ -1071,8 +1355,6 @@ BEGIN
   FROM public.exercises WHERE created_by IS NULL AND archived_at IS NULL;
   RAISE NOTICE 'Ćwiczeń publicznych w obiegu po seedzie: % (oczekiwane co najmniej 92)', publiczne;
 END $$;
-
-COMMIT;
 
 -- Odśwież cache schematu PostgREST
 NOTIFY pgrst, 'reload schema';

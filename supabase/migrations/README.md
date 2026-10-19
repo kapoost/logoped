@@ -14,15 +14,25 @@ supabase/migrations/
 ├── 008_login_bez_maila.sql    # Logowanie loginem zamiast e-maila
 ├── 009_security_fixes.sql     # security_invoker na widokach
 ├── 010_exercise_archive.sql   # Archiwizacja ćwiczeń + widok exercise_usage
+├── seed.sql                   # 49 ćwiczeń publicznych — PRZED 011/012
 ├── 011_kategorie_polykanie_zuchwa.sql   # Kategorie: połykanie i żuchwa
-├── 012_seed_cwiczenia_logopedyczne.sql  # 92 ćwiczenia z materiałów logopedy
-└── seed.sql                   # 50+ ćwiczeń publicznych (uruchom po migracjach)
+└── 012_seed_cwiczenia_logopedyczne.sql  # 92 ćwiczenia z materiałów logopedy
 
 ```
-**Uwaga do 011 i 012:** muszą iść w DWÓCH osobnych uruchomieniach. Postgres nie
-pozwala użyć nowej wartości enuma w tej samej transakcji, w której została dodana,
-a SQL Editor w panelu Supabase opakowuje wklejony skrypt w jedną transakcję.
-012 jest idempotentny — można go puścić ponownie bez dublowania wierszy.
+**Kolejność ma znaczenie.** `seed.sql` musi iść PRZED 011/012, nie po nich.
+012 nadpisuje 14 ćwiczeń z `seed.sql` nowszymi wersjami (`Zgaś świeczkę` →
+`Gaszenie świeczki` itd.), więc puszczony w odwrotnej kolejności `seed.sql`
+wstawia stare tytuły z powrotem — sprawdzone: wychodzi 141 wierszy i 14 par
+duplikatów. Poprawnie: 001–010 → `seed.sql` → 011 → 012 = 127 ćwiczeń.
+
+Bez `seed.sql` samo 012 daje 92 ćwiczenia (ma fallback na INSERT, gdy nie ma czego
+nadpisywać), ale brakuje wtedy kategorii artykulacyjnych i słuchowych, których
+materiały od logopedy nie obejmują.
+
+**011 i 012 muszą iść w DWÓCH osobnych uruchomieniach.** Postgres nie pozwala użyć
+nowej wartości enuma w tej samej transakcji, w której została dodana, a SQL Editor
+w panelu Supabase opakowuje wklejony skrypt w jedną transakcję. Oba skrypty są
+idempotentne — można je puścić ponownie bez dublowania wierszy.
 
 ## Sposób uruchomienia
 

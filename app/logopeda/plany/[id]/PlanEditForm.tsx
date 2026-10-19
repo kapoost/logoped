@@ -83,11 +83,18 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
     setShowPicker(false)
   }
 
+  // idx jest indeksem w widocznej liście (bez pozycji zaznaczonych do usunięcia),
+  // więc zamieniamy po identyfikatorach — inaczej przy zaznaczonym do usunięcia
+  // wierszu strzałki przestawiały sąsiada, którego nie widać.
   function moveItem(idx: number, dir: -1 | 1) {
-    const next = idx + dir
-    if (next < 0 || next >= items.length) return
+    const visible = items.filter(i => !toDelete.has(i.id))
+    const current = visible[idx]
+    const target  = visible[idx + dir]
+    if (!current || !target) return
     const arr = [...items]
-    ;[arr[idx], arr[next]] = [arr[next], arr[idx]]
+    const a = arr.findIndex(i => i.id === current.id)
+    const b = arr.findIndex(i => i.id === target.id)
+    ;[arr[a], arr[b]] = [arr[b], arr[a]]
     setItems(arr)
   }
 
@@ -133,6 +140,10 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
         const body = await res.json().catch(() => ({}))
         throw new Error(body.error ?? `Nie udało się zapisać (HTTP ${res.status})`)
       }
+      // Lista z bazy zastępuje stan lokalny — pozycje `new-…` znikają razem
+      // ze swoimi tymczasowymi id, więc kolejny zapis ich nie wstawi ponownie.
+      const body = await res.json().catch(() => null)
+      if (body?.items) setItems(body.items as PlanExerciseRow[])
       setToDelete(new Set())
       setSaved(true)
       setTimeout(() => setSaved(false), 2500)
@@ -145,11 +156,20 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
   }
 
   async function togglePlanActive() {
-    await fetch('/api/logopeda/update-plan', {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ plan_id: planId, action: 'toggle_active', payload: { is_active: !isActive } }),
-    })
-    startTransition(() => router.refresh())
+    setError(null)
+    try {
+      const res = await fetch('/api/logopeda/update-plan', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan_id: planId, action: 'toggle_active', payload: { is_active: !isActive } }),
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.error ?? `Nie udało się zmienić statusu planu (HTTP ${res.status})`)
+      }
+      startTransition(() => router.refresh())
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Nie udało się zmienić statusu planu')
+    }
   }
 
   const visibleItems = items.filter(i => !toDelete.has(i.id))
