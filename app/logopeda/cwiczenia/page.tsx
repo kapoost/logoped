@@ -47,11 +47,12 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
     .order('archived_at', { ascending: false })
 
   // Grupuj wg kategorii
-  const byCategory = (exercises ?? []).reduce((acc, ex) => {
+  type ExerciseCard = NonNullable<typeof exercises>[number]
+  const byCategory = (exercises ?? []).reduce<Record<string, ExerciseCard[]>>((acc, ex) => {
     acc[ex.category] = acc[ex.category] ?? []
     acc[ex.category].push(ex)
     return acc
-  }, {} as Record<string, typeof exercises>)
+  }, {})
 
   return (
     <div className="animate-fade-in">

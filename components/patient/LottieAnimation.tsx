@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 
 // Dynamic import — lottie-react jest ciężkie, ładuj lazy
@@ -23,9 +24,24 @@ interface Props {
 }
 
 export default function LottieAnimation({ name, className, loop = false, autoplay = true, style }: Props) {
+  // lottie-react przyjmuje tylko animationData (prop `path` nie istnieje w jego API),
+  // więc JSON animacji dociągamy sami.
+  const [animationData, setAnimationData] = useState<unknown>(null)
+
+  useEffect(() => {
+    let active = true
+    fetch(ANIMATIONS[name])
+      .then(res => res.json())
+      .then(data => { if (active) setAnimationData(data) })
+      .catch(() => { /* animacja jest dekoracją — brak jej nie psuje ekranu */ })
+    return () => { active = false }
+  }, [name])
+
+  if (!animationData) return null
+
   return (
     <Lottie
-      path={ANIMATIONS[name]}
+      animationData={animationData}
       loop={loop}
       autoplay={autoplay}
       className={className}

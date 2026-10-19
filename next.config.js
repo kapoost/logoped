@@ -8,7 +8,8 @@ const withPWA = require('next-pwa')({
 })
 
 const nextConfig = {
-  typescript: { ignoreBuildErrors: true },
+  // Typy pilnowane na serio — `npm run typecheck` i build muszą być zielone
+  typescript: { ignoreBuildErrors: false },
   eslint: { ignoreDuringBuilds: true },
   output: 'standalone',
   images: {

@@ -58,7 +58,7 @@ export default async function PlanDetailPage({ params }: Props) {
       <div className="bg-green-800 text-white px-5 pt-5 pb-8">
         <div className="flex items-center gap-3 mb-3">
           <Link
-            href={`/logopeda/pacjenci/${(plan as any).patient_id}`}
+            href={`/logopeda/pacjenci/${plan.patient_id}`}
             className="text-green-300 text-sm hover:text-white"
           >
             ← {patientName}
@@ -112,7 +112,7 @@ export default async function PlanDetailPage({ params }: Props) {
           initialItems={planExercises}
           allExercises={allExercises ?? []}
           isActive={plan.is_active}
-          patientId={(plan as any).patient_id}
+          patientId={plan.patient_id}
         />
       </div>
     </div>

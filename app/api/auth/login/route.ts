@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
     {
       cookies: {
         getAll: () => request.cookies.getAll(),
-        setAll: (cs) => cookieJar.push(...cs),
+        setAll: (cs) => { cookieJar.push(...cs) },
       },
     }
   )

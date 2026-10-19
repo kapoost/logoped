@@ -115,7 +115,7 @@ export default function DemoStatsOverlay({
                 </div>
                 {unlocked && (
                   <p className="text-[10px] text-center text-brand-600 font-bold leading-tight">
-                    {badge.name}
+                    {badge.title}
                   </p>
                 )}
               </div>

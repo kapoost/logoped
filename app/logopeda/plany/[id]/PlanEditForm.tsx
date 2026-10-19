@@ -50,6 +50,7 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
   const [filterCat,   setFilterCat]   = useState<ExerciseCategory | ''>('')
   const [saving,      setSaving]      = useState(false)
   const [saved,       setSaved]       = useState(false)
+  const [error,       setError]       = useState<string | null>(null)
   const [toDelete,    setToDelete]    = useState<Set<string>>(new Set())
 
   const addedIds = new Set(items.map(i => i.exercises.id))
@@ -97,48 +98,50 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
   async function saveChanges() {
     setSaving(true)
     setSaved(false)
+    setError(null)
 
-    // 1. Usuń zaznaczone (tylko istniejące, nie nowe)
-    const existingToDelete = [...toDelete].filter(id => !id.startsWith('new-'))
-    if (existingToDelete.length) {
-      await fetch('/api/logopeda/update-plan', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ plan_id: planId, action: 'save_exercises', payload: {
-          toDelete: existingToDelete, toUpdate: [], toInsert: [],
-        }}),
-      })
-    }
+    // Kolejność liczona po widocznej liście — tak jak ją ustawił logopeda,
+    // razem z nowymi pozycjami wstawionymi pomiędzy istniejące.
+    const kept     = items.filter(i => !toDelete.has(i.id))
+    const existing = kept.filter(i => !i.id.startsWith('new-'))
+    const added    = kept.filter(i =>  i.id.startsWith('new-'))
+    const orderOf  = new Map(kept.map((item, idx) => [item.id, idx]))
 
-    // 2. Aktualizuj istniejące (order + repetitions + notes)
-    const existingItems = items.filter(i => !i.id.startsWith('new-') && !toDelete.has(i.id))
-    await Promise.all(existingItems.map((item, idx) =>
-      supabase.from('plan_exercises').update({
-        order_index: idx,
+    const payload = {
+      toDelete: Array.from(toDelete).filter(id => !id.startsWith('new-')),
+      toUpdate: existing.map(item => ({
+        id:          item.id,
+        order_index: orderOf.get(item.id) ?? item.order_index,
         repetitions: item.repetitions,
         notes:       item.notes ?? null,
-      }).eq('id', item.id)
-    ))
-
-    // 3. Wstaw nowe
-    const newItems = items.filter(i => i.id.startsWith('new-') && !toDelete.has(i.id))
-    if (newItems.length) {
-      const insertOffset = existingItems.length
-      await supabase.from('plan_exercises').insert(
-        newItems.map((item, idx) => ({
-          plan_id:     planId,
-          exercise_id: item.exercises.id,
-          order_index: insertOffset + idx,
-          repetitions: item.repetitions,
-          notes:       item.notes ?? null,
-        }))
-      )
+      })),
+      toInsert: added.map(item => ({
+        plan_id:     planId,
+        exercise_id: item.exercises.id,
+        order_index: orderOf.get(item.id) ?? 0,
+        repetitions: item.repetitions,
+        notes:       item.notes ?? null,
+      })),
     }
 
-    setToDelete(new Set())
-    setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2500)
-    startTransition(() => router.refresh())
+    try {
+      const res = await fetch('/api/logopeda/update-plan', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan_id: planId, action: 'save_exercises', payload }),
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.error ?? `Nie udało się zapisać (HTTP ${res.status})`)
+      }
+      setToDelete(new Set())
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2500)
+      startTransition(() => router.refresh())
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Nie udało się zapisać zmian')
+    } finally {
+      setSaving(false)
+    }
   }
 
   async function togglePlanActive() {
@@ -178,6 +181,12 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
             </button>
           </div>
         </div>
+
+        {error && (
+          <p className="px-4 py-2 bg-red-50 border-b border-red-100 text-xs text-red-700 font-medium">
+            {error}
+          </p>
+        )}
 
         {/* Lista ćwiczeń */}
         {visibleItems.length === 0 ? (

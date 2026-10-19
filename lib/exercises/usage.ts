@@ -41,11 +41,11 @@ export async function getUsageMap(): Promise<Record<string, UsageInfo>> {
 
   const map: Record<string, UsageInfo> = {}
   for (const row of data ?? []) {
-    const planCount = Number((row as any).plan_count ?? 0)
-    map[(row as any).exercise_id] = {
+    const planCount = Number(row.plan_count ?? 0)
+    map[row.exercise_id] = {
       planCount,
-      activePlanCount: Number((row as any).active_plan_count ?? 0),
-      patientCount:    Number((row as any).patient_count ?? 0),
+      activePlanCount: Number(row.active_plan_count ?? 0),
+      patientCount:    Number(row.patient_count ?? 0),
       canHardDelete:   planCount === 0,
     }
   }

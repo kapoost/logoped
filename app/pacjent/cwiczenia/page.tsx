@@ -53,7 +53,7 @@ export default async function CwiczeniaPage() {
         {total === 0 ? (
           <EmptyState />
         ) : (
-          <ExerciseList exercises={exercises ?? []} />
+          <ExerciseList exercises={exercises ?? []} patientId={userId} />
         )}
       </div>
     </div>

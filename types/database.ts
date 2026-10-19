@@ -13,7 +13,9 @@ export type DifficultyLevel = 'latwe' | 'srednie' | 'trudne'
 
 // ── Tabele ────────────────────────────────────────────────────────────────
 
-export interface Profile {
+export type LicenseType = 'trial' | 'basic' | 'pro' | 'unlimited'
+
+export type Profile = {
   id: string
   role: Role
   full_name: string
@@ -22,9 +24,18 @@ export interface Profile {
   date_of_birth: string | null
   created_at: string
   updated_at: string
+  // 007_licenses.sql — wszystkie dodane z DEFAULT, ale nullable w bazie
+  license_type: LicenseType | null
+  license_expires_at: string | null
+  max_patients: number | null
+  is_blocked: boolean | null
+  block_reason: string | null
+  notes: string | null          // notatki admina
+  phone: string | null
+  organization: string | null   // gabinet / klinika
 }
 
-export interface TherapistPatient {
+export type TherapistPatient = {
   id: string
   therapist_id: string
   patient_id: string
@@ -32,7 +43,7 @@ export interface TherapistPatient {
   assigned_at: string
 }
 
-export interface Exercise {
+export type Exercise = {
   id: string
   title: string
   description: string | null
@@ -52,14 +63,14 @@ export interface Exercise {
 }
 
 /** Widok public.exercise_usage — ile planów używa ćwiczenia */
-export interface ExerciseUsage {
+export type ExerciseUsage = {
   exercise_id: string
   plan_count: number
   active_plan_count: number
   patient_count: number
 }
 
-export interface ExercisePlan {
+export type ExercisePlan = {
   id: string
   therapist_id: string
   patient_id: string
@@ -71,7 +82,7 @@ export interface ExercisePlan {
   updated_at: string
 }
 
-export interface PlanExercise {
+export type PlanExercise = {
   id: string
   plan_id: string
   exercise_id: string
@@ -81,7 +92,7 @@ export interface PlanExercise {
   created_at: string
 }
 
-export interface Schedule {
+export type Schedule = {
   id: string
   plan_id: string
   days_of_week: number[]   // 0=pon, 6=nd
@@ -90,7 +101,7 @@ export interface Schedule {
   created_at: string
 }
 
-export interface ExerciseCompletion {
+export type ExerciseCompletion = {
   id: string
   patient_id: string
   plan_exercise_id: string
@@ -102,7 +113,7 @@ export interface ExerciseCompletion {
   reviewed_at: string | null
 }
 
-export interface PatientStats {
+export type PatientStats = {
   patient_id: string
   current_streak: number
   longest_streak: number
@@ -114,14 +125,14 @@ export interface PatientStats {
   updated_at: string
 }
 
-export interface Achievement {
+export type Achievement = {
   id: string
   patient_id: string
   badge_key: BadgeKey
   unlocked_at: string
 }
 
-export interface PushSubscription {
+export type PushSubscription = {
   id: string
   patient_id: string
   endpoint: string
@@ -198,7 +209,7 @@ export const DIFFICULTY_LABELS: Record<DifficultyLevel, string> = {
 
 // ── Widoki (Views z 005_views.sql) ────────────────────────────────────────
 
-export interface TodayExercise {
+export type TodayExercise = {
   plan_exercise_id: string
   plan_id: string
   order_index: number
@@ -221,7 +232,7 @@ export interface TodayExercise {
   completed_at: string | null
 }
 
-export interface TherapistPatientOverview {
+export type TherapistPatientOverview = {
   therapist_id: string
   patient_id: string
   full_name: string
@@ -242,22 +253,92 @@ export interface TherapistPatientOverview {
 
 // ── Supabase Database shape (dla createClient<Database>()) ───────────────
 
+/** Kolumny z DEFAULT w bazie — przy INSERT można je pominąć */
+type WithDefaults<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>
+
+type ProfileInsert = WithDefaults<
+  Omit<Profile, 'created_at' | 'updated_at'>,
+  'avatar_url' | 'parent_id' | 'date_of_birth' | 'license_type' | 'license_expires_at'
+  | 'max_patients' | 'is_blocked' | 'block_reason' | 'notes' | 'phone' | 'organization'
+>
+
+type ExerciseInsert = WithDefaults<
+  Omit<Exercise, 'id' | 'created_at' | 'updated_at'>,
+  'description' | 'target_sounds' | 'media_url' | 'duration_seconds' | 'emoji'
+  | 'created_by' | 'is_public' | 'archived_at' | 'archived_by'
+>
+
 export type Database = {
   public: {
     Tables: {
-      profiles: { Row: Profile; Insert: Omit<Profile, 'created_at' | 'updated_at'>; Update: Partial<Profile> }
-      exercises: { Row: Exercise; Insert: Omit<Exercise, 'id' | 'created_at' | 'updated_at'>; Update: Partial<Exercise> }
-      exercise_plans: { Row: ExercisePlan; Insert: Omit<ExercisePlan, 'id' | 'created_at' | 'updated_at'>; Update: Partial<ExercisePlan> }
-      plan_exercises: { Row: PlanExercise; Insert: Omit<PlanExercise, 'id' | 'created_at'>; Update: Partial<PlanExercise> }
-      schedules: { Row: Schedule; Insert: Omit<Schedule, 'id' | 'created_at'>; Update: Partial<Schedule> }
-      exercise_completions: { Row: ExerciseCompletion; Insert: Omit<ExerciseCompletion, 'id' | 'completed_at'>; Update: Partial<ExerciseCompletion> }
-      patient_stats: { Row: PatientStats; Insert: PatientStats; Update: Partial<PatientStats> }
-      achievements: { Row: Achievement; Insert: Omit<Achievement, 'id' | 'unlocked_at'>; Update: never }
-      therapist_patients: { Row: TherapistPatient; Insert: Omit<TherapistPatient, 'id' | 'assigned_at'>; Update: Partial<TherapistPatient> }
+      profiles: {
+        Row: Profile
+        Insert: ProfileInsert
+        Update: Partial<Profile>
+        Relationships: []
+      }
+      exercises: {
+        Row: Exercise
+        Insert: ExerciseInsert
+        Update: Partial<Exercise>
+        Relationships: []
+      }
+      exercise_plans: {
+        Row: ExercisePlan
+        Insert: WithDefaults<Omit<ExercisePlan, 'id' | 'created_at' | 'updated_at'>, 'description' | 'is_active' | 'start_date'>
+        Update: Partial<ExercisePlan>
+        Relationships: []
+      }
+      plan_exercises: {
+        Row: PlanExercise
+        Insert: WithDefaults<Omit<PlanExercise, 'id' | 'created_at'>, 'order_index' | 'repetitions' | 'notes'>
+        Update: Partial<PlanExercise>
+        Relationships: []
+      }
+      schedules: {
+        Row: Schedule
+        Insert: WithDefaults<Omit<Schedule, 'id' | 'created_at'>, 'days_of_week' | 'reminder_time' | 'is_active'>
+        Update: Partial<Schedule>
+        Relationships: []
+      }
+      exercise_completions: {
+        Row: ExerciseCompletion
+        Insert: WithDefaults<
+          Omit<ExerciseCompletion, 'id' | 'completed_at'>,
+          'session_date' | 'recording_url' | 'therapist_ok' | 'therapist_note' | 'reviewed_at'
+        >
+        Update: Partial<ExerciseCompletion>
+        Relationships: []
+      }
+      patient_stats: {
+        Row: PatientStats
+        Insert: WithDefaults<PatientStats, Exclude<keyof PatientStats, 'patient_id'>>
+        Update: Partial<PatientStats>
+        Relationships: []
+      }
+      achievements: {
+        Row: Achievement
+        Insert: Omit<Achievement, 'id' | 'unlocked_at'>
+        Update: never
+        Relationships: []
+      }
+      therapist_patients: {
+        Row: TherapistPatient
+        Insert: WithDefaults<Omit<TherapistPatient, 'id' | 'assigned_at'>, 'notes'>
+        Update: Partial<TherapistPatient>
+        Relationships: []
+      }
+      push_subscriptions: {
+        Row: PushSubscription
+        Insert: Omit<PushSubscription, 'id' | 'created_at'>
+        Update: Partial<PushSubscription>
+        Relationships: []
+      }
     }
     Views: {
-      today_exercises: { Row: TodayExercise }
-      therapist_patient_overview: { Row: TherapistPatientOverview }
+      today_exercises:            { Row: TodayExercise;            Relationships: [] }
+      therapist_patient_overview: { Row: TherapistPatientOverview; Relationships: [] }
+      exercise_usage:             { Row: ExerciseUsage;            Relationships: [] }
     }
     Functions: {
       get_patient_calendar: {
@@ -274,6 +355,8 @@ export type Database = {
     Enums: {
       exercise_category: ExerciseCategory
       difficulty_level: DifficultyLevel
+      license_type: LicenseType
     }
+    CompositeTypes: Record<never, never>
   }
 }

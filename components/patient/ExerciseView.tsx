@@ -175,10 +175,10 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
 
       {/* Instrukcje */}
       <div className="flex-1 px-4 space-y-3 overflow-y-auto pb-4">
-        {ex.notes && (
+        {ex.therapist_notes && (
           <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 flex gap-3">
             <span className="text-xl flex-shrink-0">💬</span>
-            <p className="text-sm text-amber-800 font-medium">{ex.notes}</p>
+            <p className="text-sm text-amber-800 font-medium">{ex.therapist_notes}</p>
           </div>
         )}
 
