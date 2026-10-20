@@ -120,8 +120,8 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
                   href={`/logopeda/cwiczenia/${ex.id}`}
                   className="bg-white border border-gray-100 rounded-2xl px-4 py-3 flex items-center gap-3 hover:border-green-200 hover:bg-green-50/30 active:scale-[0.99] transition"
                 >
-                  <span className="text-2xl w-10 h-10 bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0">
-                    <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={80} />
+                  <span className="text-4xl w-16 h-16 bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center flex-shrink-0">
+                    <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={128} />
                   </span>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-gray-800 truncate">{ex.title}</p>
@@ -165,8 +165,8 @@ export default async function CwiczeniaPage({ searchParams: sp }: Props) {
                   href={`/logopeda/cwiczenia/${ex.id}`}
                   className="bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 flex items-center gap-3 hover:border-gray-200 transition"
                 >
-                  <span className="text-2xl w-10 h-10 bg-white rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0 grayscale">
-                    <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={80} />
+                  <span className="text-4xl w-16 h-16 bg-white rounded-2xl overflow-hidden flex items-center justify-center flex-shrink-0 grayscale">
+                    <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={128} />
                   </span>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-500 truncate">{ex.title}</p>

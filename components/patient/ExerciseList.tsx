@@ -229,9 +229,9 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                className="text-5xl mb-2 w-20 h-20 mx-auto rounded-2xl overflow-hidden flex items-center justify-center"
+                className="text-7xl mb-3 w-40 h-40 mx-auto rounded-3xl overflow-hidden flex items-center justify-center"
               >
-                <ExerciseImage src={nextEx.media_url} emoji={nextEx.emoji} title={nextEx.title} size={160} priority />
+                <ExerciseImage src={nextEx.media_url} emoji={nextEx.emoji} title={nextEx.title} size={320} priority />
               </motion.div>
               <p className="text-2xl font-black">
                 {done === 0 ? 'Zacznij ćwiczenia!' : 'Kontynuuj!'}
@@ -256,8 +256,8 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
             href={`/pacjent/cwiczenie/${nextEx.plan_exercise_id}`}
             className="block bg-gradient-to-br from-blue-500 to-indigo-700 rounded-3xl p-6 text-center text-white shadow-lg shadow-blue-200 active:scale-95 transition-transform"
           >
-            <div className="text-5xl mb-2 w-20 h-20 mx-auto rounded-2xl overflow-hidden flex items-center justify-center">
-              <ExerciseImage src={nextEx.media_url} emoji={nextEx.emoji} title={nextEx.title} size={160} />
+            <div className="text-7xl mb-3 w-40 h-40 mx-auto rounded-3xl overflow-hidden flex items-center justify-center">
+              <ExerciseImage src={nextEx.media_url} emoji={nextEx.emoji} title={nextEx.title} size={320} />
             </div>
             <p className="text-2xl font-black">
               {replayDone.size === 0 ? 'Powtórka!' : 'Kontynuuj!'}
@@ -290,9 +290,9 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
                 <motion.div
                   initial={isJust ? { rotate: -20 } : false}
                   animate={{ rotate: 0 }}
-                  className="w-14 h-14 bg-green-500 rounded-xl overflow-hidden flex items-center justify-center text-3xl flex-shrink-0 shadow-sm"
+                  className="w-20 h-20 bg-green-500 rounded-2xl overflow-hidden flex items-center justify-center text-4xl flex-shrink-0 shadow-sm"
                 >
-                  <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
+                  <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={160} />
                 </motion.div>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-green-800 truncate">{ex.title}</p>
@@ -326,9 +326,9 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
                   <motion.div
                     animate={{ scale: [1, 1.08, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="w-16 h-16 bg-brand-600 rounded-2xl overflow-hidden flex items-center justify-center text-4xl flex-shrink-0 shadow"
+                    className="w-24 h-24 bg-brand-600 rounded-2xl overflow-hidden flex items-center justify-center text-5xl flex-shrink-0 shadow"
                   >
-                    <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={128} />
+                    <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={192} />
                   </motion.div>
                   <div className="flex-1 min-w-0">
                     <p className="font-black text-brand-900 text-lg truncate">{ex.title}</p>
@@ -363,8 +363,8 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
               layout
               className="flex items-center gap-4 bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 opacity-50"
             >
-              <div className="w-14 h-14 bg-gray-200 rounded-xl overflow-hidden flex items-center justify-center text-3xl flex-shrink-0">
-                <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
+              <div className="w-20 h-20 bg-gray-200 rounded-2xl overflow-hidden flex items-center justify-center text-4xl flex-shrink-0">
+                <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={160} />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-semibold text-gray-500 truncate">{ex.title}</p>

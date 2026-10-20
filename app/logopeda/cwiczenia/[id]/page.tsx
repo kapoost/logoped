@@ -41,8 +41,8 @@ export default async function PodgladCwiczeniaPage({ params }: { params: { id: s
           ← Baza ćwiczeń
         </Link>
         <div className="flex items-start gap-3 mt-3">
-          <span className="text-3xl w-14 h-14 bg-white/15 rounded-2xl overflow-hidden flex items-center justify-center flex-shrink-0">
-            <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
+          <span className="text-5xl w-24 h-24 bg-white/15 rounded-2xl overflow-hidden flex items-center justify-center flex-shrink-0">
+            <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={192} />
           </span>
           <div className="min-w-0">
             <h1 className="text-xl font-bold">{ex.title}</h1>

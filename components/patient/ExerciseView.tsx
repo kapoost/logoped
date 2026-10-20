@@ -121,9 +121,9 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-7xl mb-2 drop-shadow w-28 h-28 rounded-3xl overflow-hidden flex items-center justify-center"
+            className="text-8xl mb-3 drop-shadow-lg w-56 h-56 rounded-[2rem] overflow-hidden flex items-center justify-center"
           >
-            <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={224} priority />
+            <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={448} priority />
           </motion.div>
           <h1 className="text-xl font-black text-white text-center px-8">{ex.title}</h1>
           <span className={`mt-2 text-xs font-bold px-3 py-1 rounded-full ${DIFFICULTY_COLOR[ex.difficulty]}`}>

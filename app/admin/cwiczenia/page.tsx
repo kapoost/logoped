@@ -75,8 +75,8 @@ export default async function AdminCwiczeniaPage() {
               {publicEx.map(ex => (
                 <tr key={ex.id} className="hover:bg-gray-50">
                   <td className="px-5 py-3 text-xl">
-                    <span className="w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center">
-                      <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={72} />
+                    <span className="w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center">
+                      <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
                     </span>
                   </td>
                   <td className="px-5 py-3">
@@ -141,8 +141,8 @@ export default async function AdminCwiczeniaPage() {
                 {privateEx.map(ex => (
                   <tr key={ex.id} className="hover:bg-gray-50">
                     <td className="px-5 py-3 text-xl">
-                    <span className="w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center">
-                      <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={72} />
+                    <span className="w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center">
+                      <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
                     </span>
                   </td>
                     <td className="px-5 py-3">
@@ -203,8 +203,8 @@ export default async function AdminCwiczeniaPage() {
                 {archived.map(ex => (
                   <tr key={ex.id} className="hover:bg-gray-50">
                     <td className="px-5 py-3 text-xl grayscale">
-                      <span className="w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center">
-                        <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={72} />
+                      <span className="w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center">
+                        <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
                       </span>
                     </td>
                     <td className="px-5 py-3">

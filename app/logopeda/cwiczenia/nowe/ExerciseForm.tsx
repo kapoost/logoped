@@ -5,6 +5,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { CATEGORY_LABELS } from '@/types/database'
+import ExerciseImage from '@/components/shared/ExerciseImage'
 import type { Exercise, ExerciseCategory, DifficultyLevel } from '@/types/database'
 
 const EMOJIS = ['👅','👄','💨','🔤','👂','🐍','🐱','🔔','🎯','🦷','🎤','🐸','💪','🌸','🎈','🥤','🪶','🧘','🐘','😛','😮','😁']
@@ -113,13 +114,43 @@ export default function ExerciseForm({ therapistId, isAdmin, exercise, onSuccess
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      {/* Emoji picker */}
+      {/* Ilustracja — duża, bo to formularz, w którym zapada decyzja o ćwiczeniu
+          dla dziecka, a dziecko zobaczy ten rysunek na pół ekranu. Podgląd jest
+          żywy: bez ilustracji pokazuje wybraną ikonę, więc picker niżej od razu
+          widać w docelowym rozmiarze. */}
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-2">Ikona ćwiczenia</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">Ilustracja ćwiczenia</label>
+        <div className="flex items-center gap-5">
+          <div className="w-40 h-40 text-7xl bg-gray-50 border-2 border-gray-100 rounded-3xl overflow-hidden flex items-center justify-center flex-shrink-0">
+            <ExerciseImage
+              src={exercise?.media_url}
+              emoji={emoji}
+              title={title || 'Podgląd ćwiczenia'}
+              size={320}
+            />
+          </div>
+          <p className="text-sm text-gray-500 leading-relaxed">
+            {exercise?.media_url
+              ? 'Tak zobaczy to dziecko na ekranie ćwiczenia.'
+              : 'To ćwiczenie nie ma jeszcze ilustracji — dziecko zobaczy wybraną ikonę.'}
+          </p>
+        </div>
+      </div>
+
+      {/* Ikona zapasowa */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          {exercise?.media_url ? 'Ikona zapasowa' : 'Ikona ćwiczenia'}
+        </label>
+        <p className="text-xs text-gray-400 mb-2">
+          {exercise?.media_url
+            ? 'Używana tam, gdzie ilustracja się nie wczyta.'
+            : 'Zastępuje ilustrację, dopóki ćwiczenie jej nie ma.'}
+        </p>
         <div className="flex flex-wrap gap-2">
           {palette.map(e => (
             <button key={e} type="button" onClick={() => setEmoji(e)}
-              className={`text-2xl w-10 h-10 rounded-xl border-2 flex items-center justify-center transition
+              className={`text-3xl w-14 h-14 rounded-xl border-2 flex items-center justify-center transition
                 ${emoji === e ? 'border-green-600 bg-green-50 scale-110' : 'border-gray-200 hover:border-gray-300'}`}>
               {e}
             </button>

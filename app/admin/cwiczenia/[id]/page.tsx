@@ -40,8 +40,8 @@ export default async function AdminPodgladCwiczeniaPage({ params }: { params: { 
       </Link>
 
       <div className="flex items-start gap-4">
-        <span className="text-3xl w-14 h-14 bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center flex-shrink-0">
-          <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
+        <span className="text-5xl w-24 h-24 bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center flex-shrink-0">
+          <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={192} />
         </span>
         <div className="min-w-0">
           <div className="flex items-center gap-2 flex-wrap">

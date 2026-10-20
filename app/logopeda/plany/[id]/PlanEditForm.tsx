@@ -232,8 +232,8 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
                       className="text-gray-300 hover:text-gray-600 disabled:opacity-20 text-xs leading-none">▼</button>
                   </div>
 
-                  <span className="text-lg w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
-                    <ExerciseImage src={item.exercises.media_url} emoji={item.exercises.emoji} title={item.exercises.title} size={64} />
+                  <span className="text-3xl w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0">
+                    <ExerciseImage src={item.exercises.media_url} emoji={item.exercises.emoji} title={item.exercises.title} size={112} />
                   </span>
 
                   <div className="flex-1 min-w-0">
@@ -311,8 +311,8 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
             ) : filtered.map(ex => (
               <button key={ex.id} onClick={() => addExercise(ex)}
                 className="w-full px-4 py-3 flex items-center gap-3 text-left hover:bg-green-50 transition">
-                <span className="text-lg w-8 h-8 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
-                  <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={64} />
+                <span className="text-3xl w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0">
+                  <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-gray-800 truncate">{ex.title}</p>

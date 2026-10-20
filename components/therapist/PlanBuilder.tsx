@@ -262,8 +262,8 @@ export default function PlanBuilder({ patients, exercises, therapistId, preselec
                         >▼</button>
                       </div>
 
-                      <span className="text-xl w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
-                        <ExerciseImage src={item.exercise.media_url} emoji={item.exercise.emoji} title={item.exercise.title} size={72} />
+                      <span className="text-3xl w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0">
+                        <ExerciseImage src={item.exercise.media_url} emoji={item.exercise.emoji} title={item.exercise.title} size={112} />
                       </span>
 
                       <div className="flex-1 min-w-0">
@@ -350,8 +350,8 @@ export default function PlanBuilder({ patients, exercises, therapistId, preselec
                       isAdded ? 'opacity-40 cursor-not-allowed' : 'hover:bg-green-50 active:bg-green-100'
                     )}
                   >
-                    <span className="text-xl w-9 h-9 rounded-lg overflow-hidden flex items-center justify-center flex-shrink-0">
-                      <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={72} />
+                    <span className="text-3xl w-14 h-14 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0">
+                      <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={112} />
                     </span>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-gray-800 truncate">{ex.title}</p>
