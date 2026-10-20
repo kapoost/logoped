@@ -1,0 +1,31 @@
+{
+  "_opis": "Ręcznie napisane sceny po angielsku — jedna na ćwiczenie, klucz to 'kategoria/tytuł'.",
+  "_zasady": [
+    "Opisuj WIDOCZNY ruch i rekwizyt, nie cel terapeutyczny — model rysuje to, co widać.",
+    "Nie powtarzaj stylu ani bohatera: styl jest w STYL, bohater w OBSADA w build_prompts.py.",
+    "Nie pisz pierwszego kroku instrukcji ('nabierz powietrze nosem') — to jest niewidoczne.",
+    "Rekwizyt bierz z emoji ćwiczenia, jeśli jest sensowny.",
+    "Dwa ćwiczenia o podobnym celu muszą mieć różne sceny, inaczej dostaniemy ten sam obrazek."
+  ],
+
+  "oddechowe/Bańki mydlane": "blowing a stream of soap bubbles through a round bubble wand held in one wing, several large iridescent bubbles floating up and to the right",
+  "oddechowe/Gaszenie świeczki": "blowing a steady stream of air at a single lit candle on a small holder, the flame bending sideways but not going out",
+  "oddechowe/Głęboki oddech — relaks": "sitting cross-legged with eyes closed, one wing resting on its belly and the other on its chest, calm expression, belly gently rounded",
+  "oddechowe/Głoskowa zabawa": "beak open wide in a long sustained sing, three simple music notes floating up from the beak",
+  "oddechowe/Gwizdanie": "beak pursed into a tiny round whistle shape, a thin curling ribbon of air spiralling out",
+  "oddechowe/Huśtanie misia": "lying flat on its back on a soft rug, a small teddy bear balanced on its rounded belly, teddy riding upward",
+  "oddechowe/Lokomotywa": "pushing a small wooden toy steam train along the floor, round puffs of white steam rising from the funnel",
+  "oddechowe/Nadmuchiwanie balonu": "inflating a big red balloon held to its beak, cheeks puffed, balloon already half full",
+  "oddechowe/Piórko w powietrzu": "holding one wing flat and open, a single soft white feather hovering just above it, kept up by a short puff of air",
+  "oddechowe/Pióropusz": "wing raised to beak height, blowing hard so a bright feather sails away far into the distance, motion trail behind it",
+  "oddechowe/Siła słomki": "sucking through a straw to lift a small coloured pom-pom stuck to the straw tip, moving it toward a bowl, wings held behind its back",
+  "oddechowe/Skłony": "standing and bending forward at the waist to touch its toes, arrow showing the downward bend",
+  "oddechowe/Słomka w wodzie": "blowing through a straw into a tall clear glass of water, a steady column of round bubbles rising inside the glass",
+  "oddechowe/Statek na wodzie": "blowing a small folded paper boat across a shallow basin of water, ripples trailing behind the boat",
+  "oddechowe/Syczenie i szumienie": "beak narrowed, sending a long thin visible stream of air at a small friendly cartoon snake coiled on the ground",
+  "oddechowe/Wąchanie kwiatków": "eyes closed, leaning in to sniff a single large pink flower held in one wing",
+  "oddechowe/Wąski strumień": "blowing a very thin focused jet of air onto the back of its own outstretched wing, the jet drawn as a narrow tapering cone",
+  "oddechowe/Wiatraczek": "blowing at a colourful pinwheel on a stick, the pinwheel spinning with motion blur arcs",
+  "oddechowe/Wyścigi papierowych kulek": "blowing through a straw to push a crumpled paper ball across a table toward a small checkered finish flag",
+  "oddechowe/Zimne rączki": "cupping both wings together near its beak and breathing warm air into them, small warmth swirls rising, wearing cosy mittens"
+}
