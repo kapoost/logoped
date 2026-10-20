@@ -18,15 +18,17 @@ Przykłady:
   python3 scripts/ilustracje/generuj.py --kategoria oddechowe
   python3 scripts/ilustracje/generuj.py --kategoria oddechowe --wgraj
 """
-import argparse, concurrent.futures as cf, json, os, sys, time, urllib.error, urllib.request
+import argparse, base64, concurrent.futures as cf, json, os, sys, time, urllib.error, urllib.request
 
 TUTAJ    = os.path.dirname(os.path.abspath(__file__))
 MANIFEST = os.path.join(TUTAJ, 'prompts.json')
 WYJSCIE  = os.path.join(TUTAJ, 'wygenerowane')
+POSTACIE = os.path.join(TUTAJ, 'postacie')
 BUCKET   = 'exercise-media'
 
 # $0.012 za megapiksel (FLUX.2 [dev], cennik fal z 20.10.2026). 1024² ≈ 1 Mpx.
 CENA_ZA_MPX = 0.012
+DOMYSLNY_MODEL = 'fal-ai/flux-2'
 
 
 def http(url, *, naglowki, dane=None, metoda=None, timeout=120, surowe=False):
@@ -43,12 +45,23 @@ def http(url, *, naglowki, dane=None, metoda=None, timeout=120, surowe=False):
 
 
 # ── fal ───────────────────────────────────────────────────────────────────
-def fal_generuj(wpis, *, model, rozmiar, klucz, kroki):
-    """Kolejkuje zadanie i czeka na wynik. Zwraca bajty obrazka."""
+def fal_generuj(wpis, *, model, rozmiar, klucz, kroki, referencje=None):
+    """Kolejkuje zadanie i czeka na wynik. Zwraca bajty obrazka.
+
+    `rozmiar` to bok kwadratu albo para (szerokość, wysokość).
+    `referencje` to lista URL-i albo data URI — podane, przełączają wywołanie
+    na wariant edycyjny modelu, który bierze tożsamość postaci z pikseli.
+
+    Pole `negative` z manifestu NIE jest wysyłane: schemat FLUX.2 na fal nie ma
+    negative_prompt (sprawdzone 20.10.2026 — jedenaście pól, tego wśród nich
+    nie ma). Zostaje w manifeście, bo opisuje intencję i przyda się, gdyby
+    silnik się zmienił, ale dziś czystość wyniku zawdzięczamy samemu modelowi.
+    """
+    szer, wys = rozmiar if isinstance(rozmiar, (tuple, list)) else (rozmiar, rozmiar)
     naglowki = {'Authorization': f'Key {klucz}', 'Content-Type': 'application/json'}
     wejscie = {
         'prompt': wpis['prompt'],
-        'image_size': {'width': rozmiar, 'height': rozmiar},
+        'image_size': {'width': szer, 'height': wys},
         'num_images': 1,
         'seed': wpis['seed'],
         'output_format': 'webp',
@@ -57,6 +70,9 @@ def fal_generuj(wpis, *, model, rozmiar, klucz, kroki):
         # rozszerzanie przez model rozjechałoby spójność między obrazkami.
         'enable_prompt_expansion': False,
     }
+    if referencje:
+        wejscie['image_urls'] = referencje[:4]   # model bierze najwyżej cztery
+
     zgloszenie = http(f'https://queue.fal.run/{model}', naglowki=naglowki,
                       dane=json.dumps(wejscie).encode(), metoda='POST')
 
@@ -79,6 +95,33 @@ def fal_generuj(wpis, *, model, rozmiar, klucz, kroki):
     if any(wynik.get('has_nsfw_concepts') or []):
         raise RuntimeError('obrazek oznaczony przez filtr treści — pomijam')
     return http(obrazki[0]['url'], naglowki={}, surowe=True)
+
+
+def referencja(kategoria):
+    """Zwraca data URI zaakceptowanego arkusza postaci albo None.
+
+    Arkusz leży w postacie/<kategoria>.webp i trafia tam ręcznie, po obejrzeniu
+    kandydatów z postac.py. Jego brak nie jest błędem — wtedy tożsamość niesie
+    sam opis w promptcie, tak jak w pilocie z 20.10.2026.
+    """
+    sciezka = os.path.join(POSTACIE, f'{kategoria}.webp')
+    if not os.path.exists(sciezka):
+        return None
+    with open(sciezka, 'rb') as f:
+        return 'data:image/webp;base64,' + base64.b64encode(f.read()).decode()
+
+
+def prompt_z_referencja(wpis, obsada, styl):
+    """Prompt dla wariantu edycyjnego: scena plus nakaz trzymania się wzoru.
+
+    Opis wyglądu celowo wypada — tożsamość ma iść z pikseli arkusza, a nie
+    z przymiotników, bo to właśnie przymiotniki dały cztery różne papugi.
+    """
+    bohater = obsada.get(wpis['kategoria'], 'the character')
+    return (f"{bohater} {wpis['ruch']}. "
+            f"Keep the character exactly as in the reference sheet — same colours, "
+            f"same markings, same proportions, same face. Draw one single character "
+            f"in a new pose, not a reference sheet. {styl}")
 
 
 # ── Supabase ──────────────────────────────────────────────────────────────
@@ -105,7 +148,9 @@ def main():
     p.add_argument('--limit', type=int, help='najwyżej tyle obrazków')
     p.add_argument('--wgraj', action='store_true', help='wyślij do bucketu i ustaw media_url')
     p.add_argument('--nadpisz', action='store_true', help='generuj też to, co ma już grafikę lub plik')
-    p.add_argument('--model', default='fal-ai/flux-2')
+    p.add_argument('--model', default=DOMYSLNY_MODEL)
+    p.add_argument('--bez-referencji', action='store_true',
+                   help='ignoruj arkusze postaci, tożsamość z samego promptu')
     p.add_argument('--rozmiar', type=int, default=1024)
     p.add_argument('--kroki', type=int, default=28)
     p.add_argument('--rownolegle', type=int, default=4)
@@ -126,7 +171,8 @@ def main():
             sys.exit(f'--wgraj wymaga {e.args[0]} w środowisku.')
 
     with open(MANIFEST, encoding='utf-8') as f:
-        wszystkie = json.load(f)['cwiczenia']
+        manifest = json.load(f)
+    wszystkie, obsada, styl = manifest['cwiczenia'], manifest['obsada'], manifest['styl']
 
     bez_sceny = [w for w in wszystkie if w['do_przegladu']]
     kolejka = [w for w in wszystkie if not w['do_przegladu']]
@@ -151,13 +197,25 @@ def main():
     koszt = len(kolejka) * mpx * CENA_ZA_MPX
     print(f'Do wygenerowania: {len(kolejka)} | model {a.model} | '
           f'{a.rozmiar}×{a.rozmiar} | szacowany koszt ≈ ${koszt:.2f}')
+    if not a.bez_referencji:
+        z_arkuszem = sorted({w['kategoria'] for w in kolejka if referencja(w['kategoria'])})
+        print(f'Arkusz postaci: ' + (', '.join(z_arkuszem) if z_arkuszem
+              else 'brak — tożsamość z samego promptu'))
     print(f'Zapis: {WYJSCIE}' + ('  + bucket i media_url' if a.wgraj else '  (baza nietknięta)'))
     if not a.tak and input('Lecimy? [t/N] ').strip().lower() not in ('t', 'tak', 'y'):
         sys.exit('Przerwane.')
 
     def zrob(w):
-        bajty = fal_generuj(w, model=a.model, rozmiar=a.rozmiar,
-                            klucz=klucz_fal, kroki=a.kroki)
+        ref = None if a.bez_referencji else referencja(w['kategoria'])
+        if ref:
+            # Wariant edycyjny bierze tożsamość z arkusza; prompt opisuje sam ruch.
+            zadanie = dict(w, prompt=prompt_z_referencja(w, obsada, styl))
+            model = a.model if a.model != DOMYSLNY_MODEL else DOMYSLNY_MODEL + '/edit'
+        else:
+            zadanie, model = w, a.model
+        bajty = fal_generuj(zadanie, model=model, rozmiar=a.rozmiar,
+                            klucz=klucz_fal, kroki=a.kroki,
+                            referencje=[ref] if ref else None)
         sciezka = os.path.join(WYJSCIE, w['plik'])
         os.makedirs(os.path.dirname(sciezka), exist_ok=True)
         with open(sciezka, 'wb') as f:

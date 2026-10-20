@@ -23,10 +23,17 @@ TUTAJ = os.path.dirname(os.path.abspath(__file__))
 # dlatego trzymamy go w jednym miejscu, a nie w promptach per ćwiczenie.
 STYL = (
     "flat 2D children's book illustration, soft rounded shapes, "
-    "warm pastel palette, thick clean outlines, gentle top-left lighting, "
-    "single centered subject, plain very light cream background, "
+    "warm pastel palette, thick clean outlines, no shading gradients, "
+    "the character fills most of the frame, tight crop, "
+    "plain very light cream background with minimal empty space, "
     "friendly and calm, square composition"
 )
+# Zmiany wobec wersji z 20.10.2026, po pilocie:
+# - wypadło "gentle top-left lighting" — kłóciło się z "flat 2D" i dawało
+#   różne cieniowanie w kolejnych wywołaniach;
+# - "single centered subject" zamienione na kadr wypełniony postacią, bo
+#   model czytał poprzednie sformułowanie jako zgodę na szeroki margines,
+#   a aplikacja renderuje te grafiki już od 64 px.
 
 # Czego nigdy nie chcemy. Tekst osobno: podpisy renderujemy w HTML nad obrazkiem,
 # bo modele dyfuzyjne psują polskie ogonki, a tytuł i opis mamy w bazie.
@@ -69,14 +76,16 @@ for e in rows:
     klucz = f"{e['category']}/{e['title']}"
 
     if klucz in SCENY:
-        scena, do_przegladu = f"{bohater} {SCENY[klucz]}", False
+        ruch, do_przegladu = SCENY[klucz], False
+        scena = f"{bohater} {ruch}"
         uzyte.add(klucz)
     else:
         # Fallback: opis celu i pierwszy krok instrukcji. Po polsku i mało
         # obrazowy — wiersz jest tu po to, żeby było widać, czego brakuje.
         pierwszy_krok = (e['instructions'] or '').split('\n')[0]
         pierwszy_krok = pierwszy_krok.split('. ', 1)[-1].rstrip('.')
-        scena = f"{bohater} demonstrating a speech therapy exercise: {pierwszy_krok}"
+        ruch = f"demonstrating a speech therapy exercise: {pierwszy_krok}"
+        scena = f"{bohater} {ruch}"
         do_przegladu = True
 
     manifest.append({
@@ -86,6 +95,7 @@ for e in rows:
         'klucz':     klucz,
         'plik':      f"{e['category']}/{e['id']}.webp",
         'scena':     scena,
+        'ruch':      ruch,
         'prompt':    f"{scena}. {STYL}",
         'negative':  ANTY,
         'seed':      int(hashlib.sha256(e['id'].encode()).hexdigest()[:8], 16),
