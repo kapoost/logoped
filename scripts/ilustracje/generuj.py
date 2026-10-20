@@ -147,6 +147,8 @@ def main():
     p.add_argument('--id', action='append', default=[], help='konkretne ćwiczenie (można wielokrotnie)')
     p.add_argument('--limit', type=int, help='najwyżej tyle obrazków')
     p.add_argument('--wgraj', action='store_true', help='wyślij do bucketu i ustaw media_url')
+    p.add_argument('--tylko-wgraj', action='store_true',
+                   help='nie generuj nic nowego — wyślij pliki, które już leżą w wygenerowane/')
     p.add_argument('--nadpisz', action='store_true', help='generuj też to, co ma już grafikę lub plik')
     p.add_argument('--model', default=DOMYSLNY_MODEL)
     p.add_argument('--bez-referencji', action='store_true',
@@ -157,8 +159,11 @@ def main():
     p.add_argument('--tak', action='store_true', help='nie pytaj o potwierdzenie kosztu')
     a = p.parse_args()
 
+    if a.tylko_wgraj:
+        a.wgraj = True
+
     klucz_fal = os.environ.get('FAL_KEY')
-    if not klucz_fal:
+    if not klucz_fal and not a.tylko_wgraj:
         sys.exit('Brak FAL_KEY w środowisku. Dopisz go do .env.local i puść:\n'
                  '  set -a && . ./.env.local && set +a && python3 scripts/ilustracje/generuj.py ...')
 
@@ -180,7 +185,9 @@ def main():
         kolejka = [w for w in kolejka if w['kategoria'] == a.kategoria]
     if a.id:
         kolejka = [w for w in kolejka if w['id'] in a.id]
-    if not a.nadpisz:
+    if a.tylko_wgraj:
+        kolejka = [w for w in kolejka if os.path.exists(os.path.join(WYJSCIE, w['plik']))]
+    elif not a.nadpisz:
         kolejka = [w for w in kolejka
                    if not w['ma_grafike']
                    and not os.path.exists(os.path.join(WYJSCIE, w['plik']))]
@@ -194,9 +201,12 @@ def main():
         sys.exit('Nic do zrobienia.')
 
     mpx = (a.rozmiar / 1024) ** 2
-    koszt = len(kolejka) * mpx * CENA_ZA_MPX
-    print(f'Do wygenerowania: {len(kolejka)} | model {a.model} | '
-          f'{a.rozmiar}×{a.rozmiar} | szacowany koszt ≈ ${koszt:.2f}')
+    if a.tylko_wgraj:
+        print(f'Do wgrania: {len(kolejka)} gotowych plików | bez wywołań fal, koszt $0,00')
+    else:
+        koszt = len(kolejka) * mpx * CENA_ZA_MPX
+        print(f'Do wygenerowania: {len(kolejka)} | model {a.model} | '
+              f'{a.rozmiar}×{a.rozmiar} | szacowany koszt ≈ ${koszt:.2f}')
     if not a.bez_referencji:
         z_arkuszem = sorted({w['kategoria'] for w in kolejka if referencja(w['kategoria'])})
         print(f'Arkusz postaci: ' + (', '.join(z_arkuszem) if z_arkuszem
@@ -206,6 +216,14 @@ def main():
         sys.exit('Przerwane.')
 
     def zrob(w):
+        sciezka = os.path.join(WYJSCIE, w['plik'])
+
+        if a.tylko_wgraj:
+            with open(sciezka, 'rb') as f:
+                bajty = f.read()
+            wgraj(w, bajty, url=url_sb, klucz=klucz_sb)
+            return len(bajty)
+
         ref = None if a.bez_referencji else referencja(w['kategoria'])
         if ref:
             # Wariant edycyjny bierze tożsamość z arkusza; prompt opisuje sam ruch.
@@ -216,7 +234,6 @@ def main():
         bajty = fal_generuj(zadanie, model=model, rozmiar=a.rozmiar,
                             klucz=klucz_fal, kroki=a.kroki,
                             referencje=[ref] if ref else None)
-        sciezka = os.path.join(WYJSCIE, w['plik'])
         os.makedirs(os.path.dirname(sciezka), exist_ok=True)
         with open(sciezka, 'wb') as f:
             f.write(bajty)
@@ -237,7 +254,8 @@ def main():
                 bledy.append((w['klucz'], str(e)))
                 print(f'[{i}/{len(kolejka)}] ✗ {w["klucz"]}: {e}', file=sys.stderr)
 
-    print(f'\nGotowe: {udane}/{len(kolejka)} | koszt ≈ ${udane * mpx * CENA_ZA_MPX:.2f}')
+    koszt_koncowy = 0.0 if a.tylko_wgraj else udane * mpx * CENA_ZA_MPX
+    print(f'\nGotowe: {udane}/{len(kolejka)} | koszt ≈ ${koszt_koncowy:.2f}')
     if bledy:
         print(f'Nieudane ({len(bledy)}):', file=sys.stderr)
         for k, e in bledy:
