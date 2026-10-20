@@ -105,7 +105,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col select-none">
+    <div className="h-[100dvh] overflow-hidden bg-gray-50 flex flex-col select-none">
       <Confetti trigger={showCelebration} type={isLastExercise ? 'levelup' : 'celebration'} />
 
       {/* Nagłówek */}
@@ -121,7 +121,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-8xl mb-3 drop-shadow-lg w-56 h-56 rounded-[2rem] overflow-hidden flex items-center justify-center"
+            className="text-8xl mb-3 drop-shadow-lg w-[clamp(7rem,26vh,14rem)] h-[clamp(7rem,26vh,14rem)] rounded-[2rem] overflow-hidden flex items-center justify-center"
           >
             <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={448} priority />
           </motion.div>
@@ -176,7 +176,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
       </div>
 
       {/* Instrukcje */}
-      <div className="flex-1 px-4 space-y-3 overflow-y-auto pb-4">
+      <div className="flex-1 min-h-0 px-4 space-y-3 overflow-y-auto pb-4">
         {ex.therapist_notes && (
           <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 flex gap-3">
             <span className="text-xl flex-shrink-0">💬</span>
