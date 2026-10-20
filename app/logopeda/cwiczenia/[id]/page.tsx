@@ -10,6 +10,7 @@ import ExerciseLifecycleActions from '@/components/shared/ExerciseLifecycleActio
 import { getExerciseUsage } from '@/lib/exercises/usage'
 import { plural } from '@/lib/plural'
 import ExerciseImage from '@/components/shared/ExerciseImage'
+import PrzekrojJamyUstnej from '@/components/shared/PrzekrojJamyUstnej'
 
 export const metadata: Metadata = { title: 'Podgląd ćwiczenia' }
 export const revalidate = 0
@@ -102,6 +103,8 @@ export default async function PodgladCwiczeniaPage({ params }: { params: { id: s
             ))}
           </ol>
         </div>
+
+        <PrzekrojJamyUstnej gloski={ex.target_sounds} />
 
         {isArchived && (
           <div className="bg-amber-50 border border-amber-100 rounded-2xl px-4 py-3">

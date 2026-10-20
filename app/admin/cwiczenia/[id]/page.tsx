@@ -9,6 +9,7 @@ import Link from 'next/link'
 import ExerciseLifecycleActions from '@/components/shared/ExerciseLifecycleActions'
 import { plural } from '@/lib/plural'
 import ExerciseImage from '@/components/shared/ExerciseImage'
+import PrzekrojJamyUstnej from '@/components/shared/PrzekrojJamyUstnej'
 
 export const metadata: Metadata = { title: 'Admin — Podgląd ćwiczenia' }
 export const revalidate = 0
@@ -91,6 +92,8 @@ export default async function AdminPodgladCwiczeniaPage({ params }: { params: { 
           <p className="text-sm text-gray-600">{ex.description}</p>
         </div>
       )}
+
+      <PrzekrojJamyUstnej gloski={ex.target_sounds} />
 
       <div className="grid grid-cols-3 gap-6">
         <div className="col-span-2 bg-white rounded-2xl border border-gray-100 px-5 py-4">

@@ -8,6 +8,7 @@ import { playRep, playExerciseDone, playSessionComplete } from '@/lib/sounds'
 import { addDemoExercisePoints, addDemoSessionBonus } from '@/lib/demoStats'
 import Confetti from './Confetti'
 import ExerciseImage from '@/components/shared/ExerciseImage'
+import PrzekrojJamyUstnej from '@/components/shared/PrzekrojJamyUstnej'
 import type { TodayExercise } from '@/types/database'
 
 const DIFFICULTY_COLOR = {
@@ -198,6 +199,11 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
             </div>
           )}
         </div>
+
+        {/* Przekrój pokazuje to, czego ilustracja z bohaterem nie pokaże —
+            układ języka w jamie ustnej. Dziecko widzi wyłącznie pozycje
+            zaakceptowane przez logopedę. */}
+        <PrzekrojJamyUstnej gloski={ex.target_sounds} dlaPacjenta />
       </div>
 
       {/* Przyciski akcji */}

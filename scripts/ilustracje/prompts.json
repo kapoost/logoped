@@ -298,13 +298,13 @@
       "kategoria": "warg",
       "klucz": "warg/Balonik z boku",
       "plik": "warg/e8a0c38d-2209-4cd3-8b07-371e29fb32a4.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Nabierz powietrze",
-      "ruch": "demonstrating a speech therapy exercise: Nabierz powietrze",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Nabierz powietrze. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet with one cheek puffed out round and full while the other stays flat, a curved arrow showing the air moving from one cheek to the other",
+      "ruch": "with one cheek puffed out round and full while the other stays flat, a curved arrow showing the air moving from one cheek to the other",
+      "prompt": "a round friendly piglet with one cheek puffed out round and full while the other stays flat, a curved arrow showing the air moving from one cheek to the other. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3543286013,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "6993bdc9-c54d-4d86-b752-f518e65c4503",
@@ -312,13 +312,13 @@
       "kategoria": "warg",
       "klucz": "warg/Balonikowe policzki",
       "plik": "warg/6993bdc9-c54d-4d86-b752-f518e65c4503.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Nadmuchaj policzki",
-      "ruch": "demonstrating a speech therapy exercise: Nadmuchaj policzki",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Nadmuchaj policzki. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet with both cheeks puffed out completely round, mouth shut tight, holding the air, eyes wide",
+      "ruch": "with both cheeks puffed out completely round, mouth shut tight, holding the air, eyes wide",
+      "prompt": "a round friendly piglet with both cheeks puffed out completely round, mouth shut tight, holding the air, eyes wide. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1823332249,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "591ae4c5-559d-4daa-8ede-67eeec609513",
@@ -326,13 +326,13 @@
       "kategoria": "warg",
       "klucz": "warg/Cmokanie",
       "plik": "warg/591ae4c5-559d-4daa-8ede-67eeec609513.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Wysuń i zaokrąglij wargi",
-      "ruch": "demonstrating a speech therapy exercise: Wysuń i zaokrąglij wargi",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Wysuń i zaokrąglij wargi. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet lips pushed forward into a round kiss shape, a small puff of air leaving them",
+      "ruch": "lips pushed forward into a round kiss shape, a small puff of air leaving them",
+      "prompt": "a round friendly piglet lips pushed forward into a round kiss shape, a small puff of air leaving them. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2609803699,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "7b0844c3-ff21-4476-94d3-033e6c1e0321",
@@ -340,13 +340,13 @@
       "kategoria": "warg",
       "klucz": "warg/Dmuchamy!",
       "plik": "warg/7b0844c3-ff21-4476-94d3-033e6c1e0321.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Ułóż wargi do dmuchania",
-      "ruch": "demonstrating a speech therapy exercise: Ułóż wargi do dmuchania",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Ułóż wargi do dmuchania. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet lips rounded into a small opening, blowing a white ping-pong ball across a table top",
+      "ruch": "lips rounded into a small opening, blowing a white ping-pong ball across a table top",
+      "prompt": "a round friendly piglet lips rounded into a small opening, blowing a white ping-pong ball across a table top. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2465497878,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "25dfbeab-fe9c-4bfc-8d90-8600ca6f8ab1",
@@ -354,13 +354,13 @@
       "kategoria": "warg",
       "klucz": "warg/Górna i dolna warga",
       "plik": "warg/25dfbeab-fe9c-4bfc-8d90-8600ca6f8ab1.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Zamknij szczęki",
-      "ruch": "demonstrating a speech therapy exercise: Zamknij szczęki",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Zamknij szczęki. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet mouth closed, the upper lip lifted high to show the top teeth while the lower lip is pulled down, two small arrows pointing apart",
+      "ruch": "mouth closed, the upper lip lifted high to show the top teeth while the lower lip is pulled down, two small arrows pointing apart",
+      "prompt": "a round friendly piglet mouth closed, the upper lip lifted high to show the top teeth while the lower lip is pulled down, two small arrows pointing apart. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 72368827,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "f1309fb4-0b73-4179-bc79-0b43d48e899c",
@@ -368,13 +368,13 @@
       "kategoria": "warg",
       "klucz": "warg/Mocny zacisk",
       "plik": "warg/f1309fb4-0b73-4179-bc79-0b43d48e899c.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Silnie zaciśnij wargi",
-      "ruch": "demonstrating a speech therapy exercise: Silnie zaciśnij wargi",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Silnie zaciśnij wargi. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet lips pressed hard together into a tight straight line, brows furrowed with visible effort",
+      "ruch": "lips pressed hard together into a tight straight line, brows furrowed with visible effort",
+      "prompt": "a round friendly piglet lips pressed hard together into a tight straight line, brows furrowed with visible effort. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3713024764,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "f8cf6d3c-c846-4bc4-8276-15e9d46b4d21",
@@ -382,13 +382,13 @@
       "kategoria": "warg",
       "klucz": "warg/Ołówek między wargami",
       "plik": "warg/f8cf6d3c-c846-4bc4-8276-15e9d46b4d21.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Włóż ołówek lub kredkę między wargi",
-      "ruch": "demonstrating a speech therapy exercise: Włóż ołówek lub kredkę między wargi",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Włóż ołówek lub kredkę między wargi. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet holding a yellow pencil horizontally between the lips, teeth apart, head level and still",
+      "ruch": "holding a yellow pencil horizontally between the lips, teeth apart, head level and still",
+      "prompt": "a round friendly piglet holding a yellow pencil horizontally between the lips, teeth apart, head level and still. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3443041375,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "6df97200-dd34-4c99-822e-63d7b8653719",
@@ -396,13 +396,13 @@
       "kategoria": "warg",
       "klucz": "warg/Otwórz i zamknij",
       "plik": "warg/6df97200-dd34-4c99-822e-63d7b8653719.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Wysuń wargi do przodu",
-      "ruch": "demonstrating a speech therapy exercise: Wysuń wargi do przodu",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Wysuń wargi do przodu. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet lips pushed forward into a tube and opening into a small round shape, a dotted outline showing the open and closed position",
+      "ruch": "lips pushed forward into a tube and opening into a small round shape, a dotted outline showing the open and closed position",
+      "prompt": "a round friendly piglet lips pushed forward into a tube and opening into a small round shape, a dotted outline showing the open and closed position. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 4020601197,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "67ebd501-3f1b-4763-a7bc-0cdd5549d770",
@@ -410,13 +410,13 @@
       "kategoria": "warg",
       "klucz": "warg/Parskanie konia",
       "plik": "warg/67ebd501-3f1b-4763-a7bc-0cdd5549d770.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Rozluźnij wargi zupełnie",
-      "ruch": "demonstrating a speech therapy exercise: Rozluźnij wargi zupełnie",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Rozluźnij wargi zupełnie. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet loose relaxed lips blowing out and flapping, wavy motion lines along the lips showing them vibrating",
+      "ruch": "loose relaxed lips blowing out and flapping, wavy motion lines along the lips showing them vibrating",
+      "prompt": "a round friendly piglet loose relaxed lips blowing out and flapping, wavy motion lines along the lips showing them vibrating. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1673286933,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "df089304-711c-46b8-a871-5457c224c3dc",
@@ -424,13 +424,13 @@
       "kategoria": "warg",
       "klucz": "warg/Ryjek i uśmiech",
       "plik": "warg/df089304-711c-46b8-a871-5457c224c3dc.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Ułóż wargi w ryjek",
-      "ruch": "demonstrating a speech therapy exercise: Ułóż wargi w ryjek",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Ułóż wargi w ryjek. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet caught mid-change between a pushed-forward round pout and a wide stretched smile, a curved two-way arrow between the two shapes",
+      "ruch": "caught mid-change between a pushed-forward round pout and a wide stretched smile, a curved two-way arrow between the two shapes",
+      "prompt": "a round friendly piglet caught mid-change between a pushed-forward round pout and a wide stretched smile, a curved two-way arrow between the two shapes. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2742318719,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "7f8a0472-6529-45f4-ad73-8ba1de255a50",
@@ -438,13 +438,13 @@
       "kategoria": "warg",
       "klucz": "warg/Ryjek świnki",
       "plik": "warg/7f8a0472-6529-45f4-ad73-8ba1de255a50.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Wysuń zaokrąglone wargi do przodu",
-      "ruch": "demonstrating a speech therapy exercise: Wysuń zaokrąglone wargi do przodu",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Wysuń zaokrąglone wargi do przodu. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet snout pushed far forward into a tight round pout, held still, eyes crossed looking at it",
+      "ruch": "snout pushed far forward into a tight round pout, held still, eyes crossed looking at it",
+      "prompt": "a round friendly piglet snout pushed far forward into a tight round pout, held still, eyes crossed looking at it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3222772281,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "58d6bda9-97f4-4b17-8d80-13e26ef59a68",
@@ -452,13 +452,13 @@
       "kategoria": "warg",
       "klucz": "warg/Silne wargi",
       "plik": "warg/58d6bda9-97f4-4b17-8d80-13e26ef59a68.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Włóż między wargi duży płaski guzik na sznurku",
-      "ruch": "demonstrating a speech therapy exercise: Włóż między wargi duży płaski guzik na sznurku",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Włóż między wargi duży płaski guzik na sznurku. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet gripping a large flat button on a string between its lips while the string is gently pulled away, a tug arrow on the string",
+      "ruch": "gripping a large flat button on a string between its lips while the string is gently pulled away, a tug arrow on the string",
+      "prompt": "a round friendly piglet gripping a large flat button on a string between its lips while the string is gently pulled away, a tug arrow on the string. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2908131964,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "8bb9b001-1a55-4bab-a6d0-8ba4450bc006",
@@ -466,13 +466,13 @@
       "kategoria": "warg",
       "klucz": "warg/Ssanie warg",
       "plik": "warg/8bb9b001-1a55-4bab-a6d0-8ba4450bc006.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Delikatnie zassij obie wargi do jamy ustnej",
-      "ruch": "demonstrating a speech therapy exercise: Delikatnie zassij obie wargi do jamy ustnej",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Delikatnie zassij obie wargi do jamy ustnej. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet both lips sucked inward so the mouth becomes a thin pulled-in line, cheeks hollowed",
+      "ruch": "both lips sucked inward so the mouth becomes a thin pulled-in line, cheeks hollowed",
+      "prompt": "a round friendly piglet both lips sucked inward so the mouth becomes a thin pulled-in line, cheeks hollowed. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 26125401,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "0d1b27f7-6b45-4b5d-8ac7-a7ebbcc644e7",
@@ -480,13 +480,13 @@
       "kategoria": "warg",
       "klucz": "warg/Szeroki uśmiech",
       "plik": "warg/0d1b27f7-6b45-4b5d-8ac7-a7ebbcc644e7.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Rozciągnij usta jak najszerzej — pokaż wszystkie zęby!",
-      "ruch": "demonstrating a speech therapy exercise: Rozciągnij usta jak najszerzej — pokaż wszystkie zęby!",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Rozciągnij usta jak najszerzej — pokaż wszystkie zęby!. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet a very wide stretched smile showing the whole row of teeth, cheeks pushed up",
+      "ruch": "a very wide stretched smile showing the whole row of teeth, cheeks pushed up",
+      "prompt": "a round friendly piglet a very wide stretched smile showing the whole row of teeth, cheeks pushed up. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3821356359,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "7b907113-a0da-4bb8-8d90-19aef6f74470",
@@ -494,13 +494,13 @@
       "kategoria": "warg",
       "klucz": "warg/Warga na wardze",
       "plik": "warg/7b907113-a0da-4bb8-8d90-19aef6f74470.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Nałóż górną wargę na dolną",
-      "ruch": "demonstrating a speech therapy exercise: Nałóż górną wargę na dolną",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Nałóż górną wargę na dolną. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet the upper lip stretched down over the lower lip and completely covering it",
+      "ruch": "the upper lip stretched down over the lower lip and completely covering it",
+      "prompt": "a round friendly piglet the upper lip stretched down over the lower lip and completely covering it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 38512142,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "76a434db-796b-489b-98d9-47400e2d3cad",
@@ -508,13 +508,13 @@
       "kategoria": "warg",
       "klucz": "warg/Wędrujące powietrze",
       "plik": "warg/76a434db-796b-489b-98d9-47400e2d3cad.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Nabierz powietrza do ust",
-      "ruch": "demonstrating a speech therapy exercise: Nabierz powietrza do ust",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Nabierz powietrza do ust. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet one cheek puffed round, a dotted arrow arcing across the closed mouth toward the other flat cheek",
+      "ruch": "one cheek puffed round, a dotted arrow arcing across the closed mouth toward the other flat cheek",
+      "prompt": "a round friendly piglet one cheek puffed round, a dotted arrow arcing across the closed mouth toward the other flat cheek. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2245769762,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "d982cefd-4d8b-4b04-9775-b996c08c77f3",
@@ -522,13 +522,13 @@
       "kategoria": "warg",
       "klucz": "warg/Wesołe odgłosy",
       "plik": "warg/d982cefd-4d8b-4b04-9775-b996c08c77f3.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Naśladuj krowę: mu, mu",
-      "ruch": "demonstrating a speech therapy exercise: Naśladuj krowę: mu, mu",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Naśladuj krowę: mu, mu. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet mouth open mid-sound, with a tiny cartoon cow, owl and dog floating around its head as small simple icons",
+      "ruch": "mouth open mid-sound, with a tiny cartoon cow, owl and dog floating around its head as small simple icons",
+      "prompt": "a round friendly piglet mouth open mid-sound, with a tiny cartoon cow, owl and dog floating around its head as small simple icons. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1107990909,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "91a774ec-9daa-446e-bf07-8d14b56f1da0",
@@ -536,13 +536,13 @@
       "kategoria": "warg",
       "klucz": "warg/Zęby na wardze",
       "plik": "warg/91a774ec-9daa-446e-bf07-8d14b56f1da0.webp",
-      "scena": "a round friendly piglet demonstrating a speech therapy exercise: Lekko ugryź górną wargę górnymi zębami",
-      "ruch": "demonstrating a speech therapy exercise: Lekko ugryź górną wargę górnymi zębami",
-      "prompt": "a round friendly piglet demonstrating a speech therapy exercise: Lekko ugryź górną wargę górnymi zębami. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a round friendly piglet the upper teeth resting gently on the lower lip, the lip pressed up against them, mouth otherwise relaxed",
+      "ruch": "the upper teeth resting gently on the lower lip, the lip pressed up against them, mouth otherwise relaxed",
+      "prompt": "a round friendly piglet the upper teeth resting gently on the lower lip, the lip pressed up against them, mouth otherwise relaxed. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2929462095,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "e9dd9181-21d9-4c4a-b0dc-0ede745dddb6",
@@ -550,13 +550,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Celownik",
       "plik": "jezyka/e9dd9181-21d9-4c4a-b0dc-0ede745dddb6.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta szeroko",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz usta szeroko",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta szeroko. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth wide open, the tongue tip stretching upward toward its own nose, a dotted guide line from tongue tip to nose",
+      "ruch": "mouth wide open, the tongue tip stretching upward toward its own nose, a dotted guide line from tongue tip to nose",
+      "prompt": "a playful brown puppy mouth wide open, the tongue tip stretching upward toward its own nose, a dotted guide line from tongue tip to nose. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 346782211,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "150b0559-2189-481e-a2b8-7b797d2aa1af",
@@ -564,13 +564,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Chomik",
       "plik": "jezyka/150b0559-2189-481e-a2b8-7b797d2aa1af.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz szeroko usta",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz szeroko usta",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz szeroko usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth open, the tongue pushing one cheek outward from inside so a round bulge shows",
+      "ruch": "mouth open, the tongue pushing one cheek outward from inside so a round bulge shows",
+      "prompt": "a playful brown puppy mouth open, the tongue pushing one cheek outward from inside so a round bulge shows. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2691455461,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "66713cfb-de47-4d31-b985-f21dd0be7925",
@@ -578,13 +578,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Grzyb",
       "plik": "jezyka/66713cfb-de47-4d31-b985-f21dd0be7925.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta szeroko",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz usta szeroko",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta szeroko. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth wide open, the whole flat tongue pressed up against the roof of the mouth, the stretched band underneath visible like a mushroom stalk",
+      "ruch": "mouth wide open, the whole flat tongue pressed up against the roof of the mouth, the stretched band underneath visible like a mushroom stalk",
+      "prompt": "a playful brown puppy mouth wide open, the whole flat tongue pressed up against the roof of the mouth, the stretched band underneath visible like a mushroom stalk. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3680238776,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "38c47c2f-3770-4246-a11f-c3349a36cf43",
@@ -592,13 +592,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Język w głąb",
       "plik": "jezyka/38c47c2f-3770-4246-a11f-c3349a36cf43.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Cofnij język w głąb jamy ustnej",
-      "ruch": "demonstrating a speech therapy exercise: Cofnij język w głąb jamy ustnej",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Cofnij język w głąb jamy ustnej. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth open, the tongue pulled far back into the mouth, a backward arrow behind it",
+      "ruch": "mouth open, the tongue pulled far back into the mouth, a backward arrow behind it",
+      "prompt": "a playful brown puppy mouth open, the tongue pulled far back into the mouth, a backward arrow behind it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3471130876,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "ce4178d7-7806-4e53-b4ef-3ec22651e44e",
@@ -606,13 +606,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Kląskający konik",
       "plik": "jezyka/ce4178d7-7806-4e53-b4ef-3ec22651e44e.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Przyklej język do podniebienia",
-      "ruch": "demonstrating a speech therapy exercise: Przyklej język do podniebienia",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Przyklej język do podniebienia. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth open mid-click, the tongue snapping down from the roof of the mouth, two small sound arcs, a little wooden hobby horse beside it",
+      "ruch": "mouth open mid-click, the tongue snapping down from the roof of the mouth, two small sound arcs, a little wooden hobby horse beside it",
+      "prompt": "a playful brown puppy mouth open mid-click, the tongue snapping down from the roof of the mouth, two small sound arcs, a little wooden hobby horse beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2752354996,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "8416ff5d-5d2c-415e-8163-10a6ef59b623",
@@ -620,13 +620,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Kółko",
       "plik": "jezyka/8416ff5d-5d2c-415e-8163-10a6ef59b623.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz usta",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth open, the tongue tip tracing a circle just behind the teeth, a dotted circular arrow following the path",
+      "ruch": "mouth open, the tongue tip tracing a circle just behind the teeth, a dotted circular arrow following the path",
+      "prompt": "a playful brown puppy mouth open, the tongue tip tracing a circle just behind the teeth, a dotted circular arrow following the path. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2480547744,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "c62fe5a5-9278-4f83-a5a9-66e4e93e9934",
@@ -634,13 +634,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Kotek",
       "plik": "jezyka/c62fe5a5-9278-4f83-a5a9-66e4e93e9934.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz szeroko usta",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz szeroko usta",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz szeroko usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy a wide flat tongue out, moving up and down like lapping, a small bowl of milk below",
+      "ruch": "a wide flat tongue out, moving up and down like lapping, a small bowl of milk below",
+      "prompt": "a playful brown puppy a wide flat tongue out, moving up and down like lapping, a small bowl of milk below. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 4161727226,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "d10b53e5-d821-4c2b-b81c-ba1c0764f6ad",
@@ -648,13 +648,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Liczenie zębów",
       "plik": "jezyka/d10b53e5-d821-4c2b-b81c-ba1c0764f6ad.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz szeroko usta",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz szeroko usta",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz szeroko usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth wide open, the tongue tip touching the inside of the upper teeth one after another, small dots marking each tooth",
+      "ruch": "mouth wide open, the tongue tip touching the inside of the upper teeth one after another, small dots marking each tooth",
+      "prompt": "a playful brown puppy mouth wide open, the tongue tip touching the inside of the upper teeth one after another, small dots marking each tooth. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1638278791,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "7ef6ff5a-a98b-496b-985a-a2983e924860",
@@ -662,13 +662,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Łopatka",
       "plik": "jezyka/7ef6ff5a-a98b-496b-985a-a2983e924860.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Wysuń szeroki, płaski język",
-      "ruch": "demonstrating a speech therapy exercise: Wysuń szeroki, płaski język",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Wysuń szeroki, płaski język. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy a wide flat broad tongue held out perfectly still, shaped like a little spade",
+      "ruch": "a wide flat broad tongue held out perfectly still, shaped like a little spade",
+      "prompt": "a playful brown puppy a wide flat broad tongue held out perfectly still, shaped like a little spade. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 219669334,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "01e96d91-5fcc-4aee-9037-f36288b5714d",
@@ -676,13 +676,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Łyżeczka",
       "plik": "jezyka/01e96d91-5fcc-4aee-9037-f36288b5714d.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Ułóż język w kształt łyżeczki",
-      "ruch": "demonstrating a speech therapy exercise: Ułóż język w kształt łyżeczki",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Ułóż język w kształt łyżeczki. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy the tongue out with its front and both sides curled upward into a spoon shape",
+      "ruch": "the tongue out with its front and both sides curled upward into a spoon shape",
+      "prompt": "a playful brown puppy the tongue out with its front and both sides curled upward into a spoon shape. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2848765033,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "860884a2-fb01-4fd6-8051-f804e339ac81",
@@ -690,13 +690,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Malarz",
       "plik": "jezyka/860884a2-fb01-4fd6-8051-f804e339ac81.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta szeroko jak możesz",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz usta szeroko jak możesz",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta szeroko jak możesz. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth wide open, the tongue tip sliding backward along the roof of the mouth, a painted stroke trail behind it, a small paintbrush beside",
+      "ruch": "mouth wide open, the tongue tip sliding backward along the roof of the mouth, a painted stroke trail behind it, a small paintbrush beside",
+      "prompt": "a playful brown puppy mouth wide open, the tongue tip sliding backward along the roof of the mouth, a painted stroke trail behind it, a small paintbrush beside. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1855640586,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "a2019999-0401-458f-8bbf-24a056232dc6",
@@ -704,13 +704,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Mlaskanie",
       "plik": "jezyka/a2019999-0401-458f-8bbf-24a056232dc6.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Naśladuj mlaskanie",
-      "ruch": "demonstrating a speech therapy exercise: Naśladuj mlaskanie",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Naśladuj mlaskanie. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth slightly open mid-smack, the middle of the tongue pulling down from the palate, small sound arcs",
+      "ruch": "mouth slightly open mid-smack, the middle of the tongue pulling down from the palate, small sound arcs",
+      "prompt": "a playful brown puppy mouth slightly open mid-smack, the middle of the tongue pulling down from the palate, small sound arcs. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 740315811,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "8b6bbfcb-62f6-4ebe-8da9-68e62b6d5598",
@@ -718,13 +718,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Motylek",
       "plik": "jezyka/8b6bbfcb-62f6-4ebe-8da9-68e62b6d5598.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Oprzyj czubek języka na górnej wardze",
-      "ruch": "demonstrating a speech therapy exercise: Oprzyj czubek języka na górnej wardze",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Oprzyj czubek języka na górnej wardze. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy the tongue tip resting on the upper lip, widening and narrowing, a small butterfly fluttering nearby",
+      "ruch": "the tongue tip resting on the upper lip, widening and narrowing, a small butterfly fluttering nearby",
+      "prompt": "a playful brown puppy the tongue tip resting on the upper lip, widening and narrowing, a small butterfly fluttering nearby. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2253468303,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "59262a4e-794f-4fca-9ad3-51505547fa60",
@@ -732,13 +732,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Oblizywanka",
       "plik": "jezyka/59262a4e-794f-4fca-9ad3-51505547fa60.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Zamknij usta",
-      "ruch": "demonstrating a speech therapy exercise: Zamknij usta",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Zamknij usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth closed, one cheek bulging where the tongue moves behind the shut lips along the upper teeth, a dotted path on the cheek",
+      "ruch": "mouth closed, one cheek bulging where the tongue moves behind the shut lips along the upper teeth, a dotted path on the cheek",
+      "prompt": "a playful brown puppy mouth closed, one cheek bulging where the tongue moves behind the shut lips along the upper teeth, a dotted path on the cheek. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 426974407,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "fbf42cae-9615-4ea7-9c8a-33978798c739",
@@ -746,13 +746,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Przyklejony język",
       "plik": "jezyka/fbf42cae-9615-4ea7-9c8a-33978798c739.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz szeroko usta",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz szeroko usta",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz szeroko usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth wide open, the tongue tip stuck firmly up to the roof of the mouth and held perfectly still",
+      "ruch": "mouth wide open, the tongue tip stuck firmly up to the roof of the mouth and held perfectly still",
+      "prompt": "a playful brown puppy mouth wide open, the tongue tip stuck firmly up to the roof of the mouth and held perfectly still. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2864585622,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "4d13c73f-c176-4834-85c5-ef134f7da864",
@@ -760,13 +760,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Smakosz",
       "plik": "jezyka/4d13c73f-c176-4834-85c5-ef134f7da864.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz lekko usta",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz lekko usta",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz lekko usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy the tongue tip licking all the way around the upper lip, a dotted arrow following the lips in a circle",
+      "ruch": "the tongue tip licking all the way around the upper lip, a dotted arrow following the lips in a circle",
+      "prompt": "a playful brown puppy the tongue tip licking all the way around the upper lip, a dotted arrow following the lips in a circle. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1142581123,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "d47a5047-449e-4aed-8ca8-b9d716626ffa",
@@ -774,13 +774,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Śpiewające sylaby",
       "plik": "jezyka/d47a5047-449e-4aed-8ca8-b9d716626ffa.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Wybierz znaną melodię",
-      "ruch": "demonstrating a speech therapy exercise: Wybierz znaną melodię",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Wybierz znaną melodię. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth open singing with the tongue tip raised to the upper teeth, three simple music notes floating up",
+      "ruch": "mouth open singing with the tongue tip raised to the upper teeth, three simple music notes floating up",
+      "prompt": "a playful brown puppy mouth open singing with the tongue tip raised to the upper teeth, three simple music notes floating up. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3264226214,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "1867f6a0-9c3d-4cbd-888b-e71498851e53",
@@ -788,13 +788,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Ssanie cukierka",
       "plik": "jezyka/1867f6a0-9c3d-4cbd-888b-e71498851e53.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Ułóż mały cukierek przy podniebieniu",
-      "ruch": "demonstrating a speech therapy exercise: Ułóż mały cukierek przy podniebieniu",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Ułóż mały cukierek przy podniebieniu. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth open, a small round candy held up against the roof of the mouth by the tongue tip",
+      "ruch": "mouth open, a small round candy held up against the roof of the mouth by the tongue tip",
+      "prompt": "a playful brown puppy mouth open, a small round candy held up against the roof of the mouth by the tongue tip. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1204408737,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "cc58ac0b-4a87-49ec-8df9-c151e5037674",
@@ -802,13 +802,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Szczoteczka",
       "plik": "jezyka/cc58ac0b-4a87-49ec-8df9-c151e5037674.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz usta",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth open, the tongue sweeping across the teeth like a brush, a small toothbrush floating beside",
+      "ruch": "mouth open, the tongue sweeping across the teeth like a brush, a small toothbrush floating beside",
+      "prompt": "a playful brown puppy mouth open, the tongue sweeping across the teeth like a brush, a small toothbrush floating beside. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 285190895,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "d69342f0-168d-4a34-aacb-88d446562943",
@@ -816,13 +816,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Winda",
       "plik": "jezyka/d69342f0-168d-4a34-aacb-88d446562943.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz usta",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth open, the whole tongue rising from the floor of the mouth up to the palate, a long upward arrow beside it",
+      "ruch": "mouth open, the whole tongue rising from the floor of the mouth up to the palate, a long upward arrow beside it",
+      "prompt": "a playful brown puppy mouth open, the whole tongue rising from the floor of the mouth up to the palate, a long upward arrow beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1635704100,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "a69dd8b0-7692-4a62-b72e-45f52a79e23c",
@@ -830,13 +830,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Zegar",
       "plik": "jezyka/a69dd8b0-7692-4a62-b72e-45f52a79e23c.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta — szeroko jak u dentysty",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz usta — szeroko jak u dentysty",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Otwórz usta — szeroko jak u dentysty. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth open wide, the tongue stretched far out to one side, a clock-hand arc showing the swing toward the other side",
+      "ruch": "mouth open wide, the tongue stretched far out to one side, a clock-hand arc showing the swing toward the other side",
+      "prompt": "a playful brown puppy mouth open wide, the tongue stretched far out to one side, a clock-hand arc showing the swing toward the other side. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2735767375,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "4fbb63be-4d55-43d7-8e50-af090f1f0d58",
@@ -844,13 +844,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Zlizywanie chrupki",
       "plik": "jezyka/4fbb63be-4d55-43d7-8e50-af090f1f0d58.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Przyklej kawałek chrupki do podniebienia",
-      "ruch": "demonstrating a speech therapy exercise: Przyklej kawałek chrupki do podniebienia",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Przyklej kawałek chrupki do podniebienia. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy mouth open, a corn puff stuck to the roof of the mouth being licked off by the tongue tip",
+      "ruch": "mouth open, a corn puff stuck to the roof of the mouth being licked off by the tongue tip",
+      "prompt": "a playful brown puppy mouth open, a corn puff stuck to the roof of the mouth being licked off by the tongue tip. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1707213831,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "13e78e75-406e-441d-9e0f-ef031a3141fe",
@@ -858,13 +858,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Żmijka",
       "plik": "jezyka/13e78e75-406e-441d-9e0f-ef031a3141fe.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Zamknij usta",
-      "ruch": "demonstrating a speech therapy exercise: Zamknij usta",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Zamknij usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy a narrow pointed tongue stuck straight out with its sides squeezed in, a tiny friendly cartoon snake beside it",
+      "ruch": "a narrow pointed tongue stuck straight out with its sides squeezed in, a tiny friendly cartoon snake beside it",
+      "prompt": "a playful brown puppy a narrow pointed tongue stuck straight out with its sides squeezed in, a tiny friendly cartoon snake beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3524720225,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "5b0842de-8253-4fc3-8cae-be70e6a4fa22",
@@ -872,13 +872,13 @@
       "kategoria": "jezyka",
       "klucz": "jezyka/Żucie boków języka",
       "plik": "jezyka/5b0842de-8253-4fc3-8cae-be70e6a4fa22.webp",
-      "scena": "a playful brown puppy demonstrating a speech therapy exercise: Delikatnie żuj brzegi języka zębami przedtrzonowymi",
-      "ruch": "demonstrating a speech therapy exercise: Delikatnie żuj brzegi języka zębami przedtrzonowymi",
-      "prompt": "a playful brown puppy demonstrating a speech therapy exercise: Delikatnie żuj brzegi języka zębami przedtrzonowymi. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a playful brown puppy the side edge of the tongue held gently between the back teeth, mouth open enough to show it",
+      "ruch": "the side edge of the tongue held gently between the back teeth, mouth open enough to show it",
+      "prompt": "a playful brown puppy the side edge of the tongue held gently between the back teeth, mouth open enough to show it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1024326473,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "11b4dc96-959a-427d-9351-212bee9ca48f",
@@ -886,13 +886,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Głoska C — cyk zegara",
       "plik": "artykulacyjne/11b4dc96-959a-427d-9351-212bee9ca48f.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Złącz zęby",
-      "ruch": "demonstrating a speech therapy exercise: Złącz zęby",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Złącz zęby. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot beak nearly closed with the teeth together, short sharp bursts of air drawn as tiny dashes, a small round alarm clock beside it",
+      "ruch": "beak nearly closed with the teeth together, short sharp bursts of air drawn as tiny dashes, a small round alarm clock beside it",
+      "prompt": "a bright red parrot beak nearly closed with the teeth together, short sharp bursts of air drawn as tiny dashes, a small round alarm clock beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2619379533,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "19499dc8-fdbc-4733-b827-61eca30783bb",
@@ -900,13 +900,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Głoska CZ — pociąg",
       "plik": "artykulacyjne/19499dc8-fdbc-4733-b827-61eca30783bb.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Pozycja jak przy SZ — usta zaokrąglone, język ku górze",
-      "ruch": "demonstrating a speech therapy exercise: Pozycja jak przy SZ — usta zaokrąglone, język ku górze",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Pozycja jak przy SZ — usta zaokrąglone, język ku górze. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot beak rounded, short strong bursts of air drawn as tiny dashes, a small toy steam train puffing beside it",
+      "ruch": "beak rounded, short strong bursts of air drawn as tiny dashes, a small toy steam train puffing beside it",
+      "prompt": "a bright red parrot beak rounded, short strong bursts of air drawn as tiny dashes, a small toy steam train puffing beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 983991802,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "2c90d65d-0f10-421c-a844-266b4548c496",
@@ -914,13 +914,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Głoska DŻ — silnik motocykla",
       "plik": "artykulacyjne/2c90d65d-0f10-421c-a844-266b4548c496.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Pozycja jak CZ — usta zaokrąglone, język ku górze",
-      "ruch": "demonstrating a speech therapy exercise: Pozycja jak CZ — usta zaokrąglone, język ku górze",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Pozycja jak CZ — usta zaokrąglone, język ku górze. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot beak rounded, one wing pressed to its throat to feel the buzzing, vibration lines at the throat, a small toy motorbike beside it",
+      "ruch": "beak rounded, one wing pressed to its throat to feel the buzzing, vibration lines at the throat, a small toy motorbike beside it",
+      "prompt": "a bright red parrot beak rounded, one wing pressed to its throat to feel the buzzing, vibration lines at the throat, a small toy motorbike beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3729201910,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "a2b71810-d7c4-49e7-aba3-bbecb1e7c07d",
@@ -928,13 +928,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Głoska G — żaba kumka",
       "plik": "artykulacyjne/a2b71810-d7c4-49e7-aba3-bbecb1e7c07d.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Pozycja jak przy K — tył języka dotyka podniebienia",
-      "ruch": "demonstrating a speech therapy exercise: Pozycja jak przy K — tył języka dotyka podniebienia",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Pozycja jak przy K — tył języka dotyka podniebienia. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot beak open with the back of the tongue raised, a small green cartoon frog sitting beside it",
+      "ruch": "beak open with the back of the tongue raised, a small green cartoon frog sitting beside it",
+      "prompt": "a bright red parrot beak open with the back of the tongue raised, a small green cartoon frog sitting beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2462403833,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "c0c92256-2930-4e31-844a-1e5e9598b041",
@@ -942,13 +942,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Głoska K — kaszlenie",
       "plik": "artykulacyjne/c0c92256-2930-4e31-844a-1e5e9598b041.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Tył języka unieś — dotknij podniebienia miękkiego",
-      "ruch": "demonstrating a speech therapy exercise: Tył języka unieś — dotknij podniebienia miękkiego",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Tył języka unieś — dotknij podniebienia miękkiego. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot beak open, the back of the tongue lifted high to the soft palate, two short puffs of air leaving the throat",
+      "ruch": "beak open, the back of the tongue lifted high to the soft palate, two short puffs of air leaving the throat",
+      "prompt": "a bright red parrot beak open, the back of the tongue lifted high to the soft palate, two short puffs of air leaving the throat. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3490259260,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "652aa037-60f5-4a17-b36d-7002d03e1aeb",
@@ -956,13 +956,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Głoska L — łyżeczka",
       "plik": "artykulacyjne/652aa037-60f5-4a17-b36d-7002d03e1aeb.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Otwórz usta szeroko",
-      "ruch": "demonstrating a speech therapy exercise: Otwórz usta szeroko",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Otwórz usta szeroko. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot beak open, the tongue tip touching just behind the upper teeth, a small spoon beside it",
+      "ruch": "beak open, the tongue tip touching just behind the upper teeth, a small spoon beside it",
+      "prompt": "a bright red parrot beak open, the tongue tip touching just behind the upper teeth, a small spoon beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2308873409,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "2ad5e136-9d6f-45cc-a15a-de7faf08d5b3",
@@ -970,13 +970,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Głoska R — silnik auta",
       "plik": "artykulacyjne/2ad5e136-9d6f-45cc-a15a-de7faf08d5b3.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Czubek języka unieś za górne zęby (jak przy L)",
-      "ruch": "demonstrating a speech therapy exercise: Czubek języka unieś za górne zęby (jak przy L)",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Czubek języka unieś za górne zęby (jak przy L). flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot beak open, the tongue tip raised behind the upper teeth with vibration lines around it, a small toy car beside it",
+      "ruch": "beak open, the tongue tip raised behind the upper teeth with vibration lines around it, a small toy car beside it",
+      "prompt": "a bright red parrot beak open, the tongue tip raised behind the upper teeth with vibration lines around it, a small toy car beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1829001280,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "3626aad8-0901-4d1a-af50-0107291e373e",
@@ -984,13 +984,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Głoska S — syk węża",
       "plik": "artykulacyjne/3626aad8-0901-4d1a-af50-0107291e373e.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Złącz zęby delikatnie",
-      "ruch": "demonstrating a speech therapy exercise: Złącz zęby delikatnie",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Złącz zęby delikatnie. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot beak stretched into a wide smile with the teeth together, a thin straight stream of air, a small friendly snake coiled beside it",
+      "ruch": "beak stretched into a wide smile with the teeth together, a thin straight stream of air, a small friendly snake coiled beside it",
+      "prompt": "a bright red parrot beak stretched into a wide smile with the teeth together, a thin straight stream of air, a small friendly snake coiled beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1499459508,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "230245b7-f9c7-4d14-9cd3-fdea7932c63f",
@@ -998,13 +998,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Głoska SZ — szum lasu",
       "plik": "artykulacyjne/230245b7-f9c7-4d14-9cd3-fdea7932c63f.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Lekko zaokrąglij usta (nie tak jak przy S)",
-      "ruch": "demonstrating a speech therapy exercise: Lekko zaokrąglij usta (nie tak jak przy S)",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Lekko zaokrąglij usta (nie tak jak przy S). flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot beak rounded forward, a broad soft stream of air, two small pine trees beside it",
+      "ruch": "beak rounded forward, a broad soft stream of air, two small pine trees beside it",
+      "prompt": "a bright red parrot beak rounded forward, a broad soft stream of air, two small pine trees beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3634925103,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "db504785-3af9-4e13-9dcc-4bda56dccfb2",
@@ -1012,13 +1012,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Głoska Z — buczenie pszczoły",
       "plik": "artykulacyjne/db504785-3af9-4e13-9dcc-4bda56dccfb2.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Pozycja jak przy S — zęby złączone, usta w uśmiechu",
-      "ruch": "demonstrating a speech therapy exercise: Pozycja jak przy S — zęby złączone, usta w uśmiechu",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Pozycja jak przy S — zęby złączone, usta w uśmiechu. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot beak in a wide smile, one wing pressed to its throat, vibration lines at the throat, a small bee circling above",
+      "ruch": "beak in a wide smile, one wing pressed to its throat, vibration lines at the throat, a small bee circling above",
+      "prompt": "a bright red parrot beak in a wide smile, one wing pressed to its throat, vibration lines at the throat, a small bee circling above. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2367134480,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "9cef7413-fe48-4ed4-81ea-64f3bd156bf5",
@@ -1026,13 +1026,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Sylaby z C–CZ",
       "plik": "artykulacyjne/9cef7413-fe48-4ed4-81ea-64f3bd156bf5.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Powtarzaj na zmianę: ca-cza, ce-cze, cu-czu",
-      "ruch": "demonstrating a speech therapy exercise: Powtarzaj na zmianę: ca-cza, ce-cze, cu-czu",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Powtarzaj na zmianę: ca-cza, ce-cze, cu-czu. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot caught mid-switch between a wide stretched smile and a small rounded beak, a two-way arrow between the two shapes",
+      "ruch": "caught mid-switch between a wide stretched smile and a small rounded beak, a two-way arrow between the two shapes",
+      "prompt": "a bright red parrot caught mid-switch between a wide stretched smile and a small rounded beak, a two-way arrow between the two shapes. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3073321347,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "127ac308-6a65-4fd5-8181-29ed5c30fbb1",
@@ -1040,13 +1040,13 @@
       "kategoria": "artykulacyjne",
       "klucz": "artykulacyjne/Sylaby z S–SZ",
       "plik": "artykulacyjne/127ac308-6a65-4fd5-8181-29ed5c30fbb1.webp",
-      "scena": "a bright red parrot demonstrating a speech therapy exercise: Powtarzaj za logopedą na zmianę: sa-sza, se-sze, si-szi",
-      "ruch": "demonstrating a speech therapy exercise: Powtarzaj za logopedą na zmianę: sa-sza, se-sze, si-szi",
-      "prompt": "a bright red parrot demonstrating a speech therapy exercise: Powtarzaj za logopedą na zmianę: sa-sza, se-sze, si-szi. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a bright red parrot caught mid-switch between a wide stretched smile and a rounded beak, with a tiny snake on one side and a small pine tree on the other",
+      "ruch": "caught mid-switch between a wide stretched smile and a rounded beak, with a tiny snake on one side and a small pine tree on the other",
+      "prompt": "a bright red parrot caught mid-switch between a wide stretched smile and a rounded beak, with a tiny snake on one side and a small pine tree on the other. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2609494541,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "0b945e17-d7e0-461d-a725-a799d3b7c313",
@@ -1054,13 +1054,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Ciche ziewanie",
       "plik": "podniebienia/0b945e17-d7e0-461d-a725-a799d3b7c313.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Ziewaj szeroko",
-      "ruch": "demonstrating a speech therapy exercise: Ziewaj szeroko",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Ziewaj szeroko. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub a wide silent yawn with eyes squeezed shut and one paw raised politely over the open mouth",
+      "ruch": "a wide silent yawn with eyes squeezed shut and one paw raised politely over the open mouth",
+      "prompt": "a sleepy brown bear cub a wide silent yawn with eyes squeezed shut and one paw raised politely over the open mouth. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3459182166,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "80a5b9c8-f2af-4828-a974-992799561d72",
@@ -1068,13 +1068,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Dziadek chrapie",
       "plik": "podniebienia/80a5b9c8-f2af-4828-a974-992799561d72.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Naśladuj chrapanie na wdechu",
-      "ruch": "demonstrating a speech therapy exercise: Naśladuj chrapanie na wdechu",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Naśladuj chrapanie na wdechu. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub lying asleep on its back, three small round puffs rising from the nose, a nightcap on its head",
+      "ruch": "lying asleep on its back, three small round puffs rising from the nose, a nightcap on its head",
+      "prompt": "a sleepy brown bear cub lying asleep on its back, three small round puffs rising from the nose, a nightcap on its head. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1674222866,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "a691ea24-d05a-490b-b5db-2185d05e4d72",
@@ -1082,13 +1082,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Echo w jaskini",
       "plik": "podniebienia/a691ea24-d05a-490b-b5db-2185d05e4d72.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Zrób wdech nosem",
-      "ruch": "demonstrating a speech therapy exercise: Zrób wdech nosem",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Zrób wdech nosem. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub standing at the mouth of a small cave, calling with an open mouth, concentric sound rings spreading out",
+      "ruch": "standing at the mouth of a small cave, calling with an open mouth, concentric sound rings spreading out",
+      "prompt": "a sleepy brown bear cub standing at the mouth of a small cave, calling with an open mouth, concentric sound rings spreading out. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1430615849,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "38fa4759-6e96-4703-9cc7-3cdfc64d99b4",
@@ -1096,13 +1096,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Gagatek G",
       "plik": "podniebienia/38fa4759-6e96-4703-9cc7-3cdfc64d99b4.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: ga, go, ge, gu, gi, gą, gę",
-      "ruch": "demonstrating a speech therapy exercise: Powtarzaj: ga, go, ge, gu, gi, gą, gę",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: ga, go, ge, gu, gi, gą, gę. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub mouth open with the back of the tongue raised, one paw on its throat feeling the voice, vibration lines at the throat",
+      "ruch": "mouth open with the back of the tongue raised, one paw on its throat feeling the voice, vibration lines at the throat",
+      "prompt": "a sleepy brown bear cub mouth open with the back of the tongue raised, one paw on its throat feeling the voice, vibration lines at the throat. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3280137758,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "04735ed7-47cb-4b39-b870-25728a92e7be",
@@ -1110,13 +1110,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Gołąbek grucha",
       "plik": "podniebienia/04735ed7-47cb-4b39-b870-25728a92e7be.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Nabierz do ust ciepłą wodę",
-      "ruch": "demonstrating a speech therapy exercise: Nabierz do ust ciepłą wodę",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Nabierz do ust ciepłą wodę. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub head tilted back gargling a mouthful of water, small bubbles rising at the throat, a little dove perched beside it",
+      "ruch": "head tilted back gargling a mouthful of water, small bubbles rising at the throat, a little dove perched beside it",
+      "prompt": "a sleepy brown bear cub head tilted back gargling a mouthful of water, small bubbles rising at the throat, a little dove perched beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3990526475,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "c6e5c007-1c30-4546-bfb2-8a36e8c0d94d",
@@ -1124,13 +1124,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Kaszlący miś",
       "plik": "podniebienia/c6e5c007-1c30-4546-bfb2-8a36e8c0d94d.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Delikatnie pokasłuj: ykhm, ykhm",
-      "ruch": "demonstrating a speech therapy exercise: Delikatnie pokasłuj: ykhm, ykhm",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Delikatnie pokasłuj: ykhm, ykhm. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub a small polite cough with one paw to its chest and two short puffs of air leaving the mouth",
+      "ruch": "a small polite cough with one paw to its chest and two short puffs of air leaving the mouth",
+      "prompt": "a sleepy brown bear cub a small polite cough with one paw to its chest and two short puffs of air leaving the mouth. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1181535266,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "585852c7-b4c6-4cc8-b2f7-88846b781391",
@@ -1138,13 +1138,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Kotek K",
       "plik": "podniebienia/585852c7-b4c6-4cc8-b2f7-88846b781391.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: ka, ko, ke, ku, ki, ką, kę",
-      "ruch": "demonstrating a speech therapy exercise: Powtarzaj: ka, ko, ke, ku, ki, ką, kę",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: ka, ko, ke, ku, ki, ką, kę. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub mouth open with the back of the tongue lifted to the soft palate, a small kitten sitting beside it",
+      "ruch": "mouth open with the back of the tongue lifted to the soft palate, a small kitten sitting beside it",
+      "prompt": "a sleepy brown bear cub mouth open with the back of the tongue lifted to the soft palate, a small kitten sitting beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1478010273,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "644ca7c5-45ad-45a2-8ee5-75a32b8fb180",
@@ -1152,13 +1152,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Kukułka Ku-Ku",
       "plik": "podniebienia/644ca7c5-45ad-45a2-8ee5-75a32b8fb180.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: ku-ku, ku-ku",
-      "ruch": "demonstrating a speech therapy exercise: Powtarzaj: ku-ku, ku-ku",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: ku-ku, ku-ku. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub mouth rounded mid-call, a small cuckoo bird popping out of a tiny wooden clock beside it",
+      "ruch": "mouth rounded mid-call, a small cuckoo bird popping out of a tiny wooden clock beside it",
+      "prompt": "a sleepy brown bear cub mouth rounded mid-call, a small cuckoo bird popping out of a tiny wooden clock beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 909241646,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "ff8b4061-61e0-4abf-89cb-3597f94f3178",
@@ -1166,13 +1166,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Mostki K",
       "plik": "podniebienia/ff8b4061-61e0-4abf-89cb-3597f94f3178.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: ak, ok, ek, uk, ik, yk",
-      "ruch": "demonstrating a speech therapy exercise: Powtarzaj: ak, ok, ek, uk, ik, yk",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: ak, ok, ek, uk, ik, yk. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub mouth closing on a sharp stop, a small arched stone bridge standing beside it",
+      "ruch": "mouth closing on a sharp stop, a small arched stone bridge standing beside it",
+      "prompt": "a sleepy brown bear cub mouth closing on a sharp stop, a small arched stone bridge standing beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 4210768894,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "1b5bb3e6-f567-408e-a89e-4664a7dd3832",
@@ -1180,13 +1180,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Pociąg sylabowy G",
       "plik": "podniebienia/1b5bb3e6-f567-408e-a89e-4664a7dd3832.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: aga, ogo, ege, ugu, ygy",
-      "ruch": "demonstrating a speech therapy exercise: Powtarzaj: aga, ogo, ege, ugu, ygy",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: aga, ogo, ege, ugu, ygy. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub mouth open mid-syllable, a little train of three joined wagons rolling beside it",
+      "ruch": "mouth open mid-syllable, a little train of three joined wagons rolling beside it",
+      "prompt": "a sleepy brown bear cub mouth open mid-syllable, a little train of three joined wagons rolling beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3695396313,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "55640a22-5f96-479f-b9fd-f0c72c0622ec",
@@ -1194,13 +1194,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Sowa Hu-Hu",
       "plik": "podniebienia/55640a22-5f96-479f-b9fd-f0c72c0622ec.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Zrób wdech nosem",
-      "ruch": "demonstrating a speech therapy exercise: Zrób wdech nosem",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Zrób wdech nosem. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub mouth rounded into a long hoot, a small owl sitting on a branch beside it",
+      "ruch": "mouth rounded into a long hoot, a small owl sitting on a branch beside it",
+      "prompt": "a sleepy brown bear cub mouth rounded into a long hoot, a small owl sitting on a branch beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 75436797,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "f2b9d9e0-83fd-48d0-9fff-357d31e82464",
@@ -1208,13 +1208,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Sylabowe echo",
       "plik": "podniebienia/f2b9d9e0-83fd-48d0-9fff-357d31e82464.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj naprzemiennie: ga-ka, go-ko, gu-ku, ge-ke",
-      "ruch": "demonstrating a speech therapy exercise: Powtarzaj naprzemiennie: ga-ka, go-ko, gu-ku, ge-ke",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj naprzemiennie: ga-ka, go-ko, gu-ku, ge-ke. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub one paw cupped behind its ear and mouth open, a circular two-way arrow between ear and mouth",
+      "ruch": "one paw cupped behind its ear and mouth open, a circular two-way arrow between ear and mouth",
+      "prompt": "a sleepy brown bear cub one paw cupped behind its ear and mouth open, a circular two-way arrow between ear and mouth. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1374856481,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "65ab4847-7663-4351-98d7-685d463ef16b",
@@ -1222,13 +1222,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Wagoniki K",
       "plik": "podniebienia/65ab4847-7663-4351-98d7-685d463ef16b.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: aka, oko, eke, uku, yky",
-      "ruch": "demonstrating a speech therapy exercise: Powtarzaj: aka, oko, eke, uku, yky",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Powtarzaj: aka, oko, eke, uku, yky. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub mouth open mid-syllable, three separate little wagons standing apart from each other beside it",
+      "ruch": "mouth open mid-syllable, three separate little wagons standing apart from each other beside it",
+      "prompt": "a sleepy brown bear cub mouth open mid-syllable, three separate little wagons standing apart from each other beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 306503185,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "c2ad6388-2903-4230-bfcd-d3b9d6033ce9",
@@ -1236,13 +1236,13 @@
       "kategoria": "podniebienia",
       "klucz": "podniebienia/Ziewający miś",
       "plik": "podniebienia/c2ad6388-2903-4230-bfcd-d3b9d6033ce9.webp",
-      "scena": "a sleepy brown bear cub demonstrating a speech therapy exercise: Opuść żuchwę",
-      "ruch": "demonstrating a speech therapy exercise: Opuść żuchwę",
-      "prompt": "a sleepy brown bear cub demonstrating a speech therapy exercise: Opuść żuchwę. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a sleepy brown bear cub jaw dropped very low in a big slow yawn, both arms stretched up above its head",
+      "ruch": "jaw dropped very low in a big slow yawn, both arms stretched up above its head",
+      "prompt": "a sleepy brown bear cub jaw dropped very low in a big slow yawn, both arms stretched up above its head. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3290530313,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "4eb62f37-1d7b-45e1-951f-78bc20ee56f6",
@@ -1250,13 +1250,13 @@
       "kategoria": "sluchowe",
       "klucz": "sluchowe/Echo",
       "plik": "sluchowe/4eb62f37-1d7b-45e1-951f-78bc20ee56f6.webp",
-      "scena": "a big-eared grey rabbit demonstrating a speech therapy exercise: Logopeda mówi sylabę lub słowo",
-      "ruch": "demonstrating a speech therapy exercise: Logopeda mówi sylabę lub słowo",
-      "prompt": "a big-eared grey rabbit demonstrating a speech therapy exercise: Logopeda mówi sylabę lub słowo. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a big-eared grey rabbit one long ear cupped forward and mouth open repeating, concentric sound rings coming back toward the ear",
+      "ruch": "one long ear cupped forward and mouth open repeating, concentric sound rings coming back toward the ear",
+      "prompt": "a big-eared grey rabbit one long ear cupped forward and mouth open repeating, concentric sound rings coming back toward the ear. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 4261389475,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "41945ddb-69a8-451d-847a-a971e4e892d0",
@@ -1264,13 +1264,13 @@
       "kategoria": "sluchowe",
       "klucz": "sluchowe/Jaki to dźwięk?",
       "plik": "sluchowe/41945ddb-69a8-451d-847a-a971e4e892d0.webp",
-      "scena": "a big-eared grey rabbit demonstrating a speech therapy exercise: Puść nagranie dźwięków z otoczenia (deszcz, samochód, dzwonek)",
-      "ruch": "demonstrating a speech therapy exercise: Puść nagranie dźwięków z otoczenia (deszcz, samochód, dzwonek)",
-      "prompt": "a big-eared grey rabbit demonstrating a speech therapy exercise: Puść nagranie dźwięków z otoczenia (deszcz, samochód, dzwonek). flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a big-eared grey rabbit ears straight up and head tilted, a small loudspeaker beside it with three sound arcs",
+      "ruch": "ears straight up and head tilted, a small loudspeaker beside it with three sound arcs",
+      "prompt": "a big-eared grey rabbit ears straight up and head tilted, a small loudspeaker beside it with three sound arcs. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2066150603,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "dce64599-75bb-41a8-81a0-07a34bfea91c",
@@ -1278,13 +1278,13 @@
       "kategoria": "sluchowe",
       "klucz": "sluchowe/Odgłosy zwierząt",
       "plik": "sluchowe/dce64599-75bb-41a8-81a0-07a34bfea91c.webp",
-      "scena": "a big-eared grey rabbit demonstrating a speech therapy exercise: Puść nagranie odgłosu zwierzęcia (bez pokazywania obrazka!)",
-      "ruch": "demonstrating a speech therapy exercise: Puść nagranie odgłosu zwierzęcia (bez pokazywania obrazka!)",
-      "prompt": "a big-eared grey rabbit demonstrating a speech therapy exercise: Puść nagranie odgłosu zwierzęcia (bez pokazywania obrazka!). flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a big-eared grey rabbit ears straight up listening hard, with a tiny cow, duck and cat floating around as small simple icons",
+      "ruch": "ears straight up listening hard, with a tiny cow, duck and cat floating around as small simple icons",
+      "prompt": "a big-eared grey rabbit ears straight up listening hard, with a tiny cow, duck and cat floating around as small simple icons. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1927208653,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "c84e4bb1-d7eb-4c13-9b91-28c002af2a96",
@@ -1292,13 +1292,13 @@
       "kategoria": "sluchowe",
       "klucz": "sluchowe/Różnicowanie par",
       "plik": "sluchowe/c84e4bb1-d7eb-4c13-9b91-28c002af2a96.webp",
-      "scena": "a big-eared grey rabbit demonstrating a speech therapy exercise: Logopeda mówi dwa słowa (np. kosa / koza, bas / pas)",
-      "ruch": "demonstrating a speech therapy exercise: Logopeda mówi dwa słowa (np. kosa / koza, bas / pas)",
-      "prompt": "a big-eared grey rabbit demonstrating a speech therapy exercise: Logopeda mówi dwa słowa (np. kosa / koza, bas / pas). flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a big-eared grey rabbit both ears straight up and head tilted, two separate clusters of sound waves arriving from the left and from the right",
+      "ruch": "both ears straight up and head tilted, two separate clusters of sound waves arriving from the left and from the right",
+      "prompt": "a big-eared grey rabbit both ears straight up and head tilted, two separate clusters of sound waves arriving from the left and from the right. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2027162542,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "80f64b78-0fc6-43d3-bdd8-4858308e6d3b",
@@ -1306,13 +1306,13 @@
       "kategoria": "sluchowe",
       "klucz": "sluchowe/Rytm klaskania",
       "plik": "sluchowe/80f64b78-0fc6-43d3-bdd8-4858308e6d3b.webp",
-      "scena": "a big-eared grey rabbit demonstrating a speech therapy exercise: Logopeda klaszcze rytm (np. klap-klap-klap-klaaap)",
-      "ruch": "demonstrating a speech therapy exercise: Logopeda klaszcze rytm (np. klap-klap-klap-klaaap)",
-      "prompt": "a big-eared grey rabbit demonstrating a speech therapy exercise: Logopeda klaszcze rytm (np. klap-klap-klap-klaaap). flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a big-eared grey rabbit clapping both paws together with three small sound arcs spreading out",
+      "ruch": "clapping both paws together with three small sound arcs spreading out",
+      "prompt": "a big-eared grey rabbit clapping both paws together with three small sound arcs spreading out. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1215133099,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "90dc369d-d076-45fc-b2f1-0edaad28f0e1",
@@ -1320,13 +1320,13 @@
       "kategoria": "sluchowe",
       "klucz": "sluchowe/Szukaj dźwięku",
       "plik": "sluchowe/90dc369d-d076-45fc-b2f1-0edaad28f0e1.webp",
-      "scena": "a big-eared grey rabbit demonstrating a speech therapy exercise: Dziecko zasłania oczy",
-      "ruch": "demonstrating a speech therapy exercise: Dziecko zasłania oczy",
-      "prompt": "a big-eared grey rabbit demonstrating a speech therapy exercise: Dziecko zasłania oczy. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a big-eared grey rabbit eyes covered with one paw while the other paw points to the side where a small bell is ringing",
+      "ruch": "eyes covered with one paw while the other paw points to the side where a small bell is ringing",
+      "prompt": "a big-eared grey rabbit eyes covered with one paw while the other paw points to the side where a small bell is ringing. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 743447398,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "b294753b-0bad-49c7-9447-446fb119d15a",
@@ -1334,13 +1334,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Ciche połykanie",
       "plik": "polykanie/b294753b-0bad-49c7-9447-446fb119d15a.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Wykonaj kilka spokojnych połknięć śliny",
-      "ruch": "demonstrating a speech therapy exercise: Wykonaj kilka spokojnych połknięć śliny",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Wykonaj kilka spokojnych połknięć śliny. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape eyes closed and completely calm, lips still, a small downward arrow at the throat",
+      "ruch": "eyes closed and completely calm, lips still, a small downward arrow at the throat",
+      "prompt": "a happy water droplet character with a cape eyes closed and completely calm, lips still, a small downward arrow at the throat. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 4088980904,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "1eb0705a-c506-4a73-8758-53c9a9d24c4e",
@@ -1348,13 +1348,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Cukierek na podniebieniu",
       "plik": "polykanie/1eb0705a-c506-4a73-8758-53c9a9d24c4e.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Przytrzymaj językiem przy podniebieniu płatek kukurydziany, chrupkę lub rodzynkę",
-      "ruch": "demonstrating a speech therapy exercise: Przytrzymaj językiem przy podniebieniu płatek kukurydziany, chrupkę lub rodzynkę",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Przytrzymaj językiem przy podniebieniu płatek kukurydziany, chrupkę lub rodzynkę. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape mouth open with a corn puff held up against the roof of the mouth",
+      "ruch": "mouth open with a corn puff held up against the roof of the mouth",
+      "prompt": "a happy water droplet character with a cape mouth open with a corn puff held up against the roof of the mouth. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 4060442687,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "8ed335d2-62e4-4868-831b-47c20934d608",
@@ -1362,13 +1362,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Fontanna ze słomki",
       "plik": "polykanie/8ed335d2-62e4-4868-831b-47c20934d608.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Pij przez słomkę małymi porcjami",
-      "ruch": "demonstrating a speech therapy exercise: Pij przez słomkę małymi porcjami",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Pij przez słomkę małymi porcjami. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape sipping through a straw from a cup, a small arc of water rising like a fountain beside it",
+      "ruch": "sipping through a straw from a cup, a small arc of water rising like a fountain beside it",
+      "prompt": "a happy water droplet character with a cape sipping through a straw from a cup, a small arc of water rising like a fountain beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 604919365,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "6089a813-f960-4f0b-8bf5-a14861270583",
@@ -1376,13 +1376,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Języczek na górce",
       "plik": "polykanie/6089a813-f960-4f0b-8bf5-a14861270583.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Unieś czubek i przednią część języka do wałka dziąsłowego za górnymi zębami",
-      "ruch": "demonstrating a speech therapy exercise: Unieś czubek i przednią część języka do wałka dziąsłowego za górnymi zębami",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Unieś czubek i przednią część języka do wałka dziąsłowego za górnymi zębami. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape mouth open with the tongue tip pressed to the ridge just behind the upper teeth, a tiny hill shape drawn beside",
+      "ruch": "mouth open with the tongue tip pressed to the ridge just behind the upper teeth, a tiny hill shape drawn beside",
+      "prompt": "a happy water droplet character with a cape mouth open with the tongue tip pressed to the ridge just behind the upper teeth, a tiny hill shape drawn beside. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1559076262,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "e180ae60-b8e5-4c9b-9749-62eb8a74f3b6",
@@ -1390,13 +1390,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Kląskający konik",
       "plik": "polykanie/e180ae60-b8e5-4c9b-9749-62eb8a74f3b6.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Rytmicznie przyklejaj i odklejaj język od podniebienia",
-      "ruch": "demonstrating a speech therapy exercise: Rytmicznie przyklejaj i odklejaj język od podniebienia",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Rytmicznie przyklejaj i odklejaj język od podniebienia. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape mid-click with the tongue snapping down from the palate, a little wooden hobby horse beside it",
+      "ruch": "mid-click with the tongue snapping down from the palate, a little wooden hobby horse beside it",
+      "prompt": "a happy water droplet character with a cape mid-click with the tongue snapping down from the palate, a little wooden hobby horse beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 786828978,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "6ed5fb26-e261-4814-bb19-ef62f17d7e10",
@@ -1404,13 +1404,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Król języczek",
       "plik": "polykanie/6ed5fb26-e261-4814-bb19-ef62f17d7e10.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Przyklej czubek języka za górnymi siekaczami",
-      "ruch": "demonstrating a speech therapy exercise: Przyklej czubek języka za górnymi siekaczami",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Przyklej czubek języka za górnymi siekaczami. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape wearing a small golden crown, mouth open, the tongue tip held firmly behind the upper teeth",
+      "ruch": "wearing a small golden crown, mouth open, the tongue tip held firmly behind the upper teeth",
+      "prompt": "a happy water droplet character with a cape wearing a small golden crown, mouth open, the tongue tip held firmly behind the upper teeth. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 529007964,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "34f8bf09-1954-45be-a823-a63dbed59aa9",
@@ -1418,13 +1418,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Łyk po łyku",
       "plik": "polykanie/34f8bf09-1954-45be-a823-a63dbed59aa9.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Pij wodę małymi łykami",
-      "ruch": "demonstrating a speech therapy exercise: Pij wodę małymi łykami",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Pij wodę małymi łykami. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape drinking small careful sips from a clear glass of water",
+      "ruch": "drinking small careful sips from a clear glass of water",
+      "prompt": "a happy water droplet character with a cape drinking small careful sips from a clear glass of water. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2888691121,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "d4151119-6f49-4f48-9098-b81a0bf85ac7",
@@ -1432,13 +1432,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Magiczna kropelka",
       "plik": "polykanie/d4151119-6f49-4f48-9098-b81a0bf85ac7.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Zgromadź ślinę w ustach",
-      "ruch": "demonstrating a speech therapy exercise: Zgromadź ślinę w ustach",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Zgromadź ślinę w ustach. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape holding up one sparkling droplet with small sparkles around it, cape lifted",
+      "ruch": "holding up one sparkling droplet with small sparkles around it, cape lifted",
+      "prompt": "a happy water droplet character with a cape holding up one sparkling droplet with small sparkles around it, cape lifted. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3029414596,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "0e97e0a2-42d6-4f86-83ea-9dd0f2bed71e",
@@ -1446,13 +1446,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Powolny konik",
       "plik": "polykanie/0e97e0a2-42d6-4f86-83ea-9dd0f2bed71e.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Kląskaj bardzo wolno i dokładnie",
-      "ruch": "demonstrating a speech therapy exercise: Kląskaj bardzo wolno i dokładnie",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Kląskaj bardzo wolno i dokładnie. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape a very slow deliberate tongue click, the tongue peeling slowly off the palate, a small horse walking slowly beside it",
+      "ruch": "a very slow deliberate tongue click, the tongue peeling slowly off the palate, a small horse walking slowly beside it",
+      "prompt": "a happy water droplet character with a cape a very slow deliberate tongue click, the tongue peeling slowly off the palate, a small horse walking slowly beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2356536934,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "986ec618-6258-44f5-b425-e4dc58d096f1",
@@ -1460,13 +1460,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Ślina jak profesjonalista",
       "plik": "polykanie/986ec618-6258-44f5-b425-e4dc58d096f1.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Oprzyj język o wałek dziąsłowy",
-      "ruch": "demonstrating a speech therapy exercise: Oprzyj język o wałek dziąsłowy",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Oprzyj język o wałek dziąsłowy. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape standing upright and proud with its cape flowing and one arm raised in a thumbs-up, mouth calmly closed",
+      "ruch": "standing upright and proud with its cape flowing and one arm raised in a thumbs-up, mouth calmly closed",
+      "prompt": "a happy water droplet character with a cape standing upright and proud with its cape flowing and one arm raised in a thumbs-up, mouth calmly closed. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3515430133,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "1a9eee40-9d5e-4a7d-82d1-f2eda3a34f6c",
@@ -1474,13 +1474,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Zamknięte usta",
       "plik": "polykanie/1a9eee40-9d5e-4a7d-82d1-f2eda3a34f6c.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Zamknij usta i lekko złącz zęby",
-      "ruch": "demonstrating a speech therapy exercise: Zamknij usta i lekko złącz zęby",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Zamknij usta i lekko złącz zęby. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape mouth firmly closed with the teeth lightly together, a small downward arrow at the throat",
+      "ruch": "mouth firmly closed with the teeth lightly together, a small downward arrow at the throat",
+      "prompt": "a happy water droplet character with a cape mouth firmly closed with the teeth lightly together, a small downward arrow at the throat. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3580265787,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "9ee72e69-ded6-4a9d-a032-2294753e913b",
@@ -1488,13 +1488,13 @@
       "kategoria": "polykanie",
       "klucz": "polykanie/Zatrzymaj i połknij",
       "plik": "polykanie/9ee72e69-ded6-4a9d-a032-2294753e913b.webp",
-      "scena": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Nabierz niewielki łyk wody",
-      "ruch": "demonstrating a speech therapy exercise: Nabierz niewielki łyk wody",
-      "prompt": "a happy water droplet character with a cape demonstrating a speech therapy exercise: Nabierz niewielki łyk wody. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a happy water droplet character with a cape cheeks slightly full holding a sip of water, one hand raised in a stop gesture",
+      "ruch": "cheeks slightly full holding a sip of water, one hand raised in a stop gesture",
+      "prompt": "a happy water droplet character with a cape cheeks slightly full holding a sip of water, one hand raised in a stop gesture. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1637320406,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "66f22238-a732-4d00-8957-2c75a9ffa625",
@@ -1502,13 +1502,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Broda do szyi",
       "plik": "zuchwa/66f22238-a732-4d00-8957-2c75a9ffa625.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Oprzyj palec na brodzie",
-      "ruch": "demonstrating a speech therapy exercise: Oprzyj palec na brodzie",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Oprzyj palec na brodzie. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey one finger resting on its chin pushing it back toward the neck, elbow tucked against the chest",
+      "ruch": "one finger resting on its chin pushing it back toward the neck, elbow tucked against the chest",
+      "prompt": "a cheeky little monkey one finger resting on its chin pushing it back toward the neck, elbow tucked against the chest. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2833562550,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "e7a04437-ef3e-49d4-ae63-e418e415fb10",
@@ -1516,13 +1516,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Ciągliwy cukierek",
       "plik": "zuchwa/e7a04437-ef3e-49d4-ae63-e418e415fb10.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Żuj wyobrażony, bardzo ciągliwy cukierek",
-      "ruch": "demonstrating a speech therapy exercise: Żuj wyobrażony, bardzo ciągliwy cukierek",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Żuj wyobrażony, bardzo ciągliwy cukierek. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey chewing a long stretchy toffee that pulls out of the mouth in a sticky strand",
+      "ruch": "chewing a long stretchy toffee that pulls out of the mouth in a sticky strand",
+      "prompt": "a cheeky little monkey chewing a long stretchy toffee that pulls out of the mouth in a sticky strand. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1369542705,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "f58bb25f-c6fd-4576-a2d3-b79b72308a05",
@@ -1530,13 +1530,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Ciche ziewanie",
       "plik": "zuchwa/f58bb25f-c6fd-4576-a2d3-b79b72308a05.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Ziewaj szeroko i spokojnie",
-      "ruch": "demonstrating a speech therapy exercise: Ziewaj szeroko i spokojnie",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Ziewaj szeroko i spokojnie. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey a wide completely silent yawn with eyes shut and shoulders relaxed",
+      "ruch": "a wide completely silent yawn with eyes shut and shoulders relaxed",
+      "prompt": "a cheeky little monkey a wide completely silent yawn with eyes shut and shoulders relaxed. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2713725778,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "a1425543-fc83-4c6e-8583-4b225c7572a3",
@@ -1544,13 +1544,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Coraz większa guma",
       "plik": "zuchwa/a1425543-fc83-4c6e-8583-4b225c7572a3.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Wyobraź sobie, że guma staje się coraz większa",
-      "ruch": "demonstrating a speech therapy exercise: Wyobraź sobie, że guma staje się coraz większa",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Wyobraź sobie, że guma staje się coraz większa. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey mouth closed, jaw making wide circles, a growing bubble of gum bulging in one cheek, a widening spiral arrow",
+      "ruch": "mouth closed, jaw making wide circles, a growing bubble of gum bulging in one cheek, a widening spiral arrow",
+      "prompt": "a cheeky little monkey mouth closed, jaw making wide circles, a growing bubble of gum bulging in one cheek, a widening spiral arrow. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1408931410,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "dbe75aa2-eddc-4c04-bc9c-d9e1a55f4e7d",
@@ -1558,13 +1558,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Grzebień",
       "plik": "zuchwa/dbe75aa2-eddc-4c04-bc9c-d9e1a55f4e7d.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Dolnymi zębami przesuwaj po górnej wardze",
-      "ruch": "demonstrating a speech therapy exercise: Dolnymi zębami przesuwaj po górnej wardze",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Dolnymi zębami przesuwaj po górnej wardze. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey the lower teeth sliding along the upper lip, jaw pushed forward",
+      "ruch": "the lower teeth sliding along the upper lip, jaw pushed forward",
+      "prompt": "a cheeky little monkey the lower teeth sliding along the upper lip, jaw pushed forward. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 290358677,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "a0323e23-0bb6-43e9-9cf4-f81d64c9f680",
@@ -1572,13 +1572,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Kląskający konik",
       "plik": "zuchwa/a0323e23-0bb6-43e9-9cf4-f81d64c9f680.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Kląskaj językiem",
-      "ruch": "demonstrating a speech therapy exercise: Kląskaj językiem",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Kląskaj językiem. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey clicking its tongue while the jaw drops loosely open, a little wooden hobby horse beside it",
+      "ruch": "clicking its tongue while the jaw drops loosely open, a little wooden hobby horse beside it",
+      "prompt": "a cheeky little monkey clicking its tongue while the jaw drops loosely open, a little wooden hobby horse beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3429410553,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "8770c6c2-5e33-403f-9d9e-6846deb8e567",
@@ -1586,13 +1586,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Koparka",
       "plik": "zuchwa/8770c6c2-5e33-403f-9d9e-6846deb8e567.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Powoli opuszczaj żuchwę maksymalnie w dół, lekko ją cofając",
-      "ruch": "demonstrating a speech therapy exercise: Powoli opuszczaj żuchwę maksymalnie w dół, lekko ją cofając",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Powoli opuszczaj żuchwę maksymalnie w dół, lekko ją cofając. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey jaw dropping low and slightly backward, a small toy excavator with its bucket down beside it",
+      "ruch": "jaw dropping low and slightly backward, a small toy excavator with its bucket down beside it",
+      "prompt": "a cheeky little monkey jaw dropping low and slightly backward, a small toy excavator with its bucket down beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1695463886,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "ff9a061c-a903-4b45-95de-662759da841a",
@@ -1600,13 +1600,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Krokodyl",
       "plik": "zuchwa/ff9a061c-a903-4b45-95de-662759da841a.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Szeroko otwórz paszczę jak krokodyl",
-      "ruch": "demonstrating a speech therapy exercise: Szeroko otwórz paszczę jak krokodyl",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Szeroko otwórz paszczę jak krokodyl. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey mouth opened extremely wide, a small friendly cartoon crocodile beside it with its jaws open too",
+      "ruch": "mouth opened extremely wide, a small friendly cartoon crocodile beside it with its jaws open too",
+      "prompt": "a cheeky little monkey mouth opened extremely wide, a small friendly cartoon crocodile beside it with its jaws open too. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1503736338,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "17ba1975-99bf-460a-b391-c71a8011ed3b",
@@ -1614,13 +1614,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Krówka gryzie",
       "plik": "zuchwa/17ba1975-99bf-460a-b391-c71a8011ed3b.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Naśladuj przeżuwanie trawy przez krowę",
-      "ruch": "demonstrating a speech therapy exercise: Naśladuj przeżuwanie trawy przez krowę",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Naśladuj przeżuwanie trawy przez krowę. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey jaw sliding from side to side chewing, a blade of grass hanging from the mouth, a side-to-side arrow",
+      "ruch": "jaw sliding from side to side chewing, a blade of grass hanging from the mouth, a side-to-side arrow",
+      "prompt": "a cheeky little monkey jaw sliding from side to side chewing, a blade of grass hanging from the mouth, a side-to-side arrow. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3266869776,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "61cb64ea-3045-48ad-9385-66447e0206c4",
@@ -1628,13 +1628,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Mądre paluszki",
       "plik": "zuchwa/61cb64ea-3045-48ad-9385-66447e0206c4.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Umieść między zębami poziomo palec wskazujący i środkowy lub zgięty kciuk",
-      "ruch": "demonstrating a speech therapy exercise: Umieść między zębami poziomo palec wskazujący i środkowy lub zgięty kciuk",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Umieść między zębami poziomo palec wskazujący i środkowy lub zgięty kciuk. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey two fingers held horizontally between its teeth, measuring the opening",
+      "ruch": "two fingers held horizontally between its teeth, measuring the opening",
+      "prompt": "a cheeky little monkey two fingers held horizontally between its teeth, measuring the opening. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2339672335,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "f4e83577-a7a8-4781-bddb-02bf5a7537c0",
@@ -1642,13 +1642,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Małpka",
       "plik": "zuchwa/f4e83577-a7a8-4781-bddb-02bf5a7537c0.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Maksymalnie wysuń żuchwę",
-      "ruch": "demonstrating a speech therapy exercise: Maksymalnie wysuń żuchwę",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Maksymalnie wysuń żuchwę. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey the lower jaw pushed far forward with the lower teeth resting gently over the upper lip",
+      "ruch": "the lower jaw pushed far forward with the lower teeth resting gently over the upper lip",
+      "prompt": "a cheeky little monkey the lower jaw pushed far forward with the lower teeth resting gently over the upper lip. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1554298917,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "2d98611f-0125-4cdb-b572-3febbd492b21",
@@ -1656,13 +1656,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Nieme sylaby",
       "plik": "zuchwa/2d98611f-0125-4cdb-b572-3febbd492b21.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Bezgłośnie wymawiaj sylaby: pa, ba, da",
-      "ruch": "demonstrating a speech therapy exercise: Bezgłośnie wymawiaj sylaby: pa, ba, da",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Bezgłośnie wymawiaj sylaby: pa, ba, da. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey jaw opening and closing in a silent round shape, a dotted outline showing the movement, no sound marks at all",
+      "ruch": "jaw opening and closing in a silent round shape, a dotted outline showing the movement, no sound marks at all",
+      "prompt": "a cheeky little monkey jaw opening and closing in a silent round shape, a dotted outline showing the movement, no sound marks at all. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1200089474,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "4ff2136e-9efa-408b-87eb-0daf8b0a917c",
@@ -1670,13 +1670,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Otwieranie i zamykanie domku",
       "plik": "zuchwa/4ff2136e-9efa-408b-87eb-0daf8b0a917c.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Szeroko otwórz usta jak przy głosce „a\"",
-      "ruch": "demonstrating a speech therapy exercise: Szeroko otwórz usta jak przy głosce „a\"",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Szeroko otwórz usta jak przy głosce „a\". flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey mouth opened wide into a round shape, a small house with an open door standing beside it",
+      "ruch": "mouth opened wide into a round shape, a small house with an open door standing beside it",
+      "prompt": "a cheeky little monkey mouth opened wide into a round shape, a small house with an open door standing beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3359078753,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "333f23ad-6879-47ec-acf8-8bcae9cb267b",
@@ -1684,13 +1684,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Piła",
       "plik": "zuchwa/333f23ad-6879-47ec-acf8-8bcae9cb267b.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Przesuwaj żuchwę do przodu i do tyłu",
-      "ruch": "demonstrating a speech therapy exercise: Przesuwaj żuchwę do przodu i do tyłu",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Przesuwaj żuchwę do przodu i do tyłu. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey jaw sliding forward and back, a small handsaw beside it and a four-way arrow showing the directions",
+      "ruch": "jaw sliding forward and back, a small handsaw beside it and a four-way arrow showing the directions",
+      "prompt": "a cheeky little monkey jaw sliding forward and back, a small handsaw beside it and a four-way arrow showing the directions. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2654731200,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "76fde2cb-27bc-4c64-a829-4d3b6ba47380",
@@ -1698,13 +1698,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Szybka winda",
       "plik": "zuchwa/76fde2cb-27bc-4c64-a829-4d3b6ba47380.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Rytmicznie opuszczaj i unoś żuchwę",
-      "ruch": "demonstrating a speech therapy exercise: Rytmicznie opuszczaj i unoś żuchwę",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Rytmicznie opuszczaj i unoś żuchwę. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey jaw bouncing quickly up and down with motion blur, a small lightning bolt beside it",
+      "ruch": "jaw bouncing quickly up and down with motion blur, a small lightning bolt beside it",
+      "prompt": "a cheeky little monkey jaw bouncing quickly up and down with motion blur, a small lightning bolt beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3908664593,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "8ef33e62-e0c6-43f2-9f5a-ac0b006c3dda",
@@ -1712,13 +1712,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Warga w pułapce",
       "plik": "zuchwa/8ef33e62-e0c6-43f2-9f5a-ac0b006c3dda.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Nagryzaj dolną wargę górnymi zębami",
-      "ruch": "demonstrating a speech therapy exercise: Nagryzaj dolną wargę górnymi zębami",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Nagryzaj dolną wargę górnymi zębami. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey the upper teeth biting deep into the lower lip, jaw held steady",
+      "ruch": "the upper teeth biting deep into the lower lip, jaw held steady",
+      "prompt": "a cheeky little monkey the upper teeth biting deep into the lower lip, jaw held steady. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3012325476,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "1880b2b0-d3bc-44a3-a55e-7bae9c223fe6",
@@ -1726,13 +1726,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Wolna winda",
       "plik": "zuchwa/1880b2b0-d3bc-44a3-a55e-7bae9c223fe6.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Powoli opuszczaj żuchwę jak najniżej",
-      "ruch": "demonstrating a speech therapy exercise: Powoli opuszczaj żuchwę jak najniżej",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Powoli opuszczaj żuchwę jak najniżej. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey jaw lowering slowly as far as it will go, a long downward arrow, a small lift beside it",
+      "ruch": "jaw lowering slowly as far as it will go, a long downward arrow, a small lift beside it",
+      "prompt": "a cheeky little monkey jaw lowering slowly as far as it will go, a long downward arrow, a small lift beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1492467592,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "a8f0df2e-6848-43bc-8ef9-6e27a29b6b7b",
@@ -1740,13 +1740,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Zamiatanie podłogi",
       "plik": "zuchwa/a8f0df2e-6848-43bc-8ef9-6e27a29b6b7b.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Pochyl głowę",
-      "ruch": "demonstrating a speech therapy exercise: Pochyl głowę",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Pochyl głowę. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey head tilted forward with the jaw swinging loosely from side to side, a small broom beside it",
+      "ruch": "head tilted forward with the jaw swinging loosely from side to side, a small broom beside it",
+      "prompt": "a cheeky little monkey head tilted forward with the jaw swinging loosely from side to side, a small broom beside it. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 1617381247,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "b2c4a50a-8728-447a-aa93-6d77be48266a",
@@ -1754,13 +1754,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Zdziwiona mina",
       "plik": "zuchwa/b2c4a50a-8728-447a-aa93-6d77be48266a.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Zrób głęboki wdech nosem",
-      "ruch": "demonstrating a speech therapy exercise: Zrób głęboki wdech nosem",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Zrób głęboki wdech nosem. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey mouth in a big round surprised shape with eyebrows raised very high",
+      "ruch": "mouth in a big round surprised shape with eyebrows raised very high",
+      "prompt": "a cheeky little monkey mouth in a big round surprised shape with eyebrows raised very high. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3543443238,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "5d2a0f44-fb14-4018-b31c-1c4c0d0796ee",
@@ -1768,13 +1768,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Ziewający księżyc",
       "plik": "zuchwa/5d2a0f44-fb14-4018-b31c-1c4c0d0796ee.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Obserwuj pierwszą fazę naturalnego ziewania",
-      "ruch": "demonstrating a speech therapy exercise: Obserwuj pierwszą fazę naturalnego ziewania",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Obserwuj pierwszą fazę naturalnego ziewania. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey a slow natural yawn with the jaw dropping freely, a small crescent moon in the background",
+      "ruch": "a slow natural yawn with the jaw dropping freely, a small crescent moon in the background",
+      "prompt": "a cheeky little monkey a slow natural yawn with the jaw dropping freely, a small crescent moon in the background. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 3031891749,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     },
     {
       "id": "3b0df875-de2d-470c-af73-0d29e6661bc4",
@@ -1782,13 +1782,13 @@
       "kategoria": "zuchwa",
       "klucz": "zuchwa/Żujemy gumę",
       "plik": "zuchwa/3b0df875-de2d-470c-af73-0d29e6661bc4.webp",
-      "scena": "a cheeky little monkey demonstrating a speech therapy exercise: Zamknij usta",
-      "ruch": "demonstrating a speech therapy exercise: Zamknij usta",
-      "prompt": "a cheeky little monkey demonstrating a speech therapy exercise: Zamknij usta. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
+      "scena": "a cheeky little monkey mouth closed chewing gum, cheeks moving, small motion arcs at the jaw",
+      "ruch": "mouth closed chewing gum, cheeks moving, small motion arcs at the jaw",
+      "prompt": "a cheeky little monkey mouth closed chewing gum, cheeks moving, small motion arcs at the jaw. flat 2D children's book illustration, soft rounded shapes, warm pastel palette, thick clean outlines, no shading gradients, the character fills most of the frame, tight crop, plain very light cream background with minimal empty space, friendly and calm, square composition",
       "negative": "text, letters, words, captions, watermark, signature, numbers, multiple panels, grid, collage, photorealistic, 3d render, scary, creepy, distorted anatomy, extra limbs, deformed mouth",
       "seed": 2791194031,
       "ma_grafike": false,
-      "do_przegladu": true
+      "do_przegladu": false
     }
   ]
 }
