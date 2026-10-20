@@ -17,7 +17,7 @@ export default async function PatientLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col max-w-md mx-auto">
+    <div className="h-[100dvh] overflow-hidden bg-gray-50 flex flex-col max-w-md mx-auto">
       {/* Top bar z wylogowaniem */}
       <div className="flex items-center justify-between px-4 pt-3 pb-1">
         <span className="text-xs text-gray-400">{session.profile.full_name}</span>
@@ -25,7 +25,7 @@ export default async function PatientLayout({
       </div>
 
       {/* Treść strony — padding-bottom dla dolnej nawigacji */}
-      <main className="flex-1 pb-20 overflow-y-auto">
+      <main className="flex-1 min-h-0 pb-20 overflow-y-auto">
         {children}
       </main>
 
