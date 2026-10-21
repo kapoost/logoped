@@ -109,7 +109,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
       <Confetti trigger={showCelebration} type={isLastExercise ? 'levelup' : 'celebration'} />
 
       {/* Nagłówek */}
-      <div className="bg-brand-600 px-4 pt-5 pb-8 relative overflow-hidden">
+      <div className="bg-brand-600 px-4 pt-5 pb-6 relative overflow-hidden">
         <div className="absolute -top-6 -right-6 w-28 h-28 bg-white/10 rounded-full" />
         <Link href="/pacjent/cwiczenia"
           className="absolute top-5 left-4 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white text-xl"
@@ -121,7 +121,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-8xl mb-3 drop-shadow-lg w-[clamp(7rem,26vh,14rem)] h-[clamp(7rem,26vh,14rem)] rounded-[2rem] overflow-hidden flex items-center justify-center"
+            className="text-8xl mb-3 drop-shadow-lg w-[clamp(7rem,21vh,14rem)] h-[clamp(7rem,21vh,14rem)] rounded-[2rem] overflow-hidden flex items-center justify-center"
           >
             <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={448} priority />
           </motion.div>
@@ -133,7 +133,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
       </div>
 
       {/* Kołowy licznik */}
-      <div className="flex flex-col items-center -mt-8 mb-4">
+      <div className="flex flex-col items-center -mt-8 mb-2">
         <div className="bg-white rounded-full shadow-xl p-3 relative" style={{ width: 140, height: 140 }}>
           <svg width="120" height="120" viewBox="0 0 120 120" className="-rotate-90">
             <circle cx="60" cy="60" r="52" fill="none" stroke="#e5e7eb" strokeWidth="10"/>
@@ -176,7 +176,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
       </div>
 
       {/* Instrukcje */}
-      <div className="flex-1 min-h-0 px-4 space-y-3 overflow-y-auto pb-4">
+      <div className="flex-1 min-h-0 px-4 space-y-3 overflow-y-auto pb-2">
         {/* Opis mówi PO CO jest ćwiczenie, kroki mówią JAK — stąd nad nimi.
             Pole było w danych i w typie TodayExercise od początku, ale nic go
             nie renderowało, więc dziecko widziało obrazek, tytuł i od razu kroki. */}
