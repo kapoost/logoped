@@ -104,7 +104,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
   }
 
   return (
-    <div className="h-full overflow-hidden bg-gray-50 flex flex-col select-none">
+    <div className="h-full overflow-hidden bg-sand flex flex-col select-none">
       <Confetti trigger={showCelebration} type={isLastExercise ? 'levelup' : 'celebration'} />
 
       {/* Nagłówek */}

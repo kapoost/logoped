@@ -226,23 +226,36 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
               href={`/pacjent/cwiczenie/${nextEx.plan_exercise_id}`}
               className="block bg-gradient-to-br from-brand-500 to-brand-700 rounded-3xl p-6 text-center text-white shadow-lg shadow-brand-200 active:scale-95 transition-transform"
             >
+              <p className="text-brand-200 text-xs font-bold uppercase tracking-wider">
+                {done === 0 ? `${total} ćwiczeń na dziś` : `Jeszcze ${total - done} do zrobienia`}
+              </p>
               <motion.div
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                className="text-7xl mb-3 w-40 h-40 mx-auto rounded-3xl overflow-hidden flex items-center justify-center"
+                className="text-7xl my-3 w-40 h-40 mx-auto rounded-3xl overflow-hidden flex items-center justify-center bg-cream"
               >
                 <ExerciseImage src={nextEx.media_url} emoji={nextEx.emoji} title={nextEx.title} size={320} priority />
               </motion.div>
-              <p className="text-2xl font-black">
-                {done === 0 ? 'Zacznij ćwiczenia!' : 'Kontynuuj!'}
-              </p>
-              <p className="text-brand-200 text-sm mt-1">
-                {done === 0
-                  ? `${total} ćwiczeń na dziś`
-                  : `Jeszcze ${total - done} do zrobienia`
-                }
-              </p>
+              <p className="text-child-head-md">{nextEx.title}</p>
+              {(nextEx.description_child || nextEx.description) && (
+                <p className="text-brand-100 text-sm mt-1.5 leading-snug px-2">
+                  {nextEx.description_child || nextEx.description}
+                </p>
+              )}
+              <div className="mt-4 bg-white text-brand-700 rounded-2xl py-3 font-black text-lg">
+                {done === 0 ? 'Zacznij!' : 'Kontynuuj!'} · {nextEx.repetitions}×
+              </div>
             </Link>
+
+            {nextEx.therapist_notes && (
+              <div className="mt-3 bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 flex gap-3">
+                <span className="text-xl flex-shrink-0" aria-hidden>💬</span>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold text-amber-700 uppercase tracking-wide">Od logopedy</p>
+                  <p className="text-sm text-amber-800 font-medium mt-0.5">{nextEx.therapist_notes}</p>
+                </div>
+              </div>
+            )}
           </motion.div>
         )
       })()}
@@ -290,7 +303,7 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
                 <motion.div
                   initial={isJust ? { rotate: -20 } : false}
                   animate={{ rotate: 0 }}
-                  className="w-20 h-20 bg-green-500 rounded-2xl overflow-hidden flex items-center justify-center text-4xl flex-shrink-0 shadow-sm"
+                  className="w-20 h-20 bg-cream rounded-2xl overflow-hidden flex items-center justify-center text-4xl flex-shrink-0 shadow-sm ring-2 ring-green-400"
                 >
                   <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={160} />
                 </motion.div>
@@ -326,7 +339,7 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
                   <motion.div
                     animate={{ scale: [1, 1.08, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
-                    className="w-24 h-24 bg-brand-600 rounded-2xl overflow-hidden flex items-center justify-center text-5xl flex-shrink-0 shadow"
+                    className="w-24 h-24 bg-cream rounded-2xl overflow-hidden flex items-center justify-center text-5xl flex-shrink-0 shadow ring-2 ring-brand-400"
                   >
                     <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={192} />
                   </motion.div>
@@ -361,13 +374,13 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
             <motion.div
               key={ex.plan_exercise_id}
               layout
-              className="flex items-center gap-4 bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3 opacity-50"
+              className="flex items-center gap-4 bg-gray-50 border border-gray-100 rounded-2xl px-4 py-3"
             >
-              <div className="w-20 h-20 bg-gray-200 rounded-2xl overflow-hidden flex items-center justify-center text-4xl flex-shrink-0">
+              <div className="w-20 h-20 bg-cream rounded-2xl overflow-hidden flex items-center justify-center text-4xl flex-shrink-0 ring-1 ring-gray-200">
                 <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={160} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-gray-500 truncate">{ex.title}</p>
+                <p className="font-semibold text-gray-600 truncate">{ex.title}</p>
                 <p className="text-gray-400 text-sm">{ex.repetitions} powtórzeń</p>
               </div>
               <div className="w-10 h-10 bg-gray-200 rounded-full flex-shrink-0" />
