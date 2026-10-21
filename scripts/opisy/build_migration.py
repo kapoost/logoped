@@ -34,6 +34,11 @@ print("""-- ============================================================
 --
 -- Bezpieczny do ponownego uruchomienia: ADD COLUMN IF NOT EXISTS,
 -- CREATE OR REPLACE VIEW, a UPDATE-y są idempotentne.
+--
+-- UWAGA przy edycji: ten plik odtwarza widok today_exercises w CAŁOŚCI, więc
+-- musi zawierać wszystkie warunki dołożone przez PÓŹNIEJSZE migracje. Dziś
+-- jest to bramka publikacji z 014. Pominięcie jej wystawia plany robocze
+-- wszystkim dzieciom i nie zgłasza przy tym żadnego błędu.
 -- ============================================================
 
 -- ── 1. Kolumna ──────────────────────────────────────────────
@@ -81,6 +86,7 @@ LEFT JOIN public.exercise_completions ec
   AND ec.patient_id       = ep.patient_id
   AND ec.session_date     = CURRENT_DATE
 WHERE ep.is_active = TRUE
+  AND ep.published_at IS NOT NULL      -- bramka z migracji 014
 ORDER BY pe.order_index;
 
 -- ── 3. Treść ────────────────────────────────────────────────

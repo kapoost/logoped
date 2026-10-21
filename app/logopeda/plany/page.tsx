@@ -26,9 +26,13 @@ export default async function PlanyPage() {
     .order('is_active', { ascending: false })
     .order('created_at', { ascending: false })
 
-  const active   = plans?.filter(p => p.is_active)   ?? []
-  const inactive = plans?.filter(p => !p.is_active)  ?? []
-  const robocze  = plans?.filter(p => !p.published_at).length ?? 0
+  // Roboczy ma pierwszeństwo nad aktywnym: plan roboczy powstaje z
+  // is_active = TRUE, więc bez tego rozdziału wpadał jednocześnie do
+  // "aktywnych" i do licznika roboczych, i wisiał pod nagłówkiem
+  // "Aktywne", czyli dokładnie odwrotnie, niż mówi jego własny chip.
+  const robocze  = plans?.filter(p => !p.published_at) ?? []
+  const active   = plans?.filter(p => p.published_at && p.is_active)   ?? []
+  const inactive = plans?.filter(p => p.published_at && !p.is_active)  ?? []
 
   return (
     <div className="animate-fade-in">
@@ -37,7 +41,7 @@ export default async function PlanyPage() {
           <div>
             <h1 className="text-xl font-bold">Plany ćwiczeń</h1>
             <p className="text-green-300 text-sm mt-0.5">
-              {active.length} aktywnych · {inactive.length} nieaktywnych{robocze > 0 ? ` · ${robocze} roboczych` : ''}
+              {active.length} aktywnych · {inactive.length} nieaktywnych{robocze.length > 0 ? ` · ${robocze.length} roboczych` : ''}
             </p>
           </div>
           <Link
@@ -50,6 +54,19 @@ export default async function PlanyPage() {
       </div>
 
       <div className="px-4 py-4 space-y-5">
+        {robocze.length > 0 && (
+          <section>
+            <h2 className="text-xs font-bold text-amber-600 uppercase tracking-wide mb-2">
+              Robocze — dziecko ich nie widzi
+            </h2>
+            <div className="space-y-2">
+              {robocze.map(plan => (
+                <PlanCard key={plan.id} plan={plan} />
+              ))}
+            </div>
+          </section>
+        )}
+
         {active.length > 0 && (
           <section>
             <h2 className="text-xs font-bold text-gray-400 uppercase tracking-wide mb-2">Aktywne</h2>

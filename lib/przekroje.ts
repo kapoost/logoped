@@ -92,7 +92,11 @@ export function przekrojeDlaGlosek(gloski: string[] | null | undefined): Przekro
     const g = surowa.trim().toLowerCase()
     const klucz = ALIASY[g] ?? g
     const p = PRZEKROJE[klucz]
-    if (p && !wynik.some(w => w.plik === p.plik)) wynik.push(p)
+    // Deduplikacja po POZYCJI, nie po pliku. R i T dzielą t.svg, więc przy
+    // target_sounds = ['t','r'] odsiew po pliku gubił R razem z jego
+    // zastrzeżeniem o braku znacznika drgania — zostawał sam podpis
+    // "Zwarcie dziąsłowe (T, D, N)", czyli nie to ćwiczenie.
+    if (p && !wynik.some(w => w.nazwa === p.nazwa)) wynik.push(p)
     if (wynik.length === 2) break
   }
   return wynik

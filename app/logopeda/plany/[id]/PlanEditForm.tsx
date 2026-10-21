@@ -194,6 +194,10 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
     }
   }
 
+  // Widok today_exercises wymaga OBU warunków — sam published_at nie wystarczy,
+  // a przycisk dezaktywacji stoi na tym samym ekranie.
+  const widoczneDlaDziecka = !!publishedAt && isActive
+
   const visibleItems = items.filter(i => !toDelete.has(i.id))
   const totalMin = Math.ceil(
     visibleItems.reduce((s, i) => s + i.exercises.duration_seconds * i.repetitions / 5, 0) / 60
@@ -204,15 +208,18 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
       {/* Czy dziecko to widzi — pierwsza rzecz, jaką logopeda powinien
           wiedzieć, zanim zacznie przestawiać ćwiczenia. */}
       <div className={`rounded-2xl px-4 py-3 flex items-center justify-between gap-3 border ${
-        publishedAt ? 'bg-green-50 border-green-200' : 'bg-amber-50 border-amber-200'
+        widoczneDlaDziecka ? 'bg-green-50 border-green-200' : 'bg-amber-50 border-amber-200'
       }`}>
         <div className="min-w-0">
-          <p className={`text-sm font-bold ${publishedAt ? 'text-green-800' : 'text-amber-800'}`}>
-            {publishedAt ? 'Dziecko widzi ten plan' : 'Wersja robocza'}
+          <p className={`text-sm font-bold ${widoczneDlaDziecka ? 'text-green-800' : 'text-amber-800'}`}>
+            {widoczneDlaDziecka ? 'Dziecko widzi ten plan'
+              : publishedAt ? 'Opublikowany, ale plan jest nieaktywny'
+              : 'Wersja robocza'}
           </p>
-          <p className={`text-xs mt-0.5 ${publishedAt ? 'text-green-700' : 'text-amber-700'}`}>
-            {publishedAt
-              ? `Opublikowany ${new Date(publishedAt).toLocaleDateString('pl-PL')}`
+          <p className={`text-xs mt-0.5 ${widoczneDlaDziecka ? 'text-green-700' : 'text-amber-700'}`}>
+            {widoczneDlaDziecka
+              ? `Opublikowany ${new Date(publishedAt!).toLocaleDateString('pl-PL')}`
+              : publishedAt ? 'Aktywuj plan, żeby dziecko znów go zobaczyło'
               : 'Zmiany zostają u ciebie, dopóki nie opublikujesz'}
           </p>
         </div>

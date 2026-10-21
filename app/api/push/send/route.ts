@@ -28,7 +28,7 @@ export async function POST(request: Request) {
 
   const { data: schedules } = await supabase
     .from('schedules')
-    .select(`plan_id, reminder_time, days_of_week, exercise_plans!inner(patient_id, is_active, profiles!inner(full_name))`)
+    .select(`plan_id, reminder_time, days_of_week, exercise_plans!inner(patient_id, is_active, published_at, profiles!inner(full_name))`)
     .eq('is_active', true)
     .contains('days_of_week', [currentDay])
 
@@ -45,6 +45,10 @@ export async function POST(request: Request) {
   for (const schedule of toNotify) {
     const plan = (schedule as any).exercise_plans
     if (!plan?.is_active) continue
+    // create-plan zakłada schedules także dla planu roboczego, a widok
+    // today_exercises wymaga publikacji. Bez tego dziecko dostawało
+    // powiadomienie i trafiało na pusty ekran.
+    if (!plan?.published_at) continue
     const firstName = (plan.profiles?.full_name as string ?? '').split(' ')[0]
     const { data: subs } = await supabase
       .from('push_subscriptions')

@@ -28,8 +28,11 @@ export default async function PapugaPage() {
 
   const message = getPapugaMessage(name, exercises, streak)
 
+  // min-h-screen zostało tu po starym layoucie: od 1436c52 rodzic ma
+  // h-[100dvh], więc 100vh w środku zawsze dawało martwy pas na dole,
+  // a na mobile tym większy, im więcej miejsca zabiera pasek przeglądarki.
   return (
-    <div className="animate-fade-in pb-20 min-h-screen bg-gray-50">
+    <div className="animate-fade-in pb-20 bg-sand">
 
       {/* Nagłówek */}
       <div className="bg-brand-600 text-white text-center px-5 pt-6 pb-12 relative overflow-hidden">

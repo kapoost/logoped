@@ -51,7 +51,14 @@ export default async function PatientProfilePage({ params }: Props) {
       .eq('patient_id', params.id)
       .eq('therapist_id', session.profile.id)
       .eq('is_active', true)
-      .single(),
+      // Plan roboczy powstaje z is_active = TRUE (domyślna wartość schematu),
+      // więc od fazy 3 pacjent może mieć więcej niż jeden aktywny wiersz.
+      // .single() wywalało się wtedy na PGRST116 i logopedzie znikał ŻYWY plan.
+      // Bierzemy ten, który faktycznie widzi dziecko — opublikowany i najnowszy.
+      .not('published_at', 'is', null)
+      .order('published_at', { ascending: false })
+      .limit(1)
+      .maybeSingle(),
     supabase.rpc('get_patient_calendar', { p_patient_id: params.id, p_months: 2 }),
   ])
 
