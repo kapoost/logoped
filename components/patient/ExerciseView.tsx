@@ -177,6 +177,13 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
 
       {/* Instrukcje */}
       <div className="flex-1 min-h-0 px-4 space-y-3 overflow-y-auto pb-4">
+        {/* Opis mówi PO CO jest ćwiczenie, kroki mówią JAK — stąd nad nimi.
+            Pole było w danych i w typie TodayExercise od początku, ale nic go
+            nie renderowało, więc dziecko widziało obrazek, tytuł i od razu kroki. */}
+        {ex.description && (
+          <p className="text-sm text-gray-500 px-1 leading-relaxed">{ex.description}</p>
+        )}
+
         {ex.therapist_notes && (
           <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 flex gap-3">
             <span className="text-xl flex-shrink-0">💬</span>
@@ -185,7 +192,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
         )}
 
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          {steps.slice(0, 3).map((step, i) => (
+          {steps.map((step, i) => (
             <div key={i} className={`flex gap-3 px-4 py-3.5 ${i > 0 ? 'border-t border-gray-50' : ''}`}>
               <span className="w-7 h-7 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">
                 {i + 1}
@@ -193,11 +200,6 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
               <p className="text-sm text-gray-700 leading-relaxed">{step}</p>
             </div>
           ))}
-          {steps.length > 3 && (
-            <div className="px-4 py-2 border-t border-gray-50 text-xs text-gray-400 text-center">
-              +{steps.length - 3} więcej kroków
-            </div>
-          )}
         </div>
 
         {/* Przekrój pokazuje to, czego ilustracja z bohaterem nie pokaże —
