@@ -108,7 +108,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
       <Confetti trigger={showCelebration} type={isLastExercise ? 'levelup' : 'celebration'} />
 
       {/* Nagłówek */}
-      <div className="bg-brand-600 px-4 pt-3 pb-6 relative overflow-hidden">
+      <div className="bg-brand-600 px-4 pt-3 pb-6 [@media(max-height:720px)]:pb-4 relative overflow-hidden">
         <div className="absolute -top-6 -right-6 w-28 h-28 bg-white/10 rounded-full" />
         <div className="relative flex items-center h-10 mb-1">
           <Link href="/pacjent/cwiczenia"
@@ -123,7 +123,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-8xl mb-3 drop-shadow-lg w-[clamp(8rem,30vh,16rem)] h-[clamp(8rem,30vh,16rem)] [@media(max-height:720px)]:w-40 [@media(max-height:720px)]:h-40 rounded-[2rem] overflow-hidden flex items-center justify-center"
+            className="text-8xl mb-3 drop-shadow-lg w-[clamp(8rem,30vh,16rem)] h-[clamp(8rem,30vh,16rem)] [@media(max-height:720px)]:w-36 [@media(max-height:720px)]:h-36 rounded-[2rem] overflow-hidden flex items-center justify-center"
           >
             <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={448} priority />
           </motion.div>
