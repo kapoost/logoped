@@ -108,16 +108,18 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
       <Confetti trigger={showCelebration} type={isLastExercise ? 'levelup' : 'celebration'} />
 
       {/* Nagłówek */}
-      <div className="bg-brand-600 px-4 pt-5 pb-6 relative overflow-hidden">
+      <div className="bg-brand-600 px-4 pt-3 pb-6 relative overflow-hidden">
         <div className="absolute -top-6 -right-6 w-28 h-28 bg-white/10 rounded-full" />
-        <Link href="/pacjent/cwiczenia"
-          data-testid="wyjscie"
-          className="absolute top-4 left-4 h-10 pl-3 pr-4 bg-white/20 rounded-full flex items-center gap-1.5 text-white font-bold text-sm active:scale-95 transition"
-        >
-          <span className="text-lg leading-none">←</span> Wyjdź
-        </Link>
+        <div className="relative flex items-center h-10 mb-1">
+          <Link href="/pacjent/cwiczenia"
+            data-testid="wyjscie"
+            className="h-10 pl-3 pr-4 bg-white/20 rounded-full flex items-center gap-1.5 text-white font-bold text-sm active:scale-95 transition"
+          >
+            <span className="text-lg leading-none">←</span> Wyjdź
+          </Link>
+        </div>
 
-        <div className="flex flex-col items-center pt-2">
+        <div className="flex flex-col items-center">
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
