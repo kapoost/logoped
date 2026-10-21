@@ -25,7 +25,9 @@ export default async function PatientLayout({
       </div>
 
       {/* Treść strony — padding-bottom dla dolnej nawigacji */}
-      <main className="flex-1 min-h-0 pb-20 overflow-y-auto">
+      {/* Odstęp pod nawigację należy do stron, nie do layoutu — ekran
+          ćwiczenia ukrywa pasek i nie może płacić za niego 80 px. */}
+      <main className="flex-1 min-h-0 overflow-y-auto">
         {children}
       </main>
 

@@ -34,7 +34,7 @@ export default async function CwiczeniaPage() {
   const total = exercises?.length ?? 0
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pb-20">
       {/* Nagłówek z serią i postępem */}
       <TodayHeader
         name={session.profile.full_name.split(' ')[0]}

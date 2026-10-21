@@ -109,18 +109,26 @@ test.describe('Widok ćwiczenia — przepływ', () => {
     if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
     await link.click()
     await page.waitForLoadState('networkidle')
-    // SVG licznika z circle progress
-    await expect(page.locator('svg').first()).toBeVisible()
+    // Licznik powtórzeń — od fazy 1 migracji to pasek, nie pierścień SVG
+    await expect(page.getByTestId('licznik-powtorzen')).toBeVisible()
   })
 
-  test('kółka powtórzeń są widoczne', async ({ page }) => {
+  test('segmenty postępu są widoczne', async ({ page }) => {
     const link = await getFirstExerciseLink(page)
     if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
     await link.click()
     await page.waitForLoadState('networkidle')
-    // Kółka div z rounded-full
-    const circles = page.locator('.rounded-full.border-2')
-    expect(await circles.count()).toBeGreaterThan(0)
+    await expect(page.getByTestId('segmenty')).toBeVisible()
+  })
+
+  test('nawigacja dolna znika na czas ćwiczenia', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+    // Tryb skupienia: jedno zadanie, jedno wyjście.
+    await expect(page.locator('nav')).toHaveCount(0)
+    await expect(page.getByTestId('wyjscie')).toBeVisible()
   })
 
   test('instrukcje (kroki) są widoczne', async ({ page }) => {

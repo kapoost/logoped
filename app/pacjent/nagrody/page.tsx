@@ -51,7 +51,7 @@ export default async function NagrodyPage() {
   })
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pb-20">
       {/* Nagłówek złoty */}
       <div className="bg-amber-500 text-white px-5 pt-6 pb-0">
         <div className="flex items-center gap-3 mb-5">

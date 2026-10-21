@@ -29,7 +29,7 @@ export default async function PapugaPage() {
   const message = getPapugaMessage(name, exercises, streak)
 
   return (
-    <div className="animate-fade-in min-h-screen bg-gray-50">
+    <div className="animate-fade-in pb-20 min-h-screen bg-gray-50">
 
       {/* Nagłówek */}
       <div className="bg-brand-600 text-white text-center px-5 pt-6 pb-12 relative overflow-hidden">

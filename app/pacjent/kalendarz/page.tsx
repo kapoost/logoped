@@ -29,7 +29,7 @@ export default async function KalendarzPage() {
   )
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pb-20">
       {/* Nagłówek */}
       <div className="bg-brand-600 text-white px-5 pt-5 pb-6">
         <h1 className="text-xl font-bold">Kalendarz ćwiczeń</h1>

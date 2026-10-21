@@ -112,6 +112,11 @@ const NAV_ITEMS = [
 export default function PatientNav() {
   const pathname = usePathname()
 
+  // Tryb skupienia: w trakcie ćwiczenia dziecko ma jedno zadanie i jedno
+  // wyjście. Pasek czterech zakładek jest wtedy zbędny i kosztuje 80 px
+  // wysokości na ekranie, na którym liczy się każdy piksel.
+  if (pathname.startsWith('/pacjent/cwiczenie/')) return null
+
   return (
     <>
       <style>{`

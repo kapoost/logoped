@@ -40,7 +40,6 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
 
   const totalReps   = ex.repetitions
   const progress    = totalReps > 0 ? Math.min(repsDone / totalReps, 1) : 0
-  const circumference = 2 * Math.PI * 52
 
   const steps = ex.instructions
     .split('\n').map(s => s.replace(/^\d+\.\s*/, '').trim()).filter(Boolean)
@@ -112,16 +111,17 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
       <div className="bg-brand-600 px-4 pt-5 pb-6 relative overflow-hidden">
         <div className="absolute -top-6 -right-6 w-28 h-28 bg-white/10 rounded-full" />
         <Link href="/pacjent/cwiczenia"
-          className="absolute top-5 left-4 w-10 h-10 bg-white/20 rounded-full flex items-center justify-center text-white text-xl"
+          data-testid="wyjscie"
+          className="absolute top-4 left-4 h-10 pl-3 pr-4 bg-white/20 rounded-full flex items-center gap-1.5 text-white font-bold text-sm active:scale-95 transition"
         >
-          ←
+          <span className="text-lg leading-none">←</span> Wyjdź
         </Link>
 
         <div className="flex flex-col items-center pt-2">
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-8xl mb-3 drop-shadow-lg w-[clamp(7rem,21vh,14rem)] h-[clamp(7rem,21vh,14rem)] rounded-[2rem] overflow-hidden flex items-center justify-center"
+            className="text-8xl mb-3 drop-shadow-lg w-[clamp(8rem,30vh,16rem)] h-[clamp(8rem,30vh,16rem)] rounded-[2rem] overflow-hidden flex items-center justify-center"
           >
             <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={448} priority />
           </motion.div>
@@ -132,47 +132,53 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
         </div>
       </div>
 
-      {/* Kołowy licznik */}
-      <div className="flex flex-col items-center -mt-8 mb-2">
-        <div className="bg-white rounded-full shadow-xl p-3 relative" style={{ width: 140, height: 140 }}>
-          <svg width="120" height="120" viewBox="0 0 120 120" className="-rotate-90">
-            <circle cx="60" cy="60" r="52" fill="none" stroke="#e5e7eb" strokeWidth="10"/>
-            <circle cx="60" cy="60" r="52" fill="none"
-              stroke={completed ? '#22c55e' : '#7c3aed'} strokeWidth="10"
-              strokeDasharray={circumference}
-              strokeDashoffset={circumference * (1 - progress)}
-              strokeLinecap="round"
-              style={{ transition: 'stroke-dashoffset 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)' }}
-            />
-          </svg>
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            {completed
-              ? <span className="text-4xl">✓</span>
-              : <>
-                  <span className="text-4xl font-black text-brand-700">{repsDone}</span>
-                  <span className="text-xs text-gray-400 font-semibold">/ {totalReps}</span>
-                </>
-            }
-          </div>
+      {/* Pasek postępu — jeden element zamiast pierścienia 140 px i rzędu
+          kropek pod nim. Oba pokazywały tę samą liczbę, a razem z marginesami
+          zajmowały 176 px zmierzonej wysokości; ten pasek zajmuje 36 px.
+          Przy wielu powtórzeniach segmenty ustępują ciągłemu wypełnieniu,
+          bo czternaście kapsułek w 390 px to już nie jest informacja. */}
+      <div
+        data-testid="licznik-powtorzen"
+        className={`mx-4 my-3 h-9 px-3.5 rounded-full flex items-center justify-between gap-3 border transition-colors ${
+          completed ? 'bg-green-50 border-green-200' : 'bg-white border-gray-100 shadow-sm'
+        }`}
+      >
+        <div className="flex items-baseline gap-1.5 flex-shrink-0">
+          {completed
+            ? <span className="text-green-700 font-black text-lg leading-none">✓ Gotowe</span>
+            : <>
+                <span className="font-black text-xl leading-none text-brand-700 tabular-nums">{repsDone}</span>
+                <span className="text-sm font-bold text-gray-400 leading-none">z {totalReps}</span>
+              </>
+          }
         </div>
 
-        {/* Kółka powtórzeń */}
-        <div className="flex gap-1.5 mt-3 flex-wrap justify-center px-8 max-w-xs">
-          {Array.from({ length: totalReps }).map((_, i) => (
-            <motion.div key={i}
+        {totalReps <= 8 ? (
+          <div className="flex items-center gap-1.5" data-testid="segmenty">
+            {Array.from({ length: totalReps }).map((_, i) => (
+              <motion.span
+                key={i}
+                initial={false}
+                animate={i < repsDone
+                  ? { backgroundColor: completed ? '#16a34a' : '#7c3aed', width: 18 }
+                  : { backgroundColor: '#e5e7eb', width: 10 }}
+                transition={i === repsDone - 1
+                  ? { type: 'spring', stiffness: 500, damping: 18 }
+                  : { duration: 0.2 }}
+                className="h-2.5 rounded-full block"
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="flex-1 h-2.5 rounded-full bg-gray-200 overflow-hidden" data-testid="segmenty">
+            <motion.div
               initial={false}
-              animate={i < repsDone
-                ? { scale: 1.15, backgroundColor: completed ? '#22c55e' : '#7c3aed', borderColor: completed ? '#22c55e' : '#7c3aed' }
-                : { scale: 1, backgroundColor: '#ffffff', borderColor: '#e5e7eb' }
-              }
-              transition={i === repsDone - 1
-                ? { type: 'spring', stiffness: 500, damping: 15 }
-                : { duration: 0.2 }
-              }
-              className="w-6 h-6 rounded-full border-2"
+              animate={{ width: `${progress * 100}%` }}
+              transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+              className={`h-full rounded-full ${completed ? 'bg-green-600' : 'bg-brand-600'}`}
             />
-          ))}
-        </div>
+          </div>
+        )}
       </div>
 
       {/* Instrukcje */}

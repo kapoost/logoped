@@ -7,6 +7,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // Tło wypalone w 127 plikach ilustracji — zmierzone, nie dobrane:
+        // średnia z 508 próbek naroży wszystkich plików w wygenerowane/.
+        // Kafelek pod ilustracją musi mieć dokładnie tę wartość, inaczej
+        // widać krawędź obrazka na jaśniejszym tle.
+        cream: '#FEF8EB',
+        // Tło strony pod kafelkami — o ton głębsze od kremu, żeby kafelki
+        // odcinały się bez użycia czystej bieli, na której ilustracje
+        // wyglądają na brudne.
+        sand:  '#F6F0E2',
         brand: {
           50:  '#f5f3ff',
           100: '#ede9fe',
@@ -21,6 +30,20 @@ module.exports = {
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+      },
+      // Dwie skale, bo dziecko i logopeda czytają co innego i inaczej.
+      // Dziecko: duże stopnie, nigdy poniżej 16px. Logopeda: gęsto, skanowanie.
+      fontSize: {
+        'child-display':     ['32px', { lineHeight: '40px', letterSpacing: '-0.01em', fontWeight: '700' }],
+        'child-head-lg':     ['28px', { lineHeight: '36px', fontWeight: '700' }],
+        'child-head-md':     ['22px', { lineHeight: '28px', fontWeight: '600' }],
+        'child-body-lg':     ['18px', { lineHeight: '26px', fontWeight: '500' }],
+        'child-body':        ['16px', { lineHeight: '24px', fontWeight: '500' }],
+        'counter':           ['32px', { lineHeight: '36px', letterSpacing: '-0.02em', fontWeight: '800' }],
+        'therapist-head':    ['18px', { lineHeight: '24px', fontWeight: '700' }],
+        'therapist-body':    ['15px', { lineHeight: '22px', fontWeight: '400' }],
+        'therapist-caption': ['13px', { lineHeight: '18px', fontWeight: '500' }],
+        'therapist-micro':   ['11px', { lineHeight: '14px', letterSpacing: '0.04em', fontWeight: '600' }],
       },
       borderRadius: {
         '2xl': '1rem',
