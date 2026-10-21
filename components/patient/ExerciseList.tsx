@@ -130,8 +130,10 @@ export default function ExerciseList({ exercises: initial, patientId }: Props) {
             transition={{ duration: 0.7, ease: [0.34, 1.56, 0.64, 1] }}
           />
         </div>
-        {/* Gwiazdki postępu */}
-        <div className="flex justify-center gap-1.5 mt-2">
+        {/* Gwiazdki postępu — tylko gdy jest ich tyle, że da się je policzyć
+            wzrokiem. Przy czternastu rząd i tak urywał się za krawędzią,
+            a pasek nad nimi niesie tę samą informację dokładniej. */}
+        <div className={`justify-center gap-1.5 mt-2 ${total > 8 ? 'hidden' : 'flex'}`}>
           {Array.from({ length: total }).map((_, i) => (
             <motion.span
               key={i}
