@@ -90,24 +90,43 @@ export default function TodayHeader({
           </div>
 
           {/* Gwiazdki postępu */}
-          <div className="flex-1 bg-white/15 rounded-2xl px-4 py-3 flex items-center justify-center gap-1.5">
-            {Array.from({ length: total || 3 }).map((_, i) => (
-              <motion.span
-                key={i}
-                initial={false}
-                animate={i < done
-                  ? { opacity: 1, scale: 1.15, rotate: [0, 20, -20, 0] }
-                  : { opacity: 0.25, scale: 1, rotate: 0 }
-                }
-                transition={i < done
-                  ? { duration: 0.4, delay: i * 0.1 }
-                  : { duration: 0.2 }
-                }
-                className="text-2xl inline-block"
-              >
-                ⭐
-              </motion.span>
-            ))}
+          {/* Powyżej ośmiu ćwiczeń rząd gwiazdek nie mieści się w 390 px —
+              przy planie na czternaście wychodził 188 px za krawędź i był
+              przycinany. Wtedy jedna gwiazdka z liczbą niesie to samo. */}
+          <div className="flex-1 min-w-0 bg-white/15 rounded-2xl px-4 py-3 flex items-center justify-center gap-1.5">
+            {(total || 3) > 8 ? (
+              <>
+                <motion.span
+                  initial={false}
+                  animate={done > 0 ? { scale: 1.15, rotate: [0, 20, -20, 0] } : { scale: 1 }}
+                  transition={{ duration: 0.4 }}
+                  className="text-2xl inline-block"
+                >
+                  ⭐
+                </motion.span>
+                <span className="text-white font-black text-xl leading-none tabular-nums">
+                  {done}<span className="opacity-60 font-bold text-base">/{total}</span>
+                </span>
+              </>
+            ) : (
+              Array.from({ length: total || 3 }).map((_, i) => (
+                <motion.span
+                  key={i}
+                  initial={false}
+                  animate={i < done
+                    ? { opacity: 1, scale: 1.15, rotate: [0, 20, -20, 0] }
+                    : { opacity: 0.25, scale: 1, rotate: 0 }
+                  }
+                  transition={i < done
+                    ? { duration: 0.4, delay: i * 0.1 }
+                    : { duration: 0.2 }
+                  }
+                  className="text-2xl inline-block"
+                >
+                  ⭐
+                </motion.span>
+              ))
+            )}
           </div>
         </div>
 
