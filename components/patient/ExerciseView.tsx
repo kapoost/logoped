@@ -121,7 +121,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-8xl mb-3 drop-shadow-lg w-[clamp(8rem,30vh,16rem)] h-[clamp(8rem,30vh,16rem)] rounded-[2rem] overflow-hidden flex items-center justify-center"
+            className="text-8xl mb-3 drop-shadow-lg w-[clamp(8rem,30vh,16rem)] h-[clamp(8rem,30vh,16rem)] [@media(max-height:720px)]:w-40 [@media(max-height:720px)]:h-40 rounded-[2rem] overflow-hidden flex items-center justify-center"
           >
             <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={448} priority />
           </motion.div>
