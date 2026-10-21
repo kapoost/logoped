@@ -16,13 +16,15 @@ export async function POST(request: Request) {
   if (!plan || plan.therapist_id !== user.id) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
   if (action === 'publish') {
-    // Udostępnienie planu dziecku albo cofnięcie go do wersji roboczej.
-    // Widok today_exercises wymaga published_at, więc cofnięcie natychmiast
-    // znika z ekranu pacjenta — to jest zamierzone.
-    const { error } = await supabase
-      .from('exercise_plans')
-      .update({ published_at: payload.published ? new Date().toISOString() : null })
-      .eq('id', plan_id)
+    // Przez funkcję, nie przez gołe UPDATE: od migracji 015 pacjent może mieć
+    // tylko jeden plan aktywny i opublikowany naraz, więc publikacja musi
+    // zwolnić miejsce po poprzednim. Dwa osobne zapytania z aplikacji dawałyby
+    // okno, w którym awaria zostawia dziecko bez żadnego planu — funkcja robi
+    // oba kroki w jednej transakcji i sama sprawdza uprawnienia.
+    const { error } = await supabase.rpc('publikuj_plan', {
+      p_plan_id: plan_id,
+      p_publish: !!payload.published,
+    })
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
   } else if (action === 'toggle_active') {
     const { error } = await supabase

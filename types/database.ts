@@ -362,6 +362,8 @@ export type Database = {
         }>
       }
       current_user_role: { Args: Record<never, never>; Returns: string }
+      /** Migracja 015 — publikacja i zwolnienie miejsca po poprzednim planie w jednej transakcji. */
+      publikuj_plan: { Args: { p_plan_id: string; p_publish: boolean }; Returns: void }
     }
     Enums: {
       exercise_category: ExerciseCategory
