@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { LEVELS, BADGES } from '@/types/database'
 import { formatDistanceToNow } from 'date-fns'
 import { pl } from 'date-fns/locale'
+import { policzAktywnosc } from '@/lib/aktywnosc'
 import PatientCalendarMini from '@/components/therapist/PatientCalendarMini'
 
 interface Props { params: { id: string } }
@@ -70,6 +71,14 @@ export default async function PatientProfilePage({ params }: Props) {
 
   const planExercises = (activePlan as any)?.plan_exercises ?? []
 
+  const aktywnosc = policzAktywnosc(calendarData ?? [])
+
+  // Cele artykulacyjne wprost z planu — logopeda widzi, na co ten plan
+  // faktycznie pracuje, bez wchodzenia w każde ćwiczenie osobno.
+  const cele = Array.from(new Set(
+    planExercises.flatMap((pe: any) => pe.exercises?.target_sounds ?? []),
+  )).sort() as string[]
+
   return (
     <div className="animate-fade-in">
       {/* Nagłówek pacjenta */}
@@ -107,6 +116,71 @@ export default async function PatientProfilePage({ params }: Props) {
       </div>
 
       <div className="px-4 -mt-4 space-y-4">
+        {/* Przerwa w ćwiczeniach — jedyna rzecz na tej stronie, która wymaga
+            reakcji, więc stoi nad wszystkim innym. Próg w lib/aktywnosc.ts. */}
+        {aktywnosc.przerwa && (
+          <div className="bg-red-50 border border-red-200 rounded-2xl px-4 py-3 flex gap-3">
+            <span className="text-xl flex-shrink-0" aria-hidden>⚠️</span>
+            <div className="min-w-0">
+              <p className="text-sm font-bold text-red-800">
+                {aktywnosc.dniOdOstatniego === null
+                  ? 'Jeszcze nie ćwiczył'
+                  : `Przerwa w ćwiczeniach — ${aktywnosc.dniOdOstatniego} dni`}
+              </p>
+              <p className="text-xs text-red-700 mt-0.5">
+                {aktywnosc.ostatniDzien
+                  ? `Ostatnia sesja ${new Date(aktywnosc.ostatniDzien).toLocaleDateString('pl-PL')}.`
+                  : 'Brak jakiejkolwiek sesji w ostatnich dwóch miesiącach.'}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Regularność — procent dni z ćwiczeniami w ostatnim tygodniu.
+            Liczba sesji sama w sobie nie mówi, czy dziecko ćwiczy
+            systematycznie, a o to pyta logopeda. */}
+        <div className="bg-white rounded-2xl border border-gray-100 p-4">
+          <div className="flex items-baseline justify-between mb-2">
+            <h2 className="font-bold text-gray-800">Regularność</h2>
+            <span className="text-xs text-gray-400">
+              ostatnie {aktywnosc.oknoDni} dni
+            </span>
+          </div>
+          <div className="flex items-end gap-3">
+            <span className={`text-3xl font-black leading-none tabular-nums ${
+              aktywnosc.regularnosc >= 70 ? 'text-green-700'
+                : aktywnosc.regularnosc >= 40 ? 'text-amber-600' : 'text-red-600'
+            }`}>
+              {aktywnosc.regularnosc}%
+            </span>
+            <span className="text-sm text-gray-500 pb-0.5">
+              {aktywnosc.cwiczebnychDni} z {aktywnosc.oknoDni} dni
+            </span>
+          </div>
+          <div className="mt-3 h-2 rounded-full bg-gray-100 overflow-hidden">
+            <div
+              className={`h-full rounded-full ${
+                aktywnosc.regularnosc >= 70 ? 'bg-green-500'
+                  : aktywnosc.regularnosc >= 40 ? 'bg-amber-500' : 'bg-red-500'
+              }`}
+              style={{ width: `${Math.min(aktywnosc.regularnosc, 100)}%` }}
+            />
+          </div>
+        </div>
+
+        {cele.length > 0 && (
+          <div className="bg-white rounded-2xl border border-gray-100 p-4">
+            <h2 className="font-bold text-gray-800 mb-2">Cele artykulacyjne</h2>
+            <div className="flex flex-wrap gap-1.5">
+              {cele.map(g => (
+                <span key={g} className="text-xs font-bold px-2.5 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-100">
+                  {g}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Statystyki kluczowe */}
         <div className="grid grid-cols-4 gap-2">
           {[

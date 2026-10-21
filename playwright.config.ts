@@ -27,6 +27,12 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
     {
+      // Czysta logika — bez przeglądarki, bez serwera, bez logowania.
+      // Uruchamiane razem z resztą, żeby nie zakładać osobnego narzędzia.
+      name: 'unit',
+      testMatch: /e2e\/unit\/.*/,
+    },
+    {
       name: 'integration',
       testMatch: /e2e\/integration\/.*/,
       use: { ...devices['Desktop Chrome'] },
