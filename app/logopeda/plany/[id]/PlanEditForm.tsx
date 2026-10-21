@@ -40,10 +40,12 @@ interface Props {
   initialItems: PlanExerciseRow[]
   allExercises: AvailableExercise[]
   isActive:     boolean
+  /** NULL = wersja robocza, dziecko planu nie widzi */
+  publishedAt:  string | null
   patientId:    string
 }
 
-export default function PlanEditForm({ planId, initialItems, allExercises, isActive, patientId }: Props) {
+export default function PlanEditForm({ planId, initialItems, allExercises, isActive, publishedAt, patientId }: Props) {
   const router = useRouter()
   const [, startTransition] = useTransition()
 
@@ -175,6 +177,23 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
     }
   }
 
+  async function togglePublished() {
+    setError(null)
+    try {
+      const res = await fetch('/api/logopeda/update-plan', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan_id: planId, action: 'publish', payload: { published: !publishedAt } }),
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.error ?? `Nie udało się zmienić publikacji (HTTP ${res.status})`)
+      }
+      startTransition(() => router.refresh())
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Nie udało się zmienić publikacji')
+    }
+  }
+
   const visibleItems = items.filter(i => !toDelete.has(i.id))
   const totalMin = Math.ceil(
     visibleItems.reduce((s, i) => s + i.exercises.duration_seconds * i.repetitions / 5, 0) / 60
@@ -182,6 +201,33 @@ export default function PlanEditForm({ planId, initialItems, allExercises, isAct
 
   return (
     <div className="space-y-3">
+      {/* Czy dziecko to widzi — pierwsza rzecz, jaką logopeda powinien
+          wiedzieć, zanim zacznie przestawiać ćwiczenia. */}
+      <div className={`rounded-2xl px-4 py-3 flex items-center justify-between gap-3 border ${
+        publishedAt ? 'bg-green-50 border-green-200' : 'bg-amber-50 border-amber-200'
+      }`}>
+        <div className="min-w-0">
+          <p className={`text-sm font-bold ${publishedAt ? 'text-green-800' : 'text-amber-800'}`}>
+            {publishedAt ? 'Dziecko widzi ten plan' : 'Wersja robocza'}
+          </p>
+          <p className={`text-xs mt-0.5 ${publishedAt ? 'text-green-700' : 'text-amber-700'}`}>
+            {publishedAt
+              ? `Opublikowany ${new Date(publishedAt).toLocaleDateString('pl-PL')}`
+              : 'Zmiany zostają u ciebie, dopóki nie opublikujesz'}
+          </p>
+        </div>
+        <button
+          onClick={togglePublished}
+          className={`flex-shrink-0 text-sm font-bold px-4 py-2 rounded-xl transition active:scale-95 ${
+            publishedAt
+              ? 'bg-white border border-green-300 text-green-800 hover:bg-green-100'
+              : 'bg-green-700 text-white hover:bg-green-800 shadow'
+          }`}
+        >
+          {publishedAt ? 'Cofnij do roboczego' : 'Opublikuj dziecku'}
+        </button>
+      </div>
+
       {/* Nagłówek listy */}
       <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden">
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-50">

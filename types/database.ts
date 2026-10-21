@@ -81,6 +81,8 @@ export type ExercisePlan = {
   name: string
   description: string | null
   is_active: boolean
+  /** Moment udostępnienia dziecku. NULL = wersja robocza, widoczna tylko dla logopedy. */
+  published_at: string | null
   start_date: string
   created_at: string
   updated_at: string

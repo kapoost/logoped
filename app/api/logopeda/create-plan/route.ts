@@ -4,9 +4,13 @@ export async function POST(request: Request) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  const { patient_id, name, description, exercises, schedule } = await request.json()
+  const { patient_id, name, description, exercises, schedule, publish } = await request.json()
   const { data: plan, error: planErr } = await supabase.from('exercise_plans')
-    .insert({ therapist_id: user.id, patient_id, name, description }).select('id').single()
+    .insert({ therapist_id: user.id, patient_id, name, description,
+              // Bez publish plan powstaje jako roboczy — dziecko go nie widzi,
+              // dopóki logopeda świadomie nie udostępni.
+              published_at: publish ? new Date().toISOString() : null })
+    .select('id').single()
   if (planErr) return NextResponse.json({ error: planErr.message }, { status: 500 })
   if (exercises?.length) {
     const { error: exErr } = await supabase.from('plan_exercises').insert(

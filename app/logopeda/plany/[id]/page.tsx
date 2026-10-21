@@ -112,6 +112,7 @@ export default async function PlanDetailPage({ params }: Props) {
           initialItems={planExercises}
           allExercises={allExercises ?? []}
           isActive={plan.is_active}
+          publishedAt={plan.published_at ?? null}
           patientId={plan.patient_id}
         />
       </div>

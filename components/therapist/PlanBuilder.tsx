@@ -97,7 +97,7 @@ export default function PlanBuilder({ patients, exercises, therapistId, preselec
     )
   }
 
-  async function savePlan() {
+  async function savePlan(publish: boolean) {
     if (!patientId)       { setError('Wybierz pacjenta.'); setStep(1); return }
     if (!planName.trim()) { setError('Podaj nazwę planu.'); setStep(1); return }
     if (items.length === 0) { setError('Dodaj co najmniej jedno ćwiczenie.'); setStep(2); return }
@@ -120,6 +120,7 @@ export default function PlanBuilder({ patients, exercises, therapistId, preselec
           notes:       item.notes.trim() || null,
         })),
         schedule: { days_of_week: daysOfWeek, reminder_time: reminderTime },
+        publish,
       }),
     })
 
@@ -429,13 +430,29 @@ export default function PlanBuilder({ patients, exercises, therapistId, preselec
             <p className="text-green-700">🔔 Przypomnienie: <strong>{reminderTime}</strong></p>
           </div>
 
-          <button
-            onClick={savePlan}
-            disabled={saving}
-            className="w-full bg-green-700 hover:bg-green-800 disabled:opacity-60 text-white font-bold py-4 rounded-2xl text-base transition shadow-lg shadow-green-700/20 active:scale-95"
-          >
-            {saving ? 'Zapisuję plan…' : '✓ Zapisz plan ćwiczeń'}
-          </button>
+          {/* Dwa wyjścia zamiast jednego. Do tej pory każdy zapis planu
+              natychmiast lądował na ekranie dziecka, więc nie dało się
+              przygotować planu na spokojnie. Publikacja jest teraz osobnym,
+              świadomym ruchem. */}
+          <div className="flex gap-3">
+            <button
+              onClick={() => savePlan(false)}
+              disabled={saving}
+              className="flex-1 bg-white border-2 border-gray-200 hover:border-gray-300 disabled:opacity-60 text-gray-700 font-bold py-4 rounded-2xl text-sm transition active:scale-95"
+            >
+              {saving ? 'Zapisuję…' : 'Zapisz jako roboczy'}
+            </button>
+            <button
+              onClick={() => savePlan(true)}
+              disabled={saving}
+              className="flex-[1.4] bg-green-700 hover:bg-green-800 disabled:opacity-60 text-white font-bold py-4 rounded-2xl text-base transition shadow-lg shadow-green-700/20 active:scale-95"
+            >
+              {saving ? 'Zapisuję…' : '✓ Opublikuj dziecku'}
+            </button>
+          </div>
+          <p className="text-xs text-gray-400 text-center mt-2">
+            Wersja robocza zostaje u ciebie — dziecko zobaczy plan dopiero po opublikowaniu.
+          </p>
         </div>
       )}
     </div>

@@ -18,7 +18,7 @@ export default async function PlanyPage() {
   const { data: plans } = await supabase
     .from('exercise_plans')
     .select(`
-      id, name, is_active, start_date, created_at,
+      id, name, is_active, published_at, start_date, created_at,
       profiles!patient_id ( full_name ),
       plan_exercises ( id )
     `)
@@ -28,6 +28,7 @@ export default async function PlanyPage() {
 
   const active   = plans?.filter(p => p.is_active)   ?? []
   const inactive = plans?.filter(p => !p.is_active)  ?? []
+  const robocze  = plans?.filter(p => !p.published_at).length ?? 0
 
   return (
     <div className="animate-fade-in">
@@ -36,7 +37,7 @@ export default async function PlanyPage() {
           <div>
             <h1 className="text-xl font-bold">Plany ćwiczeń</h1>
             <p className="text-green-300 text-sm mt-0.5">
-              {active.length} aktywnych · {inactive.length} nieaktywnych
+              {active.length} aktywnych · {inactive.length} nieaktywnych{robocze > 0 ? ` · ${robocze} roboczych` : ''}
             </p>
           </div>
           <Link
@@ -105,11 +106,17 @@ function PlanCard({ plan }: { plan: any }) {
         </div>
         <div className="flex items-center gap-2 flex-shrink-0 ml-3">
           <span className="text-xs text-gray-400">{exerciseCount} ćw.</span>
-          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-            plan.is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'
-          }`}>
-            {plan.is_active ? 'Aktywny' : 'Nieaktywny'}
-          </span>
+          {!plan.published_at ? (
+            <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-amber-100 text-amber-800">
+              Roboczy
+            </span>
+          ) : (
+            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+              plan.is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'
+            }`}>
+              {plan.is_active ? 'Aktywny' : 'Nieaktywny'}
+            </span>
+          )}
         </div>
       </div>
       <p className="text-xs text-gray-400 mt-1.5">

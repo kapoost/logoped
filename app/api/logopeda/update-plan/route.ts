@@ -15,7 +15,16 @@ export async function POST(request: Request) {
   const { data: plan } = await supabase.from('exercise_plans').select('therapist_id').eq('id', plan_id).single()
   if (!plan || plan.therapist_id !== user.id) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 
-  if (action === 'toggle_active') {
+  if (action === 'publish') {
+    // Udostępnienie planu dziecku albo cofnięcie go do wersji roboczej.
+    // Widok today_exercises wymaga published_at, więc cofnięcie natychmiast
+    // znika z ekranu pacjenta — to jest zamierzone.
+    const { error } = await supabase
+      .from('exercise_plans')
+      .update({ published_at: payload.published ? new Date().toISOString() : null })
+      .eq('id', plan_id)
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  } else if (action === 'toggle_active') {
     const { error } = await supabase
       .from('exercise_plans')
       .update({ is_active: payload.is_active })
