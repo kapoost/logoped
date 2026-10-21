@@ -115,8 +115,12 @@ test('nieużywane własne ćwiczenie da się usunąć trwale', async ({ page }) 
   test.skip(!cloneUrl, 'Brak klonu z poprzedniego testu')
   await page.goto(cloneUrl)
   await page.waitForLoadState('networkidle')
-  page.on('dialog', d => d.accept())
+  // Od fazy 4 usuwanie jest dwukrokowe zamiast natywnego confirm():
+  // pierwsze kliknięcie odsłania pytanie, drugie potwierdza. Celowo
+  // rozdzielone, żeby nie dało się usunąć jednym nieuważnym dotknięciem.
   await page.getByRole('button', { name: /Usuń trwale/ }).click()
+  await expect(page.getByText(/bezpowrotnie\?/)).toBeVisible()
+  await page.getByRole('button', { name: /^Usuń$/ }).click()
   await page.waitForURL(/\/logopeda\/cwiczenia$/, { timeout: 10000 })
   // usunięte — podgląd zwraca 404
   const res = await page.request.get(cloneUrl)

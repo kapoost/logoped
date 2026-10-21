@@ -5,6 +5,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import PrzyciskNieodwracalny from './PrzyciskNieodwracalny'
 import { plural } from '@/lib/plural'
 
 interface Props {
@@ -48,7 +49,6 @@ export default function ExerciseLifecycleActions({
   }
 
   async function hardDelete() {
-    if (!confirm(`Usunąć trwale ćwiczenie „${title}"? Nie można tego cofnąć.`)) return
     setBusy('delete')
     const ok = await call('delete-exercise', {})
     setBusy(null)
@@ -79,13 +79,15 @@ export default function ExerciseLifecycleActions({
       )}
 
       {canHardDelete ? (
-        <button
-          onClick={hardDelete}
-          disabled={busy !== null}
-          className="w-full text-sm text-red-600 hover:text-red-800 font-medium py-2 disabled:opacity-50 transition"
-        >
-          {busy === 'delete' ? 'Usuwam…' : 'Usuń trwale'}
-        </button>
+        <div className="w-full flex justify-center py-1">
+          <PrzyciskNieodwracalny
+            onConfirm={hardDelete}
+            label={busy === 'delete' ? 'Usuwam…' : 'Usuń trwale'}
+            pytanie={`Usunąć „${title}" bezpowrotnie?`}
+            disabled={busy !== null}
+            className="text-sm text-red-600 hover:text-red-800 font-medium py-2 disabled:opacity-50 transition"
+          />
+        </div>
       ) : (
         <p className="text-xs text-gray-400 text-center pt-1">
           Trwałe usunięcie niedostępne — ćwiczenie jest w {planCount}&nbsp;

@@ -2,14 +2,14 @@
  * Wskaźniki aktywności pacjenta liczone z kalendarza ćwiczeń.
  *
  * Progi są tu, w jednym miejscu, bo są DECYZJĄ KLINICZNĄ, nie techniczną.
- * Wartości poniżej to robocze założenia przyjęte, żeby nie blokować pracy —
- * logopeda powinien je potwierdzić albo zmienić. Każda zmiana to jedna liczba.
+ * Próg przerwy jest potwierdzony. Okno regularności nadal jest założeniem
+ * roboczym — nie było osobno zatwierdzone. Każda zmiana to jedna liczba.
  */
 
-/** Po ilu dniach bez ćwiczeń pokazujemy ostrzeżenie. Robocze: 4. */
+/** Po ilu dniach bez ćwiczeń pokazujemy ostrzeżenie. Potwierdzone 21.10.2026. */
 export const PROG_PRZERWY_DNI = 4
 
-/** Ile ostatnich dni bierzemy do wskaźnika regularności. Robocze: 7. */
+/** Ile ostatnich dni bierzemy do wskaźnika regularności. Nadal robocze: 7. */
 export const OKNO_REGULARNOSCI_DNI = 7
 
 export interface DzienKalendarza {

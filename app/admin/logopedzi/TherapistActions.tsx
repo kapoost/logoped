@@ -3,13 +3,13 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import PrzyciskNieodwracalny from '@/components/shared/PrzyciskNieodwracalny'
 
 export default function TherapistActions({ therapistId, name }: { therapistId: string; name: string }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
   async function deleteTherapist() {
-    if (!confirm(`Czy na pewno usunąć konto logopedy ${name}? Tej operacji nie można cofnąć.`)) return
     setLoading(true)
 
     await fetch('/api/admin/delete-user', {
@@ -23,12 +23,12 @@ export default function TherapistActions({ therapistId, name }: { therapistId: s
   }
 
   return (
-    <button
-      onClick={deleteTherapist}
+    <PrzyciskNieodwracalny
+      onConfirm={deleteTherapist}
+      label="Usuń"
+      pytanie={`Usunąć konto ${name} wraz z jego pacjentami?`}
       disabled={loading}
-      className="text-xs text-red-500 hover:text-red-700 font-medium disabled:opacity-50 transition"
-    >
-      {loading ? 'Usuwanie…' : 'Usuń'}
-    </button>
+      busy={loading}
+    />
   )
 }

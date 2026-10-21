@@ -106,6 +106,19 @@ export default async function TherapistDetailPage({ params }: { params: { id: st
           </div>
 
           {/* OSTATNIE PLANY */}
+          {/* Brak planów to informacja, nie powód do chowania sekcji — pusty
+              obszar czyta się jak zepsuta strona, a nie jak "jeszcze nic nie
+              zrobił". */}
+          {(!plans || plans.length === 0) && (
+            <div className="bg-white rounded-2xl border border-gray-100 p-4 text-center">
+              <div className="text-3xl mb-2" aria-hidden>📋</div>
+              <p className="text-sm font-medium text-gray-600">Nie utworzył jeszcze żadnego planu</p>
+              <p className="text-xs text-gray-400 mt-0.5">
+                Plany pojawią się tutaj, gdy przypisze ćwiczenia pacjentowi.
+              </p>
+            </div>
+          )}
+
           {plans && plans.length > 0 && (
             <div className="bg-white rounded-2xl border border-gray-100 p-4">
               <h3 className="text-sm font-semibold text-gray-700 mb-3">Ostatnie plany ćwiczeń</h3>

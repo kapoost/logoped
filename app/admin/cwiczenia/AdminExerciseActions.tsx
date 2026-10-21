@@ -3,6 +3,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import PrzyciskNieodwracalny from '@/components/shared/PrzyciskNieodwracalny'
 import Link from 'next/link'
 import { plural } from '@/lib/plural'
 
@@ -71,15 +72,13 @@ export default function AdminExerciseActions({
           </button>
         )}
         {canHardDelete && (
-          <button
-            onClick={() => {
-              if (confirm(`Usunąć trwale ćwiczenie „${title}"? Nie można tego cofnąć.`)) post('delete-exercise')
-            }}
+          <PrzyciskNieodwracalny
+            onConfirm={() => post('delete-exercise')}
+            label="Usuń"
+            pytanie={`Usunąć „${title}" bezpowrotnie?`}
             disabled={busy}
-            className="text-xs text-red-500 hover:text-red-700 font-medium disabled:opacity-50 transition"
-          >
-            {busy ? '…' : 'Usuń'}
-          </button>
+            busy={busy}
+          />
         )}
       </div>
       {!canHardDelete && !isArchived && (
