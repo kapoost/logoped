@@ -23,6 +23,7 @@ export default function ExerciseForm({ therapistId, isAdmin, exercise, onSuccess
 
   const [title,        setTitle]        = useState(exercise?.title ?? '')
   const [description,  setDescription]  = useState(exercise?.description ?? '')
+  const [descChild,    setDescChild]    = useState(exercise?.description_child ?? '')
   const [instructions, setInstructions] = useState(exercise?.instructions ?? '')
   const [category,     setCategory]     = useState<ExerciseCategory>(exercise?.category ?? 'jezyka')
   const [difficulty,   setDifficulty]   = useState<DifficultyLevel>(exercise?.difficulty ?? 'latwe')
@@ -60,7 +61,8 @@ export default function ExerciseForm({ therapistId, isAdmin, exercise, onSuccess
 
     const payload = {
       title:            title.trim(),
-      description:      description.trim() || null,
+      description:       description.trim() || null,
+      description_child: descChild.trim() || null,
       instructions:     instructions.trim(),
       category,
       difficulty,
@@ -205,12 +207,28 @@ export default function ExerciseForm({ therapistId, isAdmin, exercise, onSuccess
         </div>
       </div>
 
-      {/* Opis */}
+      {/* Opis kliniczny */}
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Krótki opis (opcjonalny)</label>
+        <p className="text-xs text-gray-400 mb-1.5">Dla ciebie — cel ćwiczenia. Dziecko tego nie zobaczy.</p>
         <input type="text" value={description} onChange={e => setDescription(e.target.value)}
-          placeholder="np. ćwiczenie warg i policzków"
+          placeholder="np. pionizacja języka, przygotowanie do głoski r"
           className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-600/20 focus:border-green-700 text-sm" />
+      </div>
+
+      {/* Opis dla dziecka — osobne pole, bo rejestr kliniczny jest dla dziecka
+          nieczytelny. Puste = dziecko zobaczy opis powyżej, czyli stan sprzed
+          migracji 013. */}
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Co przeczyta dziecko</label>
+        <p className="text-xs text-gray-400 mb-1.5">
+          Jedno zdanie, do dziecka, bez terminów. Puste — dziecko zobaczy opis powyżej.
+        </p>
+        <input type="text" value={descChild} onChange={e => setDescChild(e.target.value)}
+          maxLength={120}
+          placeholder="np. Przyklej język do podniebienia i mocno klaśnij!"
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-600/20 focus:border-green-700 text-sm" />
+        <p className="text-xs text-gray-400 mt-1 text-right tabular-nums">{descChild.length}/120</p>
       </div>
 
       {/* Instrukcja */}

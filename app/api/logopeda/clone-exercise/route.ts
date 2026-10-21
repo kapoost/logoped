@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     // RLS przepuści tylko to, co logopeda i tak widzi (publiczne albo własne)
     const { data: src } = await supabase
       .from('exercises')
-      .select('title, description, instructions, category, difficulty, target_sounds, media_url, duration_seconds, emoji')
+      .select('title, description, description_child, instructions, category, difficulty, target_sounds, media_url, duration_seconds, emoji')
       .eq('id', exercise_id)
       .single()
 

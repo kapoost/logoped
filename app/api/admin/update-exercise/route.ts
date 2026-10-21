@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   }
 
   const body = await req.json()
-  const { exercise_id, title, description, instructions, category, difficulty,
+  const { exercise_id, title, description, description_child, instructions, category, difficulty,
           emoji, target_sounds, duration_seconds, is_public } = body
 
   if (!exercise_id) return NextResponse.json({ error: 'Brak ID' }, { status: 400 })
@@ -27,6 +27,7 @@ export async function POST(req: NextRequest) {
     .update({
       title:            title.trim(),
       description:      description?.trim() || null,
+      description_child: description_child?.trim() || null,
       instructions:     instructions.trim(),
       category,
       difficulty,

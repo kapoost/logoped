@@ -11,7 +11,7 @@ export async function POST(request: Request) {
     if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
     const body = await request.json()
-    const { exercise_id, title, description, instructions, category, difficulty,
+    const { exercise_id, title, description, description_child, instructions, category, difficulty,
             emoji, target_sounds, duration_seconds, is_public } = body
 
     if (!exercise_id) return NextResponse.json({ error: 'Brak ID' }, { status: 400 })
@@ -34,6 +34,7 @@ export async function POST(request: Request) {
     const { error } = await supabase.from('exercises').update({
       title:            title.trim(),
       description:      description?.trim() || null,
+      description_child: description_child?.trim() || null,
       instructions:     instructions.trim(),
       category,
       difficulty,

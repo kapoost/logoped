@@ -21,7 +21,7 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json()
-    const { title, description, instructions, category, difficulty, emoji,
+    const { title, description, description_child, instructions, category, difficulty, emoji,
             target_sounds, duration_seconds, is_public } = body
 
     if (!title?.trim() || !instructions?.trim()) {
@@ -33,6 +33,7 @@ export async function POST(request: Request) {
     const { data, error } = await supabase.from('exercises').insert({
       title:            title.trim(),
       description:      description?.trim() || null,
+      description_child: description_child?.trim() || null,
       instructions:     instructions.trim(),
       category,
       difficulty,
