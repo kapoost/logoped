@@ -313,3 +313,66 @@ JOIN public.profiles p ON p.id = u.id
 LEFT JOIN public.patient_stats ps ON ps.patient_id = p.id
 WHERE u.email IN ('demo@logoped.app', 'logopeda-demo@logoped.app')
 ORDER BY p.role DESC;
+
+-- ============================================================
+-- Normalizacja po migracjach 014 i 015
+--
+-- Seed powstał przed rozdzieleniem planu roboczego od opublikowanego
+-- (014) i przed zasadą jednego żywego planu na pacjenta (015). Wstawia
+-- cztery plany i nie ustawia published_at, więc uruchomiony bez tego
+-- bloku dałby konto demo z PUSTYM ekranem: plany istnieją, ale żaden nie
+-- jest opublikowany, a widok today_exercises tego wymaga.
+--
+-- Blok jest odporny na stan zastany — na produkcji plany demo zostały
+-- scalone migracją 015, więc nie można po prostu "opublikować planu nr 1":
+-- on jest już pusty. Żywy zostaje ten, który faktycznie ma najwięcej
+-- ćwiczeń, bo to on niesie demo.
+-- ============================================================
+DO $$
+DECLARE
+  v_patient uuid;
+  v_zywy    uuid;
+BEGIN
+  SELECT id INTO v_patient FROM auth.users WHERE email = 'demo@logoped.app';
+  IF v_patient IS NULL THEN
+    RAISE NOTICE 'Brak konta demo — nic do normalizacji.';
+    RETURN;
+  END IF;
+
+  SELECT p.id INTO v_zywy
+    FROM public.exercise_plans p
+    LEFT JOIN public.plan_exercises pe ON pe.plan_id = p.id
+   WHERE p.patient_id = v_patient
+   GROUP BY p.id
+   ORDER BY count(pe.id) DESC, p.created_at DESC
+   LIMIT 1;
+
+  IF v_zywy IS NULL THEN
+    RAISE NOTICE 'Konto demo nie ma żadnego planu.';
+    RETURN;
+  END IF;
+
+  -- Najpierw zwolnij miejsce, dopiero potem publikuj — odwrotna kolejność
+  -- łamie indeks uniq_jeden_zywy_plan_na_pacjenta.
+  UPDATE public.exercise_plans
+     SET is_active = FALSE, published_at = NULL
+   WHERE patient_id = v_patient AND id <> v_zywy;
+
+  UPDATE public.exercise_plans
+     SET is_active = TRUE, published_at = coalesce(published_at, now())
+   WHERE id = v_zywy;
+
+  RAISE NOTICE 'Demo: żywy plan % (%).', v_zywy,
+    (SELECT name FROM public.exercise_plans WHERE id = v_zywy);
+END $$;
+
+-- Kontrola: dziecko demo ma widzieć dokładnie jeden plan i niezerową
+-- liczbę ćwiczeń na dziś.
+SELECT
+  (SELECT count(*) FROM public.exercise_plans p
+     JOIN auth.users u ON u.id = p.patient_id
+    WHERE u.email = 'demo@logoped.app'
+      AND p.is_active AND p.published_at IS NOT NULL)        AS zywych_planow,
+  (SELECT count(*) FROM public.today_exercises t
+     JOIN auth.users u ON u.id = t.patient_id
+    WHERE u.email = 'demo@logoped.app')                      AS cwiczen_na_dzis;
