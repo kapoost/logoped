@@ -180,8 +180,13 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
         {/* Opis mówi PO CO jest ćwiczenie, kroki mówią JAK — stąd nad nimi.
             Pole było w danych i w typie TodayExercise od początku, ale nic go
             nie renderowało, więc dziecko widziało obrazek, tytuł i od razu kroki. */}
-        {ex.description && (
-          <p className="text-sm text-gray-500 px-1 leading-relaxed">{ex.description}</p>
+        {/* Wersja dziecięca, a bez niej kliniczna — tak było do tej pory.
+            Dzięki temu ekran działa też zanim migracja 013 wejdzie na bazę:
+            kolumny po prostu nie ma i fallback załatwia sprawę. */}
+        {(ex.description_child || ex.description) && (
+          <p className="text-sm text-gray-500 px-1 leading-relaxed">
+            {ex.description_child || ex.description}
+          </p>
         )}
 
         {ex.therapist_notes && (

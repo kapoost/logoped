@@ -49,6 +49,8 @@ export type Exercise = {
   id: string
   title: string
   description: string | null
+  /** Opis pisany do dziecka. NULL = brak wersji dziecięcej, pokazujemy description. */
+  description_child: string | null
   instructions: string
   category: ExerciseCategory
   difficulty: DifficultyLevel
@@ -222,6 +224,8 @@ export type TodayExercise = {
   exercise_id: string
   title: string
   description: string | null
+  /** Opis pisany do dziecka. NULL = brak wersji dziecięcej, pokazujemy description. */
+  description_child: string | null
   instructions: string
   category: ExerciseCategory
   difficulty: DifficultyLevel
@@ -268,7 +272,8 @@ type ProfileInsert = WithDefaults<
 
 type ExerciseInsert = WithDefaults<
   Omit<Exercise, 'id' | 'created_at' | 'updated_at'>,
-  'description' | 'target_sounds' | 'media_url' | 'duration_seconds' | 'emoji'
+  'description' | 'description_child' | 'target_sounds' | 'media_url'
+  | 'duration_seconds' | 'emoji'
   | 'created_by' | 'is_public' | 'archived_at' | 'archived_by'
 >
 

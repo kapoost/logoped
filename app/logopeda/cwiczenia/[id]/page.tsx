@@ -83,9 +83,26 @@ export default async function PodgladCwiczeniaPage({ params }: { params: { id: s
           </div>
         </div>
 
-        {ex.description && (
-          <div className="bg-white border border-gray-100 rounded-2xl px-4 py-3">
-            <p className="text-sm text-gray-600">{ex.description}</p>
+        {(ex.description || ex.description_child) && (
+          <div className="bg-white border border-gray-100 rounded-2xl px-4 py-3 space-y-3">
+            {ex.description && (
+              <div>
+                <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-1">Opis</p>
+                <p className="text-sm text-gray-600">{ex.description}</p>
+              </div>
+            )}
+            {/* To samo zdanie w wersji, którą widzi dziecko — żeby było widać,
+                czy ćwiczenie w ogóle ma wersję dziecięcą. */}
+            <div>
+              <p className="text-[11px] font-bold text-gray-400 uppercase tracking-wide mb-1">
+                Co czyta dziecko
+              </p>
+              {ex.description_child
+                ? <p className="text-sm text-gray-600">{ex.description_child}</p>
+                : <p className="text-sm text-amber-700">
+                    Brak wersji dziecięcej — dziecko zobaczy opis powyżej.
+                  </p>}
+            </div>
           </div>
         )}
 
