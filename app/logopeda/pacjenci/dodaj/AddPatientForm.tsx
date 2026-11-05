@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { normalizeLogin, validateLogin } from '@/lib/login'
 
 interface Props {
   therapistId: string
@@ -19,10 +20,16 @@ export default function AddPatientForm({ therapistId, existingNames }: Props) {
   const [loading,   setLoading]   = useState(false)
   const [error,     setError]     = useState<string | null>(null)
   const [success,   setSuccess]   = useState(false)
+  const [createdLogin, setCreatedLogin] = useState('')
 
   // Live walidacja duplikatu imienia
   const isDuplicate = fullName.trim().length > 0 &&
     existingNames.some(n => n.trim().toLowerCase() === fullName.trim().toLowerCase())
+
+  // Login: polskie znaki i spacje nie przejdą przez Supabase — pokaż, co trafi do bazy
+  const normalizedLogin = normalizeLogin(email)
+  const loginError      = email.trim().length > 0 ? validateLogin(email) : null
+  const loginChanged    = !email.includes('@') && normalizedLogin !== email.trim() && !loginError
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -30,7 +37,8 @@ export default function AddPatientForm({ therapistId, existingNames }: Props) {
 
     if (!fullName.trim()) { setError('Podaj imię dziecka.'); return }
     if (isDuplicate) { setError(`Masz już pacjenta o imieniu "${fullName}". Dodaj nazwisko lub inicjał.`); return }
-    if (!email.trim()) { setError('Podaj login.'); return }
+    const loginProblem = validateLogin(email)
+    if (loginProblem) { setError(loginProblem); return }
     if (password.length < 8) { setError('Hasło musi mieć minimum 8 znaków.'); return }
 
     setLoading(true)
@@ -40,7 +48,7 @@ export default function AddPatientForm({ therapistId, existingNames }: Props) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         full_name:     fullName.trim(),
-        email:         email.trim(),
+        email:         email.includes('@') ? email.trim().toLowerCase() : normalizedLogin,
         password,
         date_of_birth: birthDate || null,
         therapist_id:  therapistId,
@@ -55,8 +63,9 @@ export default function AddPatientForm({ therapistId, existingNames }: Props) {
       return
     }
 
+    setCreatedLogin(data.login ?? '')
     setSuccess(true)
-    setTimeout(() => router.push(`/logopeda/pacjenci/${data.patient_id}`), 1500)
+    setTimeout(() => router.push(`/logopeda/pacjenci/${data.patient_id}`), 3000)
   }
 
   if (success) {
@@ -64,6 +73,11 @@ export default function AddPatientForm({ therapistId, existingNames }: Props) {
       <div className="text-center py-8">
         <div className="text-5xl mb-3">✅</div>
         <p className="font-bold text-green-700 text-lg">Pacjent dodany!</p>
+        {createdLogin && (
+          <p className="text-sm text-gray-600 mt-2">
+            Login dla rodziców: <span className="font-semibold">{createdLogin}</span>
+          </p>
+        )}
         <p className="text-sm text-gray-500 mt-1">Przekierowuję do profilu…</p>
       </div>
     )
@@ -123,8 +137,24 @@ export default function AddPatientForm({ therapistId, existingNames }: Props) {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="np. zosia123"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-600/20 focus:border-green-700 text-sm transition"
+              className={`w-full px-4 py-3 rounded-xl border text-sm transition focus:outline-none focus:ring-2
+                ${loginError
+                  ? 'border-red-300 bg-red-50 focus:ring-red-400/20 focus:border-red-400'
+                  : 'border-gray-200 focus:ring-green-600/20 focus:border-green-700'
+                }`}
             />
+            {loginError ? (
+              <p className="text-red-600 text-xs mt-1.5">{loginError}</p>
+            ) : loginChanged ? (
+              <p className="text-gray-500 text-xs mt-1.5">
+                Login do przekazania rodzicom: <span className="font-semibold text-gray-700">{normalizedLogin}</span>
+                {' '}— bez polskich znaków i spacji.
+              </p>
+            ) : (
+              <p className="text-xs text-gray-400 mt-1">
+                Litery bez polskich znaków, cyfry, kropka lub myślnik. Może być też email rodzica.
+              </p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -152,7 +182,7 @@ export default function AddPatientForm({ therapistId, existingNames }: Props) {
 
       <button
         type="submit"
-        disabled={loading || isDuplicate}
+        disabled={loading || isDuplicate || !!loginError}
         className="w-full bg-green-700 hover:bg-green-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl transition active:scale-95"
       >
         {loading ? 'Tworzę konto…' : 'Dodaj pacjenta'}

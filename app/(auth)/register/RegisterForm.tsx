@@ -6,16 +6,12 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import type { Role } from '@/types/database'
+import { loginToEmail, normalizeLogin, validateLogin } from '@/lib/login'
 
 const ROLES: { value: Role; label: string; emoji: string; desc: string }[] = [
   { value: 'therapist', label: 'Logopeda',  emoji: '🩺', desc: 'Zarządzam pacjentami i tworzę plany ćwiczeń' },
   { value: 'patient',   label: 'Pacjent',   emoji: '🧒', desc: 'Chcę ćwiczyć i zbierać punkty' },
 ]
-
-/** Login → email wewnętrzny dla Supabase (tylko pacjenci) */
-function loginToEmail(login: string): string {
-  return login.includes('@') ? login : `${login.toLowerCase().trim()}@logoped.app`
-}
 
 export default function RegisterForm() {
   const router  = useRouter()
@@ -41,16 +37,19 @@ export default function RegisterForm() {
       return
     }
 
-    if (isPatient && identifier.length < 3) {
-      setError('Login musi mieć co najmniej 3 znaki.')
-      setLoading(false)
-      return
+    if (isPatient) {
+      const loginError = validateLogin(identifier)
+      if (loginError) {
+        setError(loginError)
+        setLoading(false)
+        return
+      }
     }
 
     const email = isPatient ? loginToEmail(identifier) : identifier
 
     const metadata: Record<string, string> = { role, full_name: fullName }
-    if (isPatient) metadata.login = identifier.toLowerCase().trim()
+    if (isPatient) metadata.login = normalizeLogin(identifier)
 
     const { error: authError } = await supabase.auth.signUp({
       email,

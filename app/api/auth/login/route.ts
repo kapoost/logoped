@@ -2,6 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { createClient } from '@supabase/supabase-js'
+import { loginToEmail } from '@/lib/login'
 
 const DASHBOARD: Record<string, string> = {
   admin:     '/admin',
@@ -15,11 +16,6 @@ function baseUrl(request: NextRequest): string {
     ?? 'logoped.fly.dev'
   const proto = request.headers.get('x-forwarded-proto') ?? 'https'
   return `${proto}://${host}`
-}
-
-/** Login → email: jeśli brak @, dopisz @logoped.app */
-function loginToEmail(login: string): string {
-  return login.includes('@') ? login : `${login.toLowerCase().trim()}@logoped.app`
 }
 
 export async function POST(request: NextRequest) {

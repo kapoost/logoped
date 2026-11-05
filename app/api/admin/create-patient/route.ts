@@ -4,6 +4,19 @@
 
 import { NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
+import { loginToEmail, validateLogin } from '@/lib/login'
+
+/** Surowe błędy GoTrue → komunikat dla logopedy */
+function friendlyAuthError(message: string): string {
+  const m = message.toLowerCase()
+  if (m.includes('already registered') || m.includes('already been registered'))
+    return 'Ten login jest już zajęty. Wybierz inny.'
+  if (m.includes('validate email'))
+    return 'Login może zawierać tylko litery (bez polskich znaków), cyfry, kropkę, podkreślnik i myślnik.'
+  if (m.includes('password'))
+    return 'Hasło jest za słabe — użyj co najmniej 8 znaków.'
+  return 'Nie udało się utworzyć konta. Spróbuj ponownie.'
+}
 
 export async function POST(request: Request) {
   try {
@@ -24,12 +37,19 @@ export async function POST(request: Request) {
 
     const { full_name, email: rawLogin, password, date_of_birth, therapist_id } = await request.json()
 
-    if (!full_name || !rawLogin || !password || password.length < 8) {
-      return NextResponse.json({ error: 'Nieprawidłowe dane formularza.' }, { status: 400 })
+    if (!full_name?.trim()) {
+      return NextResponse.json({ error: 'Podaj imię dziecka.' }, { status: 400 })
+    }
+    if (!password || password.length < 8) {
+      return NextResponse.json({ error: 'Hasło musi mieć minimum 8 znaków.' }, { status: 400 })
     }
 
-    // Login → email: jeśli brak @, dopisz @logoped.app (spójne z logowaniem)
-    const email = rawLogin.includes('@') ? rawLogin : `${rawLogin.toLowerCase().trim()}@logoped.app`
+    // Login → email (ta sama normalizacja co przy logowaniu, inaczej dziecko się nie zaloguje)
+    const loginError = validateLogin(rawLogin ?? '')
+    if (loginError) {
+      return NextResponse.json({ error: loginError }, { status: 400 })
+    }
+    const email = loginToEmail(rawLogin)
 
     // Sprawdź unikalność imienia pacjenta dla tego logopedy
     const { data: existingPatients } = await supabase
@@ -69,10 +89,11 @@ export async function POST(request: Request) {
     })
 
     if (createError) {
-      const msg = createError.message.includes('already registered')
-        ? 'Ten email jest już zarejestrowany.'
-        : createError.message
-      return NextResponse.json({ error: msg }, { status: 400 })
+      console.error('[create-patient] createUser', createError.message)
+      return NextResponse.json(
+        { error: friendlyAuthError(createError.message) },
+        { status: 400 }
+      )
     }
 
     const patientId = newUser.user.id
@@ -94,7 +115,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Błąd przypisania pacjenta.' }, { status: 500 })
     }
 
-    return NextResponse.json({ patient_id: patientId })
+    return NextResponse.json({ patient_id: patientId, login: email.endsWith('@logoped.app') ? email.split('@')[0] : email })
   } catch (err) {
     console.error('[create-patient]', err)
     return NextResponse.json({ error: 'Błąd serwera.' }, { status: 500 })

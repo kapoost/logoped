@@ -2,6 +2,7 @@
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import { createServerClient } from '@supabase/ssr'
+import { loginToEmail } from '@/lib/login'
 
 export async function signOut() {
   const cookieStore = cookies()
@@ -18,11 +19,6 @@ export async function signOut() {
   )
   await supabase.auth.signOut()
   redirect('/login')
-}
-
-/** Login → email: jeśli brak @, dopisz @logoped.app */
-function loginToEmail(login: string): string {
-  return login.includes('@') ? login : `${login.toLowerCase().trim()}@logoped.app`
 }
 
 export async function signIn(_: unknown, formData: FormData) {
