@@ -102,8 +102,18 @@ if [[ "$FLY_OK" == "t" ]]; then
     CRON_SECRET="$(openssl rand -hex 32)" \
     --app "$APP_NAME"
 
+  # Zmienne NEXT_PUBLIC_* Next.js wkleja do paczki przeglądarki W TRAKCIE
+  # BUILDU, a build dzieje się w obrazie Dockera — sekrety Fly.io są tam
+  # niewidoczne, bo trafiają dopiero do działającego kontenera. Dockerfile
+  # deklaruje na to ARG-i; bez przekazania ich tutaj paczka klienta wychodzi
+  # z pustym NEXT_PUBLIC_SUPABASE_URL i wszystko, co dzieje się po stronie
+  # przeglądarki (rejestracja, lektor), cicho przestaje działać.
   info "Deploy na Fly.io..."
-  flyctl deploy --app "$APP_NAME" --wait-timeout 120
+  flyctl deploy --app "$APP_NAME" --wait-timeout 120 \
+    --build-arg NEXT_PUBLIC_SUPABASE_URL="$NEXT_PUBLIC_SUPABASE_URL" \
+    --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY="$NEXT_PUBLIC_SUPABASE_ANON_KEY" \
+    --build-arg NEXT_PUBLIC_APP_URL="https://${APP_NAME}.fly.dev" \
+    --build-arg NEXT_PUBLIC_VAPID_PUBLIC_KEY="$VAPID_PUBLIC_KEY"
 
   APP_URL="https://${APP_NAME}.fly.dev"
   info "Aplikacja dostępna pod: ${APP_URL}"

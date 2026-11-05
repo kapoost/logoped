@@ -24,6 +24,17 @@ ENV NEXT_PUBLIC_SUPABASE_URL=$NEXT_PUBLIC_SUPABASE_URL
 ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
 ENV NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL
 ENV NEXT_PUBLIC_VAPID_PUBLIC_KEY=$NEXT_PUBLIC_VAPID_PUBLIC_KEY
+
+# Next.js wkleja NEXT_PUBLIC_* do paczki przeglądarki w trakcie buildu, a nie
+# przy starcie kontenera — sekrety Fly.io są tu niewidoczne. Przy `flyctl
+# deploy` bez --build-arg te zmienne są puste, build przechodzi na zielono,
+# a w przeglądarce cicho przestaje działać wszystko, co ich potrzebuje:
+# rejestracja i lektor czytający polecenia. Taki obraz ma się nie zbudować.
+RUN test -n "$NEXT_PUBLIC_SUPABASE_URL" -a -n "$NEXT_PUBLIC_SUPABASE_ANON_KEY" || { \
+      echo "BŁĄD: brak NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY."; \
+      echo "Deployuj przez ./deploy.sh albo dodaj --build-arg do flyctl deploy."; \
+      exit 1; }
+
 RUN npm run build
 
 # Production image
