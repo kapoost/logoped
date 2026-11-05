@@ -131,13 +131,53 @@ test.describe('Widok ćwiczenia — przepływ', () => {
     await expect(page.getByTestId('wyjscie')).toBeVisible()
   })
 
-  test('instrukcje (kroki) są widoczne', async ({ page }) => {
+  // Poprzednia wersja sprawdzała tylko, czy gdziekolwiek na stronie jest
+  // widoczna "1". Przechodziła na zielono wtedy, gdy na iPhonie SE polecenie
+  // dostawało 57 px i dziecko nie widziało ani jednego kroku: toBeVisible()
+  // mówi o display, nie o tym, czy element mieści się w kadrze. Stąd pomiar
+  // geometrii zamiast obecności w DOM.
+  test('karta polecenia mieści się w kadrze — także na małym telefonie', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 553 })
     const link = await getFirstExerciseLink(page)
     if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
     await link.click()
     await page.waitForLoadState('networkidle')
-    // Kroki z numerkami 1, 2, 3
-    await expect(page.locator('text=1').first()).toBeVisible()
+
+    const karta = page.getByTestId('karta-kroku')
+    await expect(karta).toBeVisible()
+
+    const box = await karta.boundingBox()
+    const wysokoscOkna = page.viewportSize()!.height
+    expect(box).not.toBeNull()
+    expect(box!.height).toBeGreaterThan(60)
+    expect(box!.y + box!.height).toBeLessThanOrEqual(wysokoscOkna)
+  })
+
+  test('kolejne kroki przewijają się strzałką', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+
+    const dalej = page.getByRole('button', { name: 'Następny krok' })
+    if (await dalej.isDisabled()) { test.skip(true, 'Ćwiczenie ma jedną kartę'); return }
+
+    const pierwsza = await page.getByTestId('karta-kroku').innerText()
+    await dalej.click()
+    await page.waitForTimeout(400)
+    await expect(page.getByTestId('karta-kroku')).not.toHaveText(pierwsza)
+
+    // Karty wychodzące mają zniknąć z DOM — inaczej po kilku krokach
+    // zostaje stos niewidocznych plansz nad przyciskiem.
+    await expect(page.getByTestId('karta-kroku')).toHaveCount(1)
+  })
+
+  test('lektor ma przycisk na karcie polecenia', async ({ page }) => {
+    const link = await getFirstExerciseLink(page)
+    if (!link) { test.skip(true, 'Brak ćwiczeń'); return }
+    await link.click()
+    await page.waitForLoadState('networkidle')
+    await expect(page.getByTestId('glosnik')).toBeVisible()
   })
 
   test('przycisk akcji w widoku ćwiczenia jest widoczny', async ({ page }) => {

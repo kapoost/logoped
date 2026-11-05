@@ -8,7 +8,7 @@ import { playRep, playExerciseDone, playSessionComplete } from '@/lib/sounds'
 import { addDemoExercisePoints, addDemoSessionBonus } from '@/lib/demoStats'
 import Confetti from './Confetti'
 import ExerciseImage from '@/components/shared/ExerciseImage'
-import PrzekrojJamyUstnej from '@/components/shared/PrzekrojJamyUstnej'
+import KrokiCwiczenia from './KrokiCwiczenia'
 import type { TodayExercise } from '@/types/database'
 
 const DIFFICULTY_COLOR = {
@@ -40,9 +40,6 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
 
   const totalReps   = ex.repetitions
   const progress    = totalReps > 0 ? Math.min(repsDone / totalReps, 1) : 0
-
-  const steps = ex.instructions
-    .split('\n').map(s => s.replace(/^\d+\.\s*/, '').trim()).filter(Boolean)
 
   // Powtórz ćwiczenie — reset licznika (nie usuwa completion z bazy)
   function repeatExercise() {
@@ -108,12 +105,12 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
       <Confetti trigger={showCelebration} type={isLastExercise ? 'levelup' : 'celebration'} />
 
       {/* Nagłówek */}
-      <div className="bg-brand-600 px-4 pt-3 pb-6 [@media(max-height:720px)]:pb-4 relative overflow-hidden">
+      <div className="bg-brand-600 px-4 pt-3 pb-4 relative overflow-hidden">
         <div className="absolute -top-6 -right-6 w-28 h-28 bg-white/10 rounded-full" />
-        <div className="relative flex items-center h-10 mb-1">
+        <div className="relative flex items-center h-9 mb-0.5">
           <Link href="/pacjent/cwiczenia"
             data-testid="wyjscie"
-            className="h-10 pl-3 pr-4 bg-white/20 rounded-full flex items-center gap-1.5 text-white font-bold text-sm active:scale-95 transition"
+            className="h-9 pl-3 pr-4 bg-white/20 rounded-full flex items-center gap-1.5 text-white font-bold text-sm active:scale-95 transition"
           >
             <span className="text-lg leading-none">←</span> Wyjdź
           </Link>
@@ -123,12 +120,19 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
           <motion.div
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            className="text-8xl mb-3 drop-shadow-lg w-[clamp(8rem,30vh,16rem)] h-[clamp(8rem,30vh,16rem)] [@media(max-height:720px)]:w-36 [@media(max-height:720px)]:h-36 rounded-[2rem] overflow-hidden flex items-center justify-center"
+            className="mb-2 drop-shadow-lg w-[clamp(4.5rem,17vh,11rem)] h-[clamp(4.5rem,17vh,11rem)] rounded-[2rem] overflow-hidden flex items-center justify-center"
           >
             <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={448} priority />
           </motion.div>
-          <h1 className="text-xl font-black text-white text-center px-8">{ex.title}</h1>
-          <span className={`mt-2 text-xs font-bold px-3 py-1 rounded-full ${DIFFICULTY_COLOR[ex.difficulty]}`}>
+          <h1 className="text-lg font-black text-white text-center px-8 leading-tight">{ex.title}</h1>
+          {/* Opis mówi PO CO jest ćwiczenie — jedna linijka, pod tytułem.
+              Kroki mówią JAK i mają własne karty niżej. */}
+          {(ex.description_child || ex.description) && (
+            <p className="hidden [@media(min-height:640px)]:block text-xs text-white/70 text-center px-6 mt-0.5 line-clamp-2">
+              {ex.description_child || ex.description}
+            </p>
+          )}
+          <span className={`mt-1.5 text-[10px] font-bold px-2.5 py-0.5 rounded-full ${DIFFICULTY_COLOR[ex.difficulty]}`}>
             {DIFFICULTY_LABEL[ex.difficulty]}
           </span>
         </div>
@@ -141,7 +145,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
           bo czternaście kapsułek w 390 px to już nie jest informacja. */}
       <div
         data-testid="licznik-powtorzen"
-        className={`mx-4 my-3 h-9 px-3.5 rounded-full flex items-center justify-between gap-3 border transition-colors ${
+        className={`mx-4 mt-2 mb-2 h-9 px-3.5 flex-shrink-0 rounded-full flex items-center justify-between gap-3 border transition-colors ${
           completed ? 'bg-green-50 border-green-200' : 'bg-white border-gray-100 shadow-sm'
         }`}
       >
@@ -183,46 +187,16 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
         )}
       </div>
 
-      {/* Instrukcje */}
-      <div className="flex-1 min-h-0 px-4 space-y-3 overflow-y-auto pb-2">
-        {/* Opis mówi PO CO jest ćwiczenie, kroki mówią JAK — stąd nad nimi.
-            Pole było w danych i w typie TodayExercise od początku, ale nic go
-            nie renderowało, więc dziecko widziało obrazek, tytuł i od razu kroki. */}
-        {/* Wersja dziecięca, a bez niej kliniczna — tak było do tej pory.
-            Dzięki temu ekran działa też zanim migracja 013 wejdzie na bazę:
-            kolumny po prostu nie ma i fallback załatwia sprawę. */}
-        {(ex.description_child || ex.description) && (
-          <p className="text-sm text-gray-500 px-1 leading-relaxed">
-            {ex.description_child || ex.description}
-          </p>
-        )}
-
-        {ex.therapist_notes && (
-          <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-3 flex gap-3">
-            <span className="text-xl flex-shrink-0">💬</span>
-            <p className="text-sm text-amber-800 font-medium">{ex.therapist_notes}</p>
-          </div>
-        )}
-
-        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          {steps.map((step, i) => (
-            <div key={i} className={`flex gap-3 px-4 py-3.5 ${i > 0 ? 'border-t border-gray-50' : ''}`}>
-              <span className="w-7 h-7 bg-brand-100 text-brand-700 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">
-                {i + 1}
-              </span>
-              <p className="text-sm text-gray-700 leading-relaxed">{step}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Przekrój pokazuje to, czego ilustracja z bohaterem nie pokaże —
-            układ języka w jamie ustnej. Dziecko widzi wyłącznie pozycje
-            zaakceptowane przez logopedę. */}
-        <PrzekrojJamyUstnej gloski={ex.target_sounds} dlaPacjenta />
-      </div>
+      {/* Polecenie — jedna karta naraz, czytana na głos */}
+      <KrokiCwiczenia
+        exerciseId={ex.exercise_id}
+        instructions={ex.instructions}
+        therapistNotes={ex.therapist_notes}
+        targetSounds={ex.target_sounds}
+      />
 
       {/* Przyciski akcji */}
-      <div className="px-4 pb-8 pt-2 space-y-2">
+      <div className="px-4 pb-5 pt-1.5 space-y-2 flex-shrink-0">
         {(completed || repsDone >= totalReps) ? (
           <>
             <div className="bg-green-500 text-white font-black text-xl py-5 rounded-2xl text-center shadow-lg shadow-green-200">
