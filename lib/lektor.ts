@@ -73,6 +73,7 @@ export function useLektor({ exerciseId }: Opcje = {}) {
   const [mowi, setMowi]        = useState(false)
   const [wyciszony, setWycisz] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const obiektUrlRef = useRef<string | null>(null)
 
   // iOS pozwala odtwarzać dźwięk dopiero po geście użytkownika. Pierwsze
   // udane odtworzenie zdejmuje blokadę i od tego momentu kolejne kroki mogą
@@ -86,9 +87,14 @@ export function useLektor({ exerciseId }: Opcje = {}) {
   // Ten sam problem przy przewinięciu karty — odzywał się krok poprzedni.
   const pokolenie = useRef(0)
 
+  const zwolnijBlob = () => {
+    if (obiektUrlRef.current) { URL.revokeObjectURL(obiektUrlRef.current); obiektUrlRef.current = null }
+  }
+
   const stop = useCallback(() => {
     pokolenie.current++
     if (audioRef.current) { audioRef.current.pause(); audioRef.current = null }
+    zwolnijBlob()
     if (typeof window !== 'undefined' && window.speechSynthesis) window.speechSynthesis.cancel()
     setMowi(false)
   }, [])
@@ -136,9 +142,15 @@ export function useLektor({ exerciseId }: Opcje = {}) {
     const url = indeks === null ? null : urlLektora(exerciseId ?? '', indeks, tekst)
     if (!url) { await syntezator(tekst, aktualne); return }
 
-    // Brak pliku zgłasza się dwiema drogami naraz — zdarzeniem error i
-    // odrzuceniem play(). Bez tej bramki syntezator startuje dwa razy,
-    // a drugie uruchomienie anuluje pierwsze w połowie zdania.
+    // Nagranie ściągamy fetchem, a nie przez audio.src. Element <audio>
+    // wysyła żądanie z nagłówkiem Range, serwer odpowiada 206 Partial
+    // Content, a takiej odpowiedzi nie da się zapisać w cache'u jako
+    // kompletnej — więc service worker nigdy nic nie zapisywał i lektor
+    // offline był obietnicą bez pokrycia. Zwykły fetch dostaje 200, trafia
+    // do cache'u na 180 dni, a odtwarzanie idzie z blobu.
+    //
+    // Przy okazji status jest jawny: 404 dla niewygenerowanego nagrania
+    // przechodzi na syntezator od razu, zamiast przez zdarzenie error.
     let zapas = false
     const naZapas = () => {
       if (zapas || !aktualne()) return
@@ -147,23 +159,34 @@ export function useLektor({ exerciseId }: Opcje = {}) {
       syntezator(tekst, aktualne)
     }
 
-    const audio = new Audio()
-    // Bez trybu CORS odpowiedź jest nieprzejrzysta (status 0), więc 404 dla
-    // jeszcze niewygenerowanego nagrania trafiał do cache'u service workera
-    // jako poprawny i zostawał tam na 180 dni — nagranie wgrane później nigdy
-    // by nie zagrało. Supabase Storage wysyła nagłówki CORS.
-    audio.crossOrigin = 'anonymous'
-    audio.src = url
+    let odpowiedz: Response
+    try {
+      odpowiedz = await fetch(url, { mode: 'cors' })
+    } catch {
+      naZapas()   // brak sieci i brak wpisu w cache'u
+      return
+    }
+    if (!aktualne()) return
+    if (!odpowiedz.ok) { naZapas(); return }
+
+    const blob = await odpowiedz.blob()
+    if (!aktualne()) return
+
+    zwolnijBlob()
+    const obiektUrl = URL.createObjectURL(blob)
+    obiektUrlRef.current = obiektUrl
+
+    const audio = new Audio(obiektUrl)
     audioRef.current = audio
-    audio.onended = () => { if (aktualne()) setMowi(false) }
+    audio.onended = () => { if (aktualne()) { setMowi(false); zwolnijBlob() } }
     audio.onerror = naZapas
 
     try {
       await audio.play()
-      if (!aktualne()) { audio.pause(); return }   // pauza/przewinięcie w trakcie ładowania
+      if (!aktualne()) { audio.pause(); return }
       odblokowane.current = true
     } catch {
-      naZapas()   // odrzucone autoplay albo brak pliku
+      naZapas()   // odrzucone autoplay
     }
   }, [exerciseId, stop, syntezator, wyciszony])
 
