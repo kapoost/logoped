@@ -13,7 +13,7 @@ export default async function CwiczeniaPage() {
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
   const userId   = session.profile.id
 
   // Ćwiczenia na dziś z widoku today_exercises (005_views.sql)

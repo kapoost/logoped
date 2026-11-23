@@ -4,11 +4,12 @@ import Link from 'next/link'
 export const metadata: Metadata = { title: 'Nie pamiętam hasła' }
 export const dynamic = 'force-dynamic'
 
-export default function ResetPage({
-  searchParams,
-}: {
-  searchParams: { sent?: string; error?: string }
-}) {
+export default async function ResetPage(
+  props: {
+    searchParams: Promise<{ sent?: string; error?: string }>
+  }
+) {
+  const searchParams = await props.searchParams;
   const wyslane = searchParams.sent === '1'
 
   return (

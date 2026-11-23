@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
   if (haslo.length < 8)  return NextResponse.redirect(`${base}/haslo/nowe?error=krotkie`, { status: 303 })
   if (haslo !== haslo2)  return NextResponse.redirect(`${base}/haslo/nowe?error=rozne`,   { status: 303 })
 
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) {
     return NextResponse.redirect(`${base}/login/reset?error=link`, { status: 303 })

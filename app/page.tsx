@@ -9,7 +9,7 @@ export default async function HomePage() {
   if (!session) redirect('/login')
 
   // Sprawdź czy jest cookie z celem redirect
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const redirectTarget = cookieStore.get('logoped_redirect')?.value
 
   if (redirectTarget && redirectTarget.startsWith('/')) {

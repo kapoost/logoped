@@ -5,15 +5,16 @@ import { createClient } from '@/lib/supabase/server'
 export const metadata: Metadata = { title: 'Nowe hasło' }
 export const dynamic = 'force-dynamic'
 
-export default async function NoweHasloPage({
-  searchParams,
-}: {
-  searchParams: { error?: string }
-}) {
+export default async function NoweHasloPage(
+  props: {
+    searchParams: Promise<{ error?: string }>
+  }
+) {
+  const searchParams = await props.searchParams;
   // Sesja powstaje dopiero po wymianie kodu z linku w /auth/callback.
   // Bez niej nie ma czego aktualizować — i trzeba to powiedzieć wprost,
   // zamiast pokazywać formularz, który i tak nie zadziała.
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {

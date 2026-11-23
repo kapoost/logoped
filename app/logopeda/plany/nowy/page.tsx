@@ -7,13 +7,14 @@ import PlanBuilder from '@/components/therapist/PlanBuilder'
 
 export const metadata: Metadata = { title: 'Nowy plan ćwiczeń' }
 
-interface Props { searchParams: { pacjent?: string } }
+interface Props { searchParams: Promise<{ pacjent?: string }> }
 
-export default async function NowyPlanPage({ searchParams }: Props) {
+export default async function NowyPlanPage(props: Props) {
+  const searchParams = await props.searchParams;
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: patients } = await supabase
     .from('therapist_patient_overview')

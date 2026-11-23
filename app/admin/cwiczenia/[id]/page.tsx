@@ -14,7 +14,8 @@ import PrzekrojJamyUstnej from '@/components/shared/PrzekrojJamyUstnej'
 export const metadata: Metadata = { title: 'Admin — Podgląd ćwiczenia' }
 export const revalidate = 0
 
-export default async function AdminPodgladCwiczeniaPage({ params }: { params: { id: string } }) {
+export default async function AdminPodgladCwiczeniaPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const session = await getSessionUser()
   if (!session || session.profile.role !== 'admin') redirect('/')
 

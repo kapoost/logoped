@@ -15,11 +15,12 @@ import PrzekrojJamyUstnej from '@/components/shared/PrzekrojJamyUstnej'
 export const metadata: Metadata = { title: 'Podgląd ćwiczenia' }
 export const revalidate = 0
 
-export default async function PodgladCwiczeniaPage({ params }: { params: { id: string } }) {
+export default async function PodgladCwiczeniaPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: ex } = await supabase
     .from('exercises')
     .select('*')

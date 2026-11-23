@@ -3,7 +3,8 @@ import LoginForm from './LoginForm'
 
 export const metadata: Metadata = { title: 'Logowanie' }
 
-export default function LoginPage({ searchParams }: { searchParams: { error?: string } }) {
+export default async function LoginPage(props: { searchParams: Promise<{ error?: string }> }) {
+  const searchParams = await props.searchParams;
   return (
     <div>
       <h2 className="text-2xl font-bold text-gray-900 mb-1">Cześć!</h2>

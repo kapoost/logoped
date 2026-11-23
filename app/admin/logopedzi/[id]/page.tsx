@@ -8,7 +8,8 @@ import TherapistEditForm from './TherapistEditForm'
 export const metadata: Metadata = { title: 'Admin — Profil logopedy' }
 export const revalidate = 0
 
-export default async function TherapistDetailPage({ params }: { params: { id: string } }) {
+export default async function TherapistDetailPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const session = await getSessionUser()
   if (!session || session.profile.role !== 'admin') redirect('/')
 

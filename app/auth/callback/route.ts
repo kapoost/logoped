@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   const proto = request.headers.get('x-forwarded-proto') ?? 'https'
   const base  = host ? `${proto}://${host}` : origin
 
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Dwie drogi, bo zależą od szablonu maila w Supabase:
   //  - `code`       (PKCE) działa tylko w tej samej przeglądarce, w której poproszono o reset,

@@ -6,8 +6,10 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import type { Database } from '@/types/database'
 
-export function createClient() {
-  const cookieStore = cookies()
+// Od Next 15 cookies() jest asynchroniczne, a w 16 synchroniczny dostęp
+// zniknął całkiem — stąd async i await przy każdym wywołaniu.
+export async function createClient() {
+  const cookieStore = await cookies()
 
   return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -53,7 +55,7 @@ export function createAdminClient() {
 // Helper: pobierz aktualnego użytkownika + profil w jednym zapytaniu
 // Rzuca błąd jeśli brak sesji (redirect do /login)
 export async function getSessionUser() {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: { user }, error: authError } = await supabase.auth.getUser()
   if (authError || !user) return null

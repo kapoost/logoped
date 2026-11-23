@@ -8,7 +8,8 @@ import Link from 'next/link'
 export const metadata: Metadata = { title: 'Admin — Edycja ćwiczenia' }
 export const revalidate = 0
 
-export default async function AdminEdytujCwiczeniePage({ params }: { params: { id: string } }) {
+export default async function AdminEdytujCwiczeniePage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const session = await getSessionUser()
   if (!session || session.profile.role !== 'admin') redirect('/')
 

@@ -11,7 +11,7 @@ export default async function DodajPacjentaPage() {
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Pobierz imiona istniejących pacjentów tego logopedy — do live walidacji duplikatów
   const { data: tp } = await supabase

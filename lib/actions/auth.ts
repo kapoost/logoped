@@ -5,7 +5,7 @@ import { createServerClient } from '@supabase/ssr'
 import { loginToEmail } from '@/lib/login'
 
 export async function signOut() {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -27,7 +27,7 @@ export async function signIn(_: unknown, formData: FormData) {
   const isDemo   = formData.get('isDemo')   === 'true'
   const email    = loginToEmail(login)
 
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,

@@ -11,7 +11,7 @@ export default async function KalendarzPage() {
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Użyj funkcji get_patient_calendar z 005_views.sql
   const { data: calendarData } = await supabase

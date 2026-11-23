@@ -10,7 +10,6 @@ const withSerwist = require('@serwist/next').default({
 const nextConfig = {
   // Typy pilnowane na serio — `npm run typecheck` i build muszą być zielone
   typescript: { ignoreBuildErrors: false },
-  eslint: { ignoreDuringBuilds: true },
   output: 'standalone',
   images: {
     remotePatterns: [
@@ -21,10 +20,8 @@ const nextConfig = {
       },
     ],
   },
-  // Supabase edge functions cookies
-  experimental: {
-    serverComponentsExternalPackages: ['@supabase/ssr'],
-  },
+  // W Next 15 opcja wyszła z experimental pod nową nazwą.
+  serverExternalPackages: ['@supabase/ssr'],
 }
 
 module.exports = withSerwist(nextConfig)

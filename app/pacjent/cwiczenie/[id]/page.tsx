@@ -4,10 +4,11 @@ import { getSessionUser, createClient } from '@/lib/supabase/server'
 import type { Metadata } from 'next'
 import ExerciseView from '@/components/patient/ExerciseView'
 
-interface Props { params: { id: string } }
+interface Props { params: Promise<{ id: string }> }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const supabase  = createClient()
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
+  const supabase  = await createClient()
   const { data }  = await supabase
     .from('plan_exercises')
     .select('exercises(title)')
@@ -19,11 +20,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export const revalidate = 0
 
-export default async function CwiczeniePage({ params }: Props) {
+export default async function CwiczeniePage(props: Props) {
+  const params = await props.params;
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Pobierz pełne dane ćwiczenia z planu
   const { data } = await supabase

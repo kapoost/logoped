@@ -8,11 +8,12 @@ import ExerciseForm from '../../nowe/ExerciseForm'
 export const metadata: Metadata = { title: 'Edycja ćwiczenia' }
 export const revalidate = 0
 
-export default async function EdytujCwiczeniePage({ params }: { params: { id: string } }) {
+export default async function EdytujCwiczeniePage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: ex } = await supabase
     .from('exercises')
     .select('*')

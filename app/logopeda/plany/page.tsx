@@ -13,7 +13,7 @@ export default async function PlanyPage() {
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: plans } = await supabase
     .from('exercise_plans')

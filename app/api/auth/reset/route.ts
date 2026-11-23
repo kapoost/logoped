@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
   const sukces = NextResponse.redirect(`${base}/login/reset?sent=1`, { status: 303 })
   if (!email) return sukces
 
-  const supabase = createClient()
+  const supabase = await createClient()
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
     redirectTo: `${base}/auth/callback?next=/haslo/nowe`,
   })

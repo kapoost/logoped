@@ -11,7 +11,7 @@ export default async function NagrodyPage() {
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
   const userId   = session.profile.id
 
   const [{ data: stats }, { data: achievements }] = await Promise.all([

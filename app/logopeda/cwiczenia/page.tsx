@@ -11,19 +11,20 @@ export const metadata: Metadata = { title: 'Baza ćwiczeń' }
 export const revalidate = 60
 
 interface Props {
-  searchParams: {
+  searchParams: Promise<{
     kategoria?: ExerciseCategory
     trudnosc?:  DifficultyLevel
     gloska?:    string
     q?:         string
-  }
+  }>
 }
 
-export default async function CwiczeniaPage({ searchParams: sp }: Props) {
+export default async function CwiczeniaPage(props: Props) {
+  const sp = await props.searchParams;
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
 
   let query = supabase
     .from('exercises')

@@ -14,7 +14,7 @@ export default async function PacjenciPage() {
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
 
   const { data: patients } = await supabase
     .from('therapist_patient_overview')

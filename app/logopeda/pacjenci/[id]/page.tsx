@@ -9,21 +9,23 @@ import { pl } from 'date-fns/locale'
 import { policzAktywnosc } from '@/lib/aktywnosc'
 import PatientCalendarMini from '@/components/therapist/PatientCalendarMini'
 
-interface Props { params: { id: string } }
+interface Props { params: Promise<{ id: string }> }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const supabase = createClient()
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
+  const supabase = await createClient()
   const { data } = await supabase.from('profiles').select('full_name').eq('id', params.id).single()
   return { title: data?.full_name ?? 'Pacjent' }
 }
 
 export const revalidate = 0
 
-export default async function PatientProfilePage({ params }: Props) {
+export default async function PatientProfilePage(props: Props) {
+  const params = await props.params;
   const session = await getSessionUser()
   if (!session) redirect('/login')
 
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Sprawdź że to pacjent tego logopedy
   const { data: relation } = await supabase

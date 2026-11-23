@@ -9,7 +9,7 @@ type InsertItem = { exercise_id: string; order_index?: number; repetitions?: num
 const PLAN_ROWS = 'id, order_index, repetitions, notes, exercises(id, title, emoji, category, difficulty, duration_seconds)'
 
 export async function POST(request: Request) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   const { plan_id, action, payload } = await request.json()
