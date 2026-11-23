@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import type { PlanExercise } from '@/types/database'
 
 type UpdateItem = { id: string; order_index?: number; repetitions?: number; notes?: string | null }
 type InsertItem = { exercise_id: string; order_index?: number; repetitions?: number; notes?: string | null }
@@ -59,7 +60,8 @@ export async function POST(request: Request) {
       // Tylko pola faktycznie przysłane — inaczej brak `notes` w payloadzie
       // kasowałby notatkę logopedy, a brak order_index i tak nic nie robi.
       const results = await Promise.all(toUpdate.map(u => {
-        const patch: Record<string, unknown> = {}
+        // Jak wyżej — supabase-js 2.119 wymaga konkretnego kształtu.
+        const patch: Partial<Pick<PlanExercise, 'order_index' | 'repetitions' | 'notes'>> = {}
         if ('order_index' in u) patch.order_index = u.order_index
         if ('repetitions' in u) patch.repetitions = u.repetitions
         if ('notes'       in u) patch.notes       = u.notes ?? null

@@ -53,6 +53,14 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# sharp obok standalone: bez niego optymalizacja obrazków w trybie standalone
+# rzuca "'sharp' is required to be installed in standalone mode" przy KAŻDYM
+# żądaniu obrazka — tak było na produkcji od 5.11.2026. Kopiujemy ze stage'a
+# deps, bo tam npm ci pobrał binaria pod musl (alpine); śledzenie zależności
+# Next.js nie zawsze wciąga natywne paczki @img.
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules/sharp ./node_modules/sharp
+COPY --from=deps --chown=nextjs:nodejs /app/node_modules/@img  ./node_modules/@img
+
 USER nextjs
 
 EXPOSE 3000

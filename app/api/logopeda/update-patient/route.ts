@@ -4,6 +4,7 @@
 
 import { NextResponse } from 'next/server'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
+import type { Profile } from '@/types/database'
 
 export async function POST(request: Request) {
   try {
@@ -40,7 +41,9 @@ export async function POST(request: Request) {
 
     // Aktualizuj profil
     if (full_name !== undefined || date_of_birth !== undefined) {
-      const updates: Record<string, any> = {}
+      // Typ zamiast Record<string, any>: od supabase-js 2.119 .update()
+      // odrzuca luźne indeksowane obiekty (RejectExcessProperties).
+      const updates: Partial<Pick<Profile, 'full_name' | 'date_of_birth'>> = {}
       if (full_name !== undefined) updates.full_name = full_name.trim()
       if (date_of_birth !== undefined) updates.date_of_birth = date_of_birth || null
 
