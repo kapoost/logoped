@@ -15,7 +15,34 @@ jobs:
         env:
           FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
+      # Zmienne NEXT_PUBLIC_* Next.js wkleja do paczki przeglądarki w trakcie
+      # buildu obrazu — sekrety Fly.io są wtedy niewidoczne, bo trafiają
+      # dopiero do działającego kontenera. Bez --build-arg deploy przechodzi
+      # na zielono, a w przeglądarce cicho nie działa rejestracja i lektor.
+      # Dockerfile przerywa teraz taki build, więc brak tych linii = czerwone CI.
       - name: Deploy to Fly.io
-        run: flyctl deploy --remote-only --wait-timeout 600
+        run: |
+          flyctl deploy --remote-only --wait-timeout 600 \
+            --build-arg NEXT_PUBLIC_SUPABASE_URL="$NEXT_PUBLIC_SUPABASE_URL" \
+            --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY="$NEXT_PUBLIC_SUPABASE_ANON_KEY" \
+            --build-arg NEXT_PUBLIC_APP_URL="https://logoped.fly.dev" \
+            --build-arg NEXT_PUBLIC_VAPID_PUBLIC_KEY="$NEXT_PUBLIC_VAPID_PUBLIC_KEY"
         env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          FLY_API_TOKEN:                 ${{ secrets.FLY_API_TOKEN }}
+          NEXT_PUBLIC_SUPABASE_URL:      ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_VAPID_PUBLIC_KEY:  ${{ secrets.NEXT_PUBLIC_VAPID_PUBLIC_KEY }}
+
+      # Deploy bez tego kroku potrafił zostawić produkcję, która odpowiada
+      # 200 na /api/health i jednocześnie nikogo nie loguje.
+      - name: Weryfikacja — czy produkcja widzi Supabase
+        run: |
+          for i in 1 2 3 4 5; do
+            kod=$(curl -s -o /tmp/zdrowie.json -w '%{http_code}' --max-time 20 \
+                  https://logoped.fly.dev/api/health?deep=1 || echo 000)
+            [ "$kod" = "200" ] && { echo "OK"; cat /tmp/zdrowie.json; exit 0; }
+            echo "próba $i: HTTP $kod"; cat /tmp/zdrowie.json 2>/dev/null; echo
+            sleep 10
+          done
+          echo "Produkcja wstała, ale nie dociera do Supabase."
+          exit 1

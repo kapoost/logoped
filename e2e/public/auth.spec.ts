@@ -69,6 +69,21 @@ test.describe('Strona logowania', () => {
     }
   })
 
+  // Liveness ma zostać zielone nawet przy martwej bazie — inaczej Fly
+  // restartuje zdrowy kontener w kółko. Głębokość siedzi pod ?deep=1.
+  test('/api/health?deep=1 potwierdza łączność z Supabase', async ({ page }) => {
+    const res = await page.request.get('/api/health?deep=1')
+    const body = await res.json()
+
+    // 503 tutaj znaczy, że produkcja nie dociera do bazy albo do auth —
+    // dokładnie ta awaria, która 23.11.2026 przeszła niezauważona, bo
+    // /api/health sprawdzało wyłącznie, czy Next odpowiada.
+    expect(res.status(), `produkcja nie widzi Supabase: ${JSON.stringify(body)}`).toBe(200)
+    expect(body.status).toBe('ok')
+    expect(body.baza?.ok).toBe(true)
+    expect(body.auth?.ok).toBe(true)
+  })
+
   test('/api/push/send bez tokenu → 401', async ({ page }) => {
     const res = await page.request.post('/api/push/send')
     expect(res.status()).toBe(401)
