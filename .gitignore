@@ -19,8 +19,8 @@ e2e/.auth/
 
 # Artefakty builda — generowane przy każdym typecheck/build
 tsconfig.tsbuildinfo
-public/sw.js
-public/workbox-*.js
+public/sw*
+public/swe-worker*
 
 # Misc
 .DS_Store

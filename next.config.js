@@ -1,33 +1,10 @@
-const domyslnyCache = require('next-pwa/cache')
-
-// Nagrania lektora są niezmienne — nazwa pliku zawiera skrót treści, więc
-// zmiana polecenia daje nowy adres. Domyślna reguła next-pwa na mp3 trzyma
-// 32 pliki przez dobę, a jedna sesja dziecka to już ~30 kroków; po dwóch
-// dniach bez zasięgu lektor by zamilkł. Stąd własny, pojemny cache przed
-// regułami domyślnymi (wygrywa pierwsze dopasowanie).
-const cacheLektora = {
-  urlPattern: ({ url }) => url.pathname.includes('/exercise-media/lektor/'),
-  handler: 'CacheFirst',
-  options: {
-    cacheName: 'lektor-audio',
-    rangeRequests: true,
-    // Tylko 200. Status 0 to odpowiedź nieprzejrzysta — przy no-cors trafiał
-    // tu również 404 dla nienagranego jeszcze kroku i zostawał na 180 dni,
-    // więc nagranie wgrane później nigdy by nie zagrało. Element <audio>
-    // ustawia crossOrigin='anonymous', więc status jest widoczny naprawdę.
-    cacheableResponse: { statuses: [200] },
-    expiration: { maxEntries: 500, maxAgeSeconds: 180 * 24 * 60 * 60 },
-  },
-}
-
-/** @type {import('next').NextConfig} */
-const withPWA = require('next-pwa')({
-  dest: 'public',
-  register: true,
-  skipWaiting: true,
+const withSerwist = require('@serwist/next').default({
+  // Reguły cache'owania (w tym nagrania lektora) siedzą w app/sw.ts —
+  // Serwist kompiluje ten plik do public/sw.js przy buildzie.
+  swSrc: 'app/sw.ts',
+  swDest: 'public/sw.js',
   disable: process.env.NODE_ENV === 'development',
-  buildExcludes: [/middleware-manifest\.json$/],
-  runtimeCaching: [cacheLektora, ...domyslnyCache],
+  reloadOnOnline: false,
 })
 
 const nextConfig = {
@@ -50,4 +27,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withPWA(nextConfig)
+module.exports = withSerwist(nextConfig)
