@@ -81,8 +81,12 @@ def hash_tekstu(tekst):
 
 
 def kroki_z_instrukcji(instrukcje):
-    return [re.sub(r'^\d+\.\s*', '', w).strip()
-            for w in (instrukcje or '').split('\n') if w.strip()]
+    """Musi dzielić identycznie jak KrokiCwiczenia.tsx, bo numer kroku jest
+    częścią nazwy pliku. Najpierw zdejmujemy prefiks "N.", dopiero potem
+    odrzucamy puste — odwrotna kolejność zostawiłaby linię będącą samym
+    numerem jako pusty krok i przesunęła indeksy wszystkich następnych."""
+    kroki = (re.sub(r'^\d+\.\s*', '', w).strip() for w in (instrukcje or '').split('\n'))
+    return [k for k in kroki if k]
 
 
 # ── fal ───────────────────────────────────────────────────────────────────

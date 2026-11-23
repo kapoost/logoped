@@ -70,7 +70,7 @@ interface Opcje {
 }
 
 export function useLektor({ exerciseId }: Opcje = {}) {
-  const [mowi, setMowi]       = useState(false)
+  const [mowi, setMowi]        = useState(false)
   const [wyciszony, setWycisz] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
 
@@ -79,7 +79,15 @@ export function useLektor({ exerciseId }: Opcje = {}) {
   // czytać się same przy przewijaniu.
   const odblokowane = useRef(false)
 
+  // Numer pokolenia unieważnia wszystko, co jeszcze leci. Bez tego pauza
+  // wciśnięta w trakcie ładowania MP3 czytała krok, który dziecko właśnie
+  // przerwało: audio.pause() odrzuca niezakończone play() błędem AbortError,
+  // a ten wpadał do tej samej gałęzi co brak pliku i uruchamiał syntezator.
+  // Ten sam problem przy przewinięciu karty — odzywał się krok poprzedni.
+  const pokolenie = useRef(0)
+
   const stop = useCallback(() => {
+    pokolenie.current++
     if (audioRef.current) { audioRef.current.pause(); audioRef.current = null }
     if (typeof window !== 'undefined' && window.speechSynthesis) window.speechSynthesis.cancel()
     setMowi(false)
@@ -87,19 +95,29 @@ export function useLektor({ exerciseId }: Opcje = {}) {
 
   useEffect(() => stop, [stop])
 
-  const syntezator = useCallback(async (tekst: string) => {
+  const syntezator = useCallback(async (tekst: string, aktualne: () => boolean) => {
     if (typeof window === 'undefined' || !window.speechSynthesis) { setMowi(false); return }
+
+    // Czekanie na listę głosów trwa na iOS do sekundy. Dziecko zdąży w tym
+    // czasie wcisnąć pauzę albo przewinąć kartę — wtedy mamy nic nie mówić.
     await czekajNaGlosy()
+    if (!aktualne()) return
+
     const u = new SpeechSynthesisUtterance(tekst)
     const glos = glosPolski()
     if (glos) u.voice = glos
     u.lang  = 'pl-PL'
     u.rate  = 0.92          // dziecko nadąża
     u.pitch = 1.15          // bliżej głosu Lolo niż lektora wiadomości
-    u.onend = () => setMowi(false)
-    u.onerror = () => setMowi(false)
+    u.onend   = () => { if (aktualne()) setMowi(false) }
+    u.onerror = () => { if (aktualne()) setMowi(false) }
     window.speechSynthesis.cancel()
     window.speechSynthesis.speak(u)
+
+    // Syntezator też liczy się jako przełamanie blokady autoplay — inaczej
+    // automatyczne czytanie kolejnych kart nie ruszyłoby nigdy tam, gdzie
+    // nagrań jeszcze nie ma.
+    odblokowane.current = true
   }, [])
 
   /**
@@ -109,30 +127,40 @@ export function useLektor({ exerciseId }: Opcje = {}) {
    */
   const mow = useCallback(async (tekst: string, indeks: number | null = null) => {
     if (!tekst?.trim() || wyciszony) return
-    stop()
+
+    stop()                                   // podbija pokolenie
+    const moje = pokolenie.current
+    const aktualne = () => moje === pokolenie.current
     setMowi(true)
 
     const url = indeks === null ? null : urlLektora(exerciseId ?? '', indeks, tekst)
-    if (!url) { await syntezator(tekst); return }
+    if (!url) { await syntezator(tekst, aktualne); return }
 
     // Brak pliku zgłasza się dwiema drogami naraz — zdarzeniem error i
     // odrzuceniem play(). Bez tej bramki syntezator startuje dwa razy,
     // a drugie uruchomienie anuluje pierwsze w połowie zdania.
     let zapas = false
     const naZapas = () => {
-      if (zapas) return
+      if (zapas || !aktualne()) return
       zapas = true
       audioRef.current = null
-      syntezator(tekst)
+      syntezator(tekst, aktualne)
     }
 
-    const audio = new Audio(url)
+    const audio = new Audio()
+    // Bez trybu CORS odpowiedź jest nieprzejrzysta (status 0), więc 404 dla
+    // jeszcze niewygenerowanego nagrania trafiał do cache'u service workera
+    // jako poprawny i zostawał tam na 180 dni — nagranie wgrane później nigdy
+    // by nie zagrało. Supabase Storage wysyła nagłówki CORS.
+    audio.crossOrigin = 'anonymous'
+    audio.src = url
     audioRef.current = audio
-    audio.onended = () => setMowi(false)
+    audio.onended = () => { if (aktualne()) setMowi(false) }
     audio.onerror = naZapas
 
     try {
       await audio.play()
+      if (!aktualne()) { audio.pause(); return }   // pauza/przewinięcie w trakcie ładowania
       odblokowane.current = true
     } catch {
       naZapas()   // odrzucone autoplay albo brak pliku
@@ -140,11 +168,12 @@ export function useLektor({ exerciseId }: Opcje = {}) {
   }, [exerciseId, stop, syntezator, wyciszony])
 
   const przelaczWyciszenie = useCallback(() => {
-    setWycisz(w => {
-      if (!w) stop()
-      return !w
-    })
-  }, [stop])
+    // Efekty uboczne poza updaterem setState — React może wywołać updater
+    // wielokrotnie (StrictMode), a stop() zatrzymuje odtwarzanie.
+    const nowe = !wyciszony
+    if (nowe) stop()
+    setWycisz(nowe)
+  }, [wyciszony, stop])
 
   return { mow, stop, mowi, wyciszony, przelaczWyciszenie, odblokowane }
 }

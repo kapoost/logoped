@@ -23,6 +23,13 @@ export const dynamic = 'force-dynamic'
 
 const TIMEOUT_MS = 3000
 
+// Endpoint jest publiczny (middleware przepuszcza /api/), więc bez tego
+// jedno żądanie z zewnątrz = dwa żądania do Supabase. Wynik jest wspólny
+// dla wszystkich pytających przez krótką chwilę — monitoring pyta co 15
+// minut, więc nic na tym nie traci, a wzmacniacz znika.
+const CACHE_MS = 10_000
+let ostatni: { kiedy: number; tresc: unknown; status: number } | null = null
+
 interface Wynik {
   ok: boolean
   ms: number
@@ -48,10 +55,17 @@ async function sprawdz(url: string, naglowki: Record<string, string>): Promise<W
 
 export async function GET(request: Request) {
   const ts = new Date().toISOString()
-  const deep = new URL(request.url).searchParams.has('deep')
+
+  // Wartość, nie sama obecność — ?deep=0 ma znaczyć "nie".
+  const param = new URL(request.url).searchParams.get('deep')
+  const deep = param !== null && param !== '0' && param !== 'false'
 
   if (!deep) {
     return NextResponse.json({ status: 'ok', ts }, { status: 200 })
+  }
+
+  if (ostatni && Date.now() - ostatni.kiedy < CACHE_MS) {
+    return NextResponse.json(ostatni.tresc as object, { status: ostatni.status })
   }
 
   const base = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -76,8 +90,9 @@ export async function GET(request: Request) {
   ])
 
   const zdrowy = baza.ok && auth.ok
-  return NextResponse.json(
-    { status: zdrowy ? 'ok' : 'degraded', ts, baza, auth },
-    { status: zdrowy ? 200 : 503 }
-  )
+  const tresc  = { status: zdrowy ? 'ok' : 'degraded', ts, baza, auth }
+  const status = zdrowy ? 200 : 503
+
+  ostatni = { kiedy: Date.now(), tresc, status }
+  return NextResponse.json(tresc, { status })
 }

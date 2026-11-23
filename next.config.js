@@ -11,7 +11,11 @@ const cacheLektora = {
   options: {
     cacheName: 'lektor-audio',
     rangeRequests: true,
-    cacheableResponse: { statuses: [0, 200] },
+    // Tylko 200. Status 0 to odpowiedź nieprzejrzysta — przy no-cors trafiał
+    // tu również 404 dla nienagranego jeszcze kroku i zostawał na 180 dni,
+    // więc nagranie wgrane później nigdy by nie zagrało. Element <audio>
+    // ustawia crossOrigin='anonymous', więc status jest widoczny naprawdę.
+    cacheableResponse: { statuses: [200] },
     expiration: { maxEntries: 500, maxAgeSeconds: 180 * 24 * 60 * 60 },
   },
 }

@@ -30,10 +30,16 @@ ENV NEXT_PUBLIC_VAPID_PUBLIC_KEY=$NEXT_PUBLIC_VAPID_PUBLIC_KEY
 # deploy` bez --build-arg te zmienne są puste, build przechodzi na zielono,
 # a w przeglądarce cicho przestaje działać wszystko, co ich potrzebuje:
 # rejestracja i lektor czytający polecenia. Taki obraz ma się nie zbudować.
-RUN test -n "$NEXT_PUBLIC_SUPABASE_URL" -a -n "$NEXT_PUBLIC_SUPABASE_ANON_KEY" || { \
-      echo "BŁĄD: brak NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY."; \
-      echo "Deployuj przez ./deploy.sh albo dodaj --build-arg do flyctl deploy."; \
-      exit 1; }
+# Klucz VAPID też tu jest: bez niego PushSetup.tsx dostaje undefined i
+# subskrypcja powiadomień wysypuje się w przeglądarce — dokładnie ta sama
+# cicha awaria, przed którą ten bezpiecznik ma chronić.
+RUN for z in NEXT_PUBLIC_SUPABASE_URL NEXT_PUBLIC_SUPABASE_ANON_KEY NEXT_PUBLIC_VAPID_PUBLIC_KEY; do \
+      eval "v=\$$z"; \
+      [ -n "$v" ] || { \
+        echo "BŁĄD: brak $z w argumentach buildu."; \
+        echo "Deployuj przez ./deploy.sh albo dodaj --build-arg do flyctl deploy."; \
+        exit 1; }; \
+    done
 
 RUN npm run build
 
