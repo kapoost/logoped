@@ -1,0 +1,35 @@
+{
+  "_opis": [
+    "Druga klatka ćwiczenia — przeciwne położenie tego samego ruchu.",
+    "Aplikacja przenika między klatką A (media_url) a B, dzięki czemu dziecko",
+    "widzi RUCH, a nie zastygłą pozę.",
+    "",
+    "Pole 'faza_b' to POLECENIE EDYCJI, nie opis sceny. Kształt zdania ma",
+    "znaczenie, zmierzone na pilocie: kierunek trzeba podać wprost (LEFT/RIGHT",
+    "względem kadru), bo 'mirroring the pose' model czyta jako 'podobnie, ale",
+    "inaczej' i zamiast przenieść język na drugą stronę po prostu go wydłuża.",
+    "Zdanie ma zaczynać się od 'Change ONLY'.",
+    "",
+    "Pilot: cztery ćwiczenia z planu demo. Reszta dopiero po obejrzeniu tych",
+    "przez logopedę — niezweryfikowany układ ust uczy dziecko błędu, tak samo",
+    "jak niezaakceptowany przekrój w lib/przekroje.ts."
+  ],
+  "cwiczenia": {
+    "a69dd8b0-7692-4a62-b72e-45f52a79e23c": {
+      "tytul": "Zegar",
+      "faza_b": "Change ONLY the direction the tongue points: in the original it hangs out towards the RIGHT side of the image; draw it sticking out towards the LEFT side instead, same length and shape, as if swung across."
+    },
+    "591ae4c5-559d-4daa-8ede-67eeec609513": {
+      "tytul": "Cmokanie",
+      "faza_b": "Change ONLY the mouth: instead of lips pushed forward into a round kiss, draw them stretched wide into a broad smile. Remove the puff of air."
+    },
+    "c51c604e-02e5-456c-a7e7-f338193a33c9": {
+      "tytul": "Nadmuchiwanie balonu",
+      "faza_b": "Change ONLY the balloon and the cheeks: draw the balloon small and limp, barely inflated, and the cheeks flat and relaxed instead of puffed."
+    },
+    "c62fe5a5-9278-4f83-a5a9-66e4e93e9934": {
+      "tytul": "Kotek",
+      "faza_b": "Change ONLY the tongue: instead of reaching down towards the bowl, draw it curled upward towards the nose, at the top of the lapping motion."
+    }
+  }
+}

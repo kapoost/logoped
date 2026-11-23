@@ -7,7 +7,7 @@ import { isDemo, getDemoReps, getDemoCompleted, setDemoReps } from '@/lib/demoPr
 import { playRep, playExerciseDone, playSessionComplete } from '@/lib/sounds'
 import { addDemoExercisePoints, addDemoSessionBonus } from '@/lib/demoStats'
 import Confetti from './Confetti'
-import ExerciseImage from '@/components/shared/ExerciseImage'
+import IlustracjaAnimowana from './IlustracjaAnimowana'
 import KrokiCwiczenia from './KrokiCwiczenia'
 import type { TodayExercise } from '@/types/database'
 
@@ -122,7 +122,7 @@ export default function ExerciseView({ exercise: ex, nextId, patientId, isLastEx
             transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
             className="mb-2 drop-shadow-lg w-[clamp(4.5rem,17vh,11rem)] h-[clamp(4.5rem,17vh,11rem)] rounded-[2rem] overflow-hidden flex items-center justify-center"
           >
-            <ExerciseImage src={ex.media_url} emoji={ex.emoji} title={ex.title} size={448} priority />
+            <IlustracjaAnimowana src={ex.media_url} emoji={ex.emoji} title={ex.title} size={448} priority />
           </motion.div>
           <h1 className="text-lg font-black text-white text-center px-8 leading-tight">{ex.title}</h1>
           {/* Opis mówi PO CO jest ćwiczenie — jedna linijka, pod tytułem.
